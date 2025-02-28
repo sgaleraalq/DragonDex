@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dragondex"
+    namespace = "com.sgale.dragondex"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.dragondex"
+        applicationId = "com.sgale.dragondex"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -23,12 +23,22 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            resValue("string", "sgale", "DragonDex")
+            buildConfigField("String", "BASE_URL", "\"https://www.dragonball-api.com/api\"")
+        }
+        debug {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+            resValue("string", "sgale", "[DEBUG] DragonDex")
+            buildConfigField("String", "BASE_URL", "\"https://www.dragonball-api.com/api\"")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -38,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

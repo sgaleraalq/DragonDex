@@ -1,4 +1,4 @@
-package com.example.dragondex
+package com.sgale.dragondex
 
 import org.junit.Test
 

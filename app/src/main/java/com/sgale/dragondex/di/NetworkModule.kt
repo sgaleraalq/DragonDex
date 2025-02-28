@@ -1,5 +1,6 @@
-package com.example.dragondex.di
+package com.sgale.dragondex.di
 
+import com.sgale.dragondex.BuildConfig.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ internal object NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl("https://www.dragonball-api.com/api")
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

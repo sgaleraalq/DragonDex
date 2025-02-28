@@ -1,6 +1,5 @@
-package com.example.dragondex.ui.theme
+package com.sgale.dragondex.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -1,4 +1,4 @@
-package com.example.dragondex.ui.theme
+package com.sgale.dragondex.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
