@@ -17,13 +17,18 @@
 package com.sgale.dragondex.data.network.services
 
 import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
+import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface DragonBallApiService {
 
     @GET("characters")
     suspend fun getAllCharacters(): CharacterListResponse
+
+    @GET("characters/{id}")
+    suspend fun getCharacter(@Path("id") id: Int): CharacterResponse
 
     @GET("planets")
     suspend fun getAllPlanets(): PlanetsListResponse

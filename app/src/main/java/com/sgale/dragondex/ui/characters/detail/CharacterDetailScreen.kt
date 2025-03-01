@@ -14,38 +14,34 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.planets
+package com.sgale.dragondex.ui.characters.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun PlanetsScreen(
-    viewModel: PlanetsViewModel = hiltViewModel()
+fun CharacterDetailScreen(
+    id: Int,
+    viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
-    val planetsList by viewModel.planetsList.collectAsState()
+    val character by viewModel.character.collectAsState()
+
+    LaunchedEffect(true) {
+        viewModel.getCharacterById(id)
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize(),
-            columns = GridCells.Fixed(2)
-        ) {
-            items(planetsList?.items?.size ?: 0) { index ->
-                val planet = planetsList?.items?.get(index)
-                Text(
-                    text = planet?.name ?: "",
-                )
-            }
-        }
+        Text(
+            text = character?.name ?: ""
+        )
     }
 }

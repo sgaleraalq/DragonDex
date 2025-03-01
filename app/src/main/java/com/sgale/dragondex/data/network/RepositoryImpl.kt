@@ -20,6 +20,7 @@ import android.util.Log
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import javax.inject.Inject
 
@@ -27,6 +28,9 @@ class RepositoryImpl @Inject constructor(
     private val dragonBallApiService: DragonBallApiService
 ): Repository {
 
+    /*
+    * Get characters from the API
+     */
     override suspend fun getAllCharacters(): CharacterListModel? {
         runCatching { dragonBallApiService.getAllCharacters() }
             .onSuccess { return it.toDomain() }
@@ -34,6 +38,16 @@ class RepositoryImpl @Inject constructor(
         return null
     }
 
+    override suspend fun getCharacter(id: Int): CharacterModel? {
+        runCatching { dragonBallApiService.getCharacter(id) }
+            .onSuccess { return it.toDomain() }
+            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
+        return null
+    }
+
+    /*
+    * Get planets from the API
+     */
     override suspend fun getAllPlanets(): PlanetsListModel? {
         runCatching { dragonBallApiService.getAllPlanets() }
             .onSuccess { return it.toDomain() }

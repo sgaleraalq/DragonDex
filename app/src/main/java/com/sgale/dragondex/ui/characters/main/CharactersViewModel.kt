@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.characters
+package com.sgale.dragondex.ui.characters.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

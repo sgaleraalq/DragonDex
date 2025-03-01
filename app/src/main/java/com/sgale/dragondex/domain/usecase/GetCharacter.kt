@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain
+package com.sgale.dragondex.domain.usecase
 
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import com.sgale.dragondex.domain.Repository
+import javax.inject.Inject
 
-interface Repository {
-    suspend fun getAllCharacters(): CharacterListModel?
-    suspend fun getCharacter(id: Int): CharacterModel?
-    suspend fun getAllPlanets(): PlanetsListModel?
+class GetCharacter @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(id: Int) = repository.getCharacter(id)
 }

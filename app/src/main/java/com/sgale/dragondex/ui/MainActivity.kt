@@ -9,10 +9,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sgale.dragondex.ui.characters.CharactersScreen
+import androidx.navigation.navArgument
+import com.sgale.dragondex.ui.characters.detail.CharacterDetailScreen
+import com.sgale.dragondex.ui.characters.main.CharactersScreen
 import com.sgale.dragondex.ui.core.Route
 import com.sgale.dragondex.ui.core.Route.*
 import com.sgale.dragondex.ui.launch.LaunchScreen
@@ -59,7 +62,7 @@ fun Content(
         startDestination = LaunchScreen.route
     ) {
         composable(
-            LaunchScreen.route
+            route = LaunchScreen.route
         ) {
             LaunchScreen(
                 navigateToCharacters = { navigateTo(CharactersScreen.createRoute()) },
@@ -68,13 +71,26 @@ fun Content(
         }
 
         composable(
-            CharactersScreen.route
+            route = CharactersScreen.route
         ) {
-            CharactersScreen()
+            CharactersScreen(
+                navigateToDetail = { id -> navigateTo(CharacterDetailScreen.createRoute(id)) }
+            )
         }
 
         composable(
-            PlanetsScreen.route
+            route = CharacterDetailScreen.route,
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType }
+            )
+        ) {
+            CharacterDetailScreen(
+                id = it.arguments?.getInt("id") ?: 0
+            )
+        }
+
+        composable(
+            route = PlanetsScreen.route
         ) {
             PlanetsScreen()
         }
