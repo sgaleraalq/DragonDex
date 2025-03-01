@@ -16,14 +16,14 @@
 
 package com.sgale.dragondex.ui.launch
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Card
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -35,27 +35,28 @@ fun LaunchScreen(
     navigateToPlanets: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().padding(vertical = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Just the title"
-        )
-
+        TitleLogo()
         Column(
-            modifier = Modifier.weight(1f).fillMaxWidth()
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Spacer(Modifier.weight(1f))
             LaunchCard(
                 text = stringResource(R.string.characters),
                 image = R.drawable.img_dragon_ball_characters,
                 onLaunchCardPressed = { navigateToCharacters() }
             )
-            Spacer(Modifier.height(12.dp))
             LaunchCard(
                 text = stringResource(R.string.planets),
                 image = R.drawable.img_king_kais_planet,
                 onLaunchCardPressed = { navigateToPlanets() }
             )
+            Spacer(Modifier.weight(1f))
         }
     }
 }

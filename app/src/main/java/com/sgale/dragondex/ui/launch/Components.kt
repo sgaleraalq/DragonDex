@@ -18,6 +18,7 @@ package com.sgale.dragondex.ui.launch
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,20 +43,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.theme.grayTransparent
 import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
-fun Title(
-    text: String
-) {
-    Text(
-        modifier = Modifier.fillMaxWidth().padding(12.dp),
-        text = text,
-        style = saiyanSans.copy(
-            fontSize = 24.sp,
-            textAlign = TextAlign.Center,
-            color = Color.White
-        )
+fun TitleLogo() {
+    Image(
+        modifier = Modifier.width(200.dp),
+        painter = painterResource(R.drawable.img_dragon_ball_logo),
+        contentDescription = stringResource(R.string.description_dragon_ball_logo),
     )
 }
 
@@ -67,7 +63,7 @@ fun LaunchCard(
     onLaunchCardPressed: () -> Unit
 ) {
     Card(
-        modifier = modifier.padding(16.dp).clickable { onLaunchCardPressed() },
+        modifier = modifier.height(300.dp).fillMaxWidth().padding(16.dp).clickable { onLaunchCardPressed() },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp,
             pressedElevation = 16.dp
@@ -76,13 +72,13 @@ fun LaunchCard(
     ) {
         Box{
             Image(
-                modifier = Modifier.fillMaxWidth().height(300.dp),
+                modifier = Modifier.fillMaxSize(),
                 painter = painterResource(image),
                 contentDescription = stringResource(R.string.description_planet),
                 contentScale = ContentScale.Crop
             )
             Text(
-                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter),
+                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(grayTransparent).padding(bottom = 8.dp, top = 8.dp),
                 text = text,
                 style = saiyanSans.copy(
                     fontSize = 18.sp,
