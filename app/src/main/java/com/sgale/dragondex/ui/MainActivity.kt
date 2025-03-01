@@ -100,7 +100,8 @@ fun Content(
             )
         ) {
             CharacterDetailScreen(
-                id = it.arguments?.getInt("id") ?: 0
+                id = it.arguments?.getInt("id") ?: 0,
+                navigateBack = { navigateTo(Characters.createRoute()) }
             )
         }
 
