@@ -1,7 +1,9 @@
 package com.sgale.dragondex.di
 
 import com.sgale.dragondex.BuildConfig.BASE_URL
+import com.sgale.dragondex.data.network.RepositoryImpl
 import com.sgale.dragondex.data.network.services.DragonBallApiService
+import com.sgale.dragondex.domain.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +30,8 @@ internal object NetworkModule {
 
     @Provides
     fun provideDragonBallApiService(retrofit: Retrofit) = retrofit.create(DragonBallApiService::class.java)
+
+    @Provides
+    fun provideRepository(apiService: DragonBallApiService) = RepositoryImpl(apiService)
+
 }

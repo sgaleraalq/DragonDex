@@ -16,6 +16,11 @@
 
 package com.sgale.dragondex.data.network.response
 
+import com.google.gson.annotations.SerializedName
+import com.sgale.dragondex.domain.model.characters.CharacterListModel
+
 data class CharacterListResponse(
-    val id: Int
-)
+    @SerializedName("items") val items: List<CharacterResponse>
+) {
+    fun toDomain() = CharacterListModel(emptyList())
+}
