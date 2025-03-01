@@ -28,13 +28,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            resValue("string", "sgale", "DragonDex")
+            resValue("string", "app_name", "DragonDex")
             buildConfigField("String", "BASE_URL", "\"https://dragonball-api.com/api/\"")
         }
         debug {
             applicationIdSuffix = ".debug"
             isDebuggable = true
-            resValue("string", "sgale", "[DEBUG] DragonDex")
+            resValue("string", "app_name", "[DEBUG] DragonDex")
             buildConfigField("String", "BASE_URL", "\"https://dragonball-api.com/api/\"")
         }
     }

@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.R
-import com.sgale.dragondex.ui.core.CharacterContent
+import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 
@@ -29,7 +29,7 @@ fun CharactersScreen(
     val charactersList  by viewModel.characters.collectAsState()
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(8.dp)
+        modifier = Modifier.fillMaxSize()
     ) {
         Header(
             text = stringResource(R.string.characters),
@@ -37,7 +37,7 @@ fun CharactersScreen(
         )
         Spacer(Modifier.height(8.dp))
         LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
             columns = GridCells.Fixed(2)
         ) {
             items(charactersList?.items?.size ?: 0) { index ->
@@ -46,7 +46,7 @@ fun CharactersScreen(
                     ItemCard(
                         id = character.id,
                         content = {
-                            CharacterContent(
+                            CharacterCardContent(
                                 name = character.name,
                                 image = character.image
                             )

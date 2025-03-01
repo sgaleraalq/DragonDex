@@ -81,7 +81,7 @@ fun ItemCard(
 }
 
 @Composable
-fun CharacterContent(
+fun CharacterCardContent(
     name: String,
     image: String,
 ) {
@@ -95,9 +95,9 @@ fun CharacterContent(
                 .data(image)
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.ic_placeholder),
+            placeholder = painterResource(R.drawable.ic_placeholder), // TODO shimmer effect
             contentDescription = stringResource(R.string.description_character_image),
-            modifier = Modifier.height(200.dp),
+            modifier = Modifier.height(150.dp),
             contentScale = ContentScale.Fit
         )
         Spacer(Modifier.height(12.dp))
@@ -117,7 +117,7 @@ fun CharacterContent(
 }
 
 @Composable
-fun PlanetContent(
+fun PlanetCardContent(
     name: String,
     image: String,
 ) {
@@ -155,7 +155,7 @@ fun Header(
     onBackPressed: () -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(vertical = 8.dp, horizontal = 4.dp).fillMaxWidth().background(primary),
+        modifier = Modifier.fillMaxWidth().background(primary).padding(vertical = 8.dp, horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
