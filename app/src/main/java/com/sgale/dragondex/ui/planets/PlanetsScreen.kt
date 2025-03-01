@@ -16,7 +16,7 @@
 
 package com.sgale.dragondex.ui.planets
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,19 +24,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PlanetContent
 
 @Composable
 fun PlanetsScreen(
-    viewModel: PlanetsViewModel = hiltViewModel()
+    viewModel: PlanetsViewModel = hiltViewModel(),
+    navigateHome: () -> Unit
 ) {
     val planetsList by viewModel.planetsList.collectAsState()
 
-    Box(
+    Column (
         modifier = Modifier.fillMaxSize()
     ) {
+        Header(
+            text = stringResource(R.string.planets),
+            onBackPressed = { navigateHome() }
+        )
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             columns = GridCells.Fixed(2)

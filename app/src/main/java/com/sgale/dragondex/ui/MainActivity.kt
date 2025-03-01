@@ -3,11 +3,16 @@ package com.sgale.dragondex.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.LinearGradient
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,11 +21,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sgale.dragondex.ui.characters.detail.CharacterDetailScreen
 import com.sgale.dragondex.ui.characters.main.CharactersScreen
-import com.sgale.dragondex.ui.core.Route
-import com.sgale.dragondex.ui.core.Route.*
-import com.sgale.dragondex.ui.launch.LaunchScreen
+import com.sgale.dragondex.ui.core.Route.CharacterDetail
+import com.sgale.dragondex.ui.core.Route.Characters
+import com.sgale.dragondex.ui.core.Route.Home
+import com.sgale.dragondex.ui.core.Route.Planets
+import com.sgale.dragondex.ui.home.HomeScreen
 import com.sgale.dragondex.ui.planets.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
+import com.sgale.dragondex.ui.theme.bluePrimary
+import com.sgale.dragondex.ui.theme.blueSecondary
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,29 +65,36 @@ fun Content(
     }
 
     NavHost(
-        modifier = modifier,
+        modifier = modifier.background(
+            brush = Brush.radialGradient(
+                colors = listOf(bluePrimary, blueSecondary),
+                center = Offset(x = 0.5f, y = 1f),
+                radius = 2500f
+            )
+        ),
         navController = navController,
-        startDestination = LaunchScreen.route
+        startDestination = Home.route
     ) {
         composable(
-            route = LaunchScreen.route
+            route = Home.route
         ) {
-            LaunchScreen(
-                navigateToCharacters = { navigateTo(CharactersScreen.createRoute()) },
-                navigateToPlanets = { navigateTo(PlanetsScreen.createRoute()) }
+            HomeScreen(
+                navigateToCharacters = { navigateTo(Characters.createRoute()) },
+                navigateToPlanets = { navigateTo(Planets.createRoute()) }
             )
         }
 
         composable(
-            route = CharactersScreen.route
+            route = Characters.route
         ) {
             CharactersScreen(
-                navigateToDetail = { id -> navigateTo(CharacterDetailScreen.createRoute(id)) }
+                navigateToDetail = { id -> navigateTo(CharacterDetail.createRoute(id)) },
+                navigateHome = { navigateTo(Home.createRoute()) }
             )
         }
 
         composable(
-            route = CharacterDetailScreen.route,
+            route = CharacterDetail.route,
             arguments = listOf(
                 navArgument("id") { type = NavType.IntType }
             )
@@ -89,9 +105,11 @@ fun Content(
         }
 
         composable(
-            route = PlanetsScreen.route
+            route = Planets.route
         ) {
-            PlanetsScreen()
+            PlanetsScreen(
+                navigateHome = { navigateTo(Home.createRoute()) }
+            )
         }
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.launch
+package com.sgale.dragondex.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.sgale.dragondex.R
 
 @Composable
-fun LaunchScreen(
+fun HomeScreen(
     navigateToCharacters: () -> Unit = {},
     navigateToPlanets: () -> Unit = {}
 ) {
