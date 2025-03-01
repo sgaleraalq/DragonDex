@@ -53,9 +53,13 @@ android {
 }
 
 dependencies {
+    // Coil
+    implementation(libs.coil.compose)
+
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.transportation.consumer)
+    implementation(libs.volley)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
