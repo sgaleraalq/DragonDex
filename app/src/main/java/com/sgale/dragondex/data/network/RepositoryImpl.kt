@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response
+package com.sgale.dragondex.data.network
 
-data class CharacterListResponse(
-    val id: Int
-)
+import com.sgale.dragondex.data.network.services.DragonBallApiService
+import com.sgale.dragondex.domain.Repository
+import javax.inject.Inject
+
+class RepositoryImpl @Inject constructor(
+    private val dragonBallApiService: DragonBallApiService
+): Repository {
+    override suspend fun getAllCharacters() {
+
+    }
+}

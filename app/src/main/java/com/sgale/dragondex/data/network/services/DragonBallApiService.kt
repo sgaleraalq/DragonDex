@@ -13,9 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ 
+package com.sgale.dragondex.data.network.services
 
-package com.sgale.dragondex.data.network.response
+import retrofit2.http.GET
 
-data class CharacterListResponse(
-    val id: Int
-)
+interface DragonBallApiService {
+
+    @GET("characters")
+    suspend fun getAllCharacters() {}
+
+    suspend fun getAllPlanets() {}
+}

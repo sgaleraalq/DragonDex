@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response
+package com.sgale.dragondex.domain
 
-data class CharacterListResponse(
-    val id: Int
-)
+interface Repository {
+    suspend fun getAllCharacters()
+}
