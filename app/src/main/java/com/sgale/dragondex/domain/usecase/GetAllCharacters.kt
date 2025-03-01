@@ -16,11 +16,17 @@
 
 package com.sgale.dragondex.domain.usecase
 
+import android.util.Log
 import com.sgale.dragondex.domain.Repository
+import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import javax.inject.Inject
 
 class GetAllCharacters @Inject constructor(
     private val repository: Repository
 ) {
-    suspend operator fun invoke() = repository.getAllCharacters()
+    suspend operator fun invoke(): CharacterListModel? {
+        val characters = repository.getAllCharacters()
+        Log.i("GetAllCharacters", "characters: $characters")
+        return characters
+    }
 }

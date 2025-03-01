@@ -19,6 +19,7 @@ package com.sgale.dragondex.ui.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.usecase.GetAllCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,14 +34,25 @@ class MainViewModel @Inject constructor(
     private val getAllCharacters: GetAllCharacters
 ): ViewModel() {
 
+    private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
+    val uiState = _uiState
+
     private val _characters = MutableStateFlow<CharacterListModel?>(null)
+    val characters = _characters
 
     init {
         viewModelScope.launch {
+            _uiState.value = UIState.Loading
             val charactersList = withContext(Dispatchers.IO){
                 getAllCharacters()
             }
-            Log.i("MainViewModel", "charactersList: $charactersList")
+
+            if (charactersList != null) {
+                _characters.value = charactersList
+                _uiState.value = UIState.Success(charactersList)
+            } else {
+                _uiState.value = UIState.Error("Ha ocurrido un error")
+            }
         }
     }
 }

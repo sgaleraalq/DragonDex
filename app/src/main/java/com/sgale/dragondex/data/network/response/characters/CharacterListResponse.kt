@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network
+package com.sgale.dragondex.data.network.response.characters
 
-import android.util.Log
-import com.sgale.dragondex.data.network.services.DragonBallApiService
-import com.sgale.dragondex.domain.Repository
+import com.google.gson.annotations.SerializedName
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
-import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(
-    private val dragonBallApiService: DragonBallApiService
-): Repository {
-
-    override suspend fun getAllCharacters(): CharacterListModel? {
-        runCatching { dragonBallApiService.getAllCharacters() }
-            .onSuccess { return it.toDomain() }
-            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
-        return null
-    }
+data class CharacterListResponse(
+    @SerializedName("items") val items: List<CharacterResponse>
+) {
+    fun toDomain() = CharacterListModel(
+        items = items.map { it.toDomain() }
+    )
 }

@@ -13,16 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
-import retrofit2.http.GET
+package com.sgale.dragondex.domain.core
 
-interface DragonBallApiService {
-
-    @GET("characters")
-    suspend fun getAllCharacters(): CharacterListResponse
-
-    suspend fun getAllPlanets() {}
+sealed class UIState {
+    data object Loading: UIState()
+    data class Success<T>(val data: T): UIState()
+    data class Error(val message: String): UIState()
 }

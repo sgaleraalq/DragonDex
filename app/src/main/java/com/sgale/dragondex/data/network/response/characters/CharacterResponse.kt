@@ -14,9 +14,10 @@
  * limitations under the License.
  */
  
-package com.sgale.dragondex.data.network.response
+package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 
 data class CharacterResponse (
     @SerializedName("id")           val id: Int,
@@ -30,6 +31,17 @@ data class CharacterResponse (
     @SerializedName("affiliation")  val affiliation: String,
     @SerializedName("deletedAt")    val deletedAt: String? = null
 ) {
-
-//    fun toDomain()
+    fun toDomain() =
+        CharacterModel(
+            id = id,
+            name = name,
+            image = image,
+            ki = ki,
+            maxKi = maxKi,
+            race = race,
+            gender = gender,
+            description = description,
+            affiliation = affiliation,
+            deletedAt = deletedAt
+        )
 }

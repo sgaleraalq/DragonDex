@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response
+package com.sgale.dragondex.data.network.response.characters
 
-import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
-
-data class CharacterListResponse(
-    @SerializedName("items") val items: List<CharacterResponse>
-) {
-    fun toDomain() = CharacterListModel(emptyList())
-}
+data class CharacterErrorResponse(
+    val message: String
+)
