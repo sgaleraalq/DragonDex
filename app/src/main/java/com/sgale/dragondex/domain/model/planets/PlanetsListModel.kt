@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
-import retrofit2.http.GET
+package com.sgale.dragondex.domain.model.planets
 
-interface DragonBallApiService {
-
-    @GET("characters")
-    suspend fun getAllCharacters(): CharacterListResponse
-
-    @GET("planets")
-    suspend fun getAllPlanets(): PlanetsListResponse
-}
+data class PlanetsListModel(
+    val items: List<PlanetModel>
+)

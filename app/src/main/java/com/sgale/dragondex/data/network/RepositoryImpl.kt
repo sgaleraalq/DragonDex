@@ -20,6 +20,7 @@ import android.util.Log
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
+import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -28,6 +29,13 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getAllCharacters(): CharacterListModel? {
         runCatching { dragonBallApiService.getAllCharacters() }
+            .onSuccess { return it.toDomain() }
+            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
+        return null
+    }
+
+    override suspend fun getAllPlanets(): PlanetsListModel? {
+        runCatching { dragonBallApiService.getAllPlanets() }
             .onSuccess { return it.toDomain() }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
         return null

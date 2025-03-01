@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
-import retrofit2.http.GET
+package com.sgale.dragondex.data.network.response.planets
 
-interface DragonBallApiService {
+import com.google.gson.annotations.SerializedName
+import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 
-    @GET("characters")
-    suspend fun getAllCharacters(): CharacterListResponse
-
-    @GET("planets")
-    suspend fun getAllPlanets(): PlanetsListResponse
+data class PlanetsListResponse(
+    @SerializedName("items") val items: List<PlanetResponse>
+) {
+    fun toDomain() =
+        PlanetsListModel(
+            items = items.map { it.toDomain() }
+        )
 }

@@ -17,7 +17,9 @@
 package com.sgale.dragondex.domain
 
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
+import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 
 interface Repository {
     suspend fun getAllCharacters(): CharacterListModel?
+    suspend fun getAllPlanets(): PlanetsListModel?
 }

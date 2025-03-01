@@ -14,7 +14,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sgale.dragondex.ui.characters.CharactersScreen
 import com.sgale.dragondex.ui.core.Route
+import com.sgale.dragondex.ui.core.Route.*
 import com.sgale.dragondex.ui.launch.LaunchScreen
+import com.sgale.dragondex.ui.planets.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,31 +43,40 @@ fun Content(
     modifier: Modifier,
     navController: NavHostController
 ) {
-    fun navigateTo() {
-        navController.navigate(Route.CharactersScreen.createRoute())
-        // TODO
+    fun navigateTo(
+        destination: String,
+    ) {
+        navController.navigate(destination) {
+            popUpTo(navController.graph.startDestinationId) { inclusive = true }
+            launchSingleTop = true
+            restoreState = false
+        }
     }
 
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.LaunchScreen.route
+        startDestination = LaunchScreen.route
     ) {
         composable(
-            Route.LaunchScreen.route
+            LaunchScreen.route
         ) {
             LaunchScreen(
-                navigateToCharacters = {
-                    navigateTo()
-                }
+                navigateToCharacters = { navigateTo(CharactersScreen.createRoute()) },
+                navigateToPlanets = { navigateTo(PlanetsScreen.createRoute()) }
             )
         }
 
         composable(
-            Route.CharactersScreen.route
+            CharactersScreen.route
         ) {
             CharactersScreen()
         }
 
+        composable(
+            PlanetsScreen.route
+        ) {
+            PlanetsScreen()
+        }
     }
 }

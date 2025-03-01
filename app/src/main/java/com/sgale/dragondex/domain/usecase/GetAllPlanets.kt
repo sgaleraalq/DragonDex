@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
-import retrofit2.http.GET
+package com.sgale.dragondex.domain.usecase
 
-interface DragonBallApiService {
+import com.sgale.dragondex.domain.Repository
+import javax.inject.Inject
 
-    @GET("characters")
-    suspend fun getAllCharacters(): CharacterListResponse
-
-    @GET("planets")
-    suspend fun getAllPlanets(): PlanetsListResponse
+class GetAllPlanets @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke() = repository.getAllPlanets()
 }
