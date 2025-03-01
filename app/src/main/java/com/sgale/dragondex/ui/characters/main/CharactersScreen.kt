@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgale.dragondex.ui.core.CharacterContent
 import com.sgale.dragondex.ui.core.ItemCard
 
 @Composable
@@ -31,8 +32,12 @@ fun CharactersScreen(
                 if (character != null) {
                     ItemCard(
                         id = character.id,
-                        name = character.name,
-                        image = character.image,
+                        content = {
+                            CharacterContent(
+                                name = character.name,
+                                image = character.image
+                            )
+                        },
                         onItemClicked = { navigateToDetail(it) }
                     )
                 }

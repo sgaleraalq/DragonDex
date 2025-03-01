@@ -18,6 +18,7 @@ package com.sgale.dragondex.ui.core
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,17 +47,16 @@ import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
 fun ItemCard(
+    content: @Composable () -> Unit,
     id: Int,
-    name: String,
-    image: String,
     onItemClicked: (Int) -> Unit,
-    isPlanet: Boolean = false
-)  {
-    val context = LocalContext.current
+) {
     Card(
-        modifier = Modifier.padding(8.dp).clickable {
-            onItemClicked(id)
-        },
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable {
+                onItemClicked(id)
+            },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp,
             pressedElevation = 16.dp
@@ -66,32 +66,75 @@ fun ItemCard(
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data(image)
-                    .crossfade(true)
-                    .build(),
-                placeholder = painterResource(R.drawable.ic_placeholder),
-                contentDescription = stringResource(R.string.description_character_image),
-                modifier = Modifier.height(200.dp),
-                contentScale = if (isPlanet) ContentScale.Crop else ContentScale.Fit
+        content()
+    }
+}
+
+@Composable
+fun CharacterContent(
+    name: String,
+    image: String,
+) {
+    val context = LocalContext.current
+    Column(
+        modifier = Modifier.padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(context)
+                .data(image)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.ic_placeholder),
+            contentDescription = stringResource(R.string.description_character_image),
+            modifier = Modifier.height(200.dp),
+            contentScale = ContentScale.Fit
+        )
+        Spacer(Modifier.height(12.dp))
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp, horizontal = 8.dp)
+                .background(Color.Transparent),
+            text = name,
+            style = saiyanSans.copy(
+                fontSize = 16.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Center
             )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp, horizontal = 8.dp).background(
-                    if (isPlanet) grayTransparent else Color.Transparent
-                ),
-                text = name,
-                style = saiyanSans.copy(
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    textAlign = TextAlign.Center
-                )
+        )
+    }
+}
+
+@Composable
+fun PlanetContent(
+    name: String,
+    image: String,
+) {
+    val context = LocalContext.current
+    Box{
+        AsyncImage(
+            model = ImageRequest.Builder(context)
+                .data(image)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.ic_placeholder),
+            contentDescription = stringResource(R.string.description_character_image),
+            modifier = Modifier.height(200.dp),
+            contentScale = ContentScale.Crop
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(grayTransparent)
+                .align(Alignment.BottomCenter)
+                .padding(vertical = 4.dp, horizontal = 8.dp),
+            text = name,
+            style = saiyanSans.copy(
+                fontSize = 16.sp,
+                color = Color.Black,
+                textAlign = TextAlign.Center
             )
-        }
+        )
     }
 }

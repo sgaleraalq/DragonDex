@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.core.PlanetContent
 
 @Composable
 fun PlanetsScreen(
@@ -45,10 +46,13 @@ fun PlanetsScreen(
                 if (planet != null){
                     ItemCard(
                         id = planet.id,
-                        name = planet.name,
-                        image = planet.image,
-                        onItemClicked = { /* TODO */},
-                        isPlanet = true
+                        content = {
+                            PlanetContent(
+                                name = planet.name,
+                                image = planet.image
+                            )
+                        },
+                        onItemClicked = { }
                     )
                 }
             }
