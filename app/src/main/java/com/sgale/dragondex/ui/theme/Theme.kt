@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-
+    primary = primary
 )
 
 private val LightColorScheme = lightColorScheme(
-
+    primary = primary
 )
 
 @Composable
