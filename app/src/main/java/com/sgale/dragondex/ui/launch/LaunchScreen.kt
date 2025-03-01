@@ -47,11 +47,13 @@ fun LaunchScreen(
         ) {
             LaunchCard(
                 text = stringResource(R.string.characters),
+                image = R.drawable.img_dragon_ball_characters,
                 onLaunchCardPressed = { navigateToCharacters() }
             )
             Spacer(Modifier.height(12.dp))
             LaunchCard(
                 text = stringResource(R.string.planets),
+                image = R.drawable.img_king_kais_planet,
                 onLaunchCardPressed = { navigateToPlanets() }
             )
         }

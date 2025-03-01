@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">DragonDex</string>
 
-    // Descriptions
-    <string name="description_character_image">Dragon ball character image</string>
+    // Launch Screen
     <string name="characters">Characters</string>
     <string name="planets">Planets</string>
+
+    // Descriptions
+    <string name="description_planet">Planet image</string>
+    <string name="description_character_image">Dragon ball character image</string>
 </resources>
