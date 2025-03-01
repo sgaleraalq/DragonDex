@@ -17,5 +17,5 @@
 package com.sgale.dragondex.domain
 
 interface Repository {
-    suspend fun getAllCharacters()
+    suspend fun getAllCharacters(): String?
 }
