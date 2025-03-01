@@ -50,7 +50,6 @@ fun Content(
         destination: String,
     ) {
         navController.navigate(destination) {
-            popUpTo(navController.graph.startDestinationId) { inclusive = true }
             launchSingleTop = true
             restoreState = false
         }

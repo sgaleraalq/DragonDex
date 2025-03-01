@@ -1,6 +1,6 @@
 package com.sgale.dragondex.ui.characters.main
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sgale.dragondex.ui.characters.main.components.CharacterCard
+import com.sgale.dragondex.ui.core.ItemCard
 
 @Composable
 fun CharactersScreen(
@@ -19,7 +19,7 @@ fun CharactersScreen(
     val uiState         by viewModel.uiState.collectAsState()
     val charactersList  by viewModel.characters.collectAsState()
 
-    Box(
+    Column(
         modifier = Modifier.fillMaxSize()
     ) {
         LazyVerticalGrid(
@@ -28,10 +28,13 @@ fun CharactersScreen(
         ) {
             items(charactersList?.items?.size ?: 0) { index ->
                 val character = charactersList?.items?.get(index)
-                CharacterCard(
-                    character = character!!,
-                ) {
-                    navigateToDetail(character.id)
+                if (character != null) {
+                    ItemCard(
+                        id = character.id,
+                        name = character.name,
+                        image = character.image,
+                        onItemClicked = { navigateToDetail(it) }
+                    )
                 }
             }
         }

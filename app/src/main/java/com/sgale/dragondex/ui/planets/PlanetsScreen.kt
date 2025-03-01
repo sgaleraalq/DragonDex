@@ -20,12 +20,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sgale.dragondex.ui.core.ItemCard
 
 @Composable
 fun PlanetsScreen(
@@ -42,9 +42,15 @@ fun PlanetsScreen(
         ) {
             items(planetsList?.items?.size ?: 0) { index ->
                 val planet = planetsList?.items?.get(index)
-                Text(
-                    text = planet?.name ?: "",
-                )
+                if (planet != null){
+                    ItemCard(
+                        id = planet.id,
+                        name = planet.name,
+                        image = planet.image,
+                        onItemClicked = { /* TODO */},
+                        isPlanet = true
+                    )
+                }
             }
         }
     }
