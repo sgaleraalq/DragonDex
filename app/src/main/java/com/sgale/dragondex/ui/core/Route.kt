@@ -2,11 +2,15 @@ package com.sgale.dragondex.ui.core
 
 
 sealed class Route (val route: String) {
-    data object MainScreen : Route("main_screen"){
-        fun createRoute() = "main_screen"
+    data object LaunchScreen : Route("launch_screen"){
+        fun createRoute() = "launch_screen"
     }
 
-    data object DetailScreen : Route("detail_screen/{id}"){
-        fun createRoute(id: String) = "detail_screen/$id"
+    data object CharactersScreen : Route("characters_screen"){
+        fun createRoute() = "characters_screen"
+    }
+
+    data object CharacterDetailScreen : Route("character_detail_screen/{id}"){
+        fun createRoute(id: String) = "character_detail_screen/$id"
     }
 }

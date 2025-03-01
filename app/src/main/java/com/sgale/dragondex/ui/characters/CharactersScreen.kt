@@ -1,4 +1,4 @@
-package com.sgale.dragondex.ui.main
+package com.sgale.dragondex.ui.characters
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,11 +9,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.sgale.dragondex.ui.main.components.CharacterCard
+import com.sgale.dragondex.ui.characters.components.CharacterCard
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+fun CharactersScreen(
+    viewModel: CharactersViewModel = hiltViewModel()
 ) {
     val uiState         by viewModel.uiState.collectAsState()
     val charactersList  by viewModel.characters.collectAsState()
@@ -30,7 +30,7 @@ fun MainScreen(
                 CharacterCard(
                     character = character!!,
                 ) {
-                    /* TODO */
+                    /* TODO NAVIGATE TO DETAIL */
                 }
             }
         }

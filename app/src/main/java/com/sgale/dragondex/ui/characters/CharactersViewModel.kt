@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.main
+package com.sgale.dragondex.ui.characters
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
@@ -30,7 +29,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class CharactersViewModel @Inject constructor(
     private val getAllCharacters: GetAllCharacters
 ): ViewModel() {
 

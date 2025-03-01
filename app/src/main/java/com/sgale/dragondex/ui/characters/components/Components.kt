@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.main.components
+package com.sgale.dragondex.ui.characters.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -79,7 +79,6 @@ fun CharacterCard(
                     .build(),
                 placeholder = painterResource(R.drawable.ic_placeholder),
                 contentDescription = stringResource(R.string.description_character_image),
-                contentScale = ContentScale.Crop,
                 modifier = Modifier.height(200.dp),
             )
             Spacer(Modifier.height(12.dp))

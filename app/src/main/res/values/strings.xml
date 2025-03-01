@@ -3,4 +3,6 @@
 
     // Descriptions
     <string name="description_character_image">Dragon ball character image</string>
+    <string name="characters">Characters</string>
+    <string name="planets">Planets</string>
 </resources>
