@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
-package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.CharacterListResponse
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
-import retrofit2.http.GET
+package com.sgale.dragondex.data.core.interceptor
 
-interface DragonBallApiService {
+import okhttp3.Interceptor
+import okhttp3.Response
+import javax.inject.Inject
 
-    @GET("characters")
-    suspend fun getAllCharacters(): CharacterListResponse
-
-    suspend fun getAllPlanets() {}
+class DbInterceptor @Inject constructor(): Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request =
+            chain.request()
+                .newBuilder()
+                .build()
+        return chain.proceed(request)
+    }
 }

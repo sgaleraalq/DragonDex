@@ -16,6 +16,8 @@
 
 package com.sgale.dragondex.domain
 
+import com.sgale.dragondex.data.network.response.CharacterListResponse
+
 interface Repository {
-    suspend fun getAllCharacters(): String?
+    suspend fun getAllCharacters(): CharacterListResponse?
 }
