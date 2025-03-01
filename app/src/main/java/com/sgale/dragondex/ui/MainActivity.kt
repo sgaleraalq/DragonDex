@@ -13,12 +13,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.LinearGradient
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sgale.dragondex.ui.characters.detail.CharacterDetailScreen
 import com.sgale.dragondex.ui.characters.main.CharactersScreen
 import com.sgale.dragondex.ui.core.Route.CharacterDetail
@@ -30,6 +32,7 @@ import com.sgale.dragondex.ui.planets.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.bluePrimary
 import com.sgale.dragondex.ui.theme.blueSecondary
+import com.sgale.dragondex.ui.theme.primary
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +40,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
+            val systemUiController  = rememberSystemUiController()
+            val navController       = rememberNavController()
+
+            systemUiController.setSystemBarsColor(primary)
             DragonDexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Content(

@@ -61,7 +61,7 @@ fun LaunchCard(
     onLaunchCardPressed: () -> Unit
 ) {
     Card(
-        modifier = modifier.height(300.dp).fillMaxWidth().padding(16.dp).clickable { onLaunchCardPressed() },
+        modifier = modifier.height(200.dp).fillMaxWidth().padding(16.dp).clickable { onLaunchCardPressed() },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 8.dp,
             pressedElevation = 16.dp

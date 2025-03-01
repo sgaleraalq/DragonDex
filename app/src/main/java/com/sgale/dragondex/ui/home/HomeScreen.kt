@@ -35,7 +35,7 @@ fun HomeScreen(
     navigateToPlanets: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(vertical = 12.dp),
+        modifier = Modifier.fillMaxSize().padding(vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TitleLogo()
@@ -43,9 +43,8 @@ fun HomeScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Spacer(Modifier.weight(1f))
             LaunchCard(
                 text = stringResource(R.string.characters),
                 image = R.drawable.img_dragon_ball_characters,
@@ -56,7 +55,6 @@ fun HomeScreen(
                 image = R.drawable.img_king_kais_planet,
                 onLaunchCardPressed = { navigateToPlanets() }
             )
-            Spacer(Modifier.weight(1f))
         }
     }
 }

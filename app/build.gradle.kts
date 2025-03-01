@@ -53,6 +53,9 @@ android {
 }
 
 dependencies {
+    // Status bar color
+    implementation(libs.accompanist.systemuicontroller)
+
     // Coil
     implementation(libs.coil.compose)
 
@@ -61,7 +64,10 @@ dependencies {
     implementation(libs.transportation.consumer)
     implementation(libs.volley)
     kapt(libs.hilt.compiler)
+
+    // Navigation
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.animation)
 
     // Retrofit
     implementation (libs.retrofit)
