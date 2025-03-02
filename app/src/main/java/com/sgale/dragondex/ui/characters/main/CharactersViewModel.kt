@@ -23,6 +23,7 @@ import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
     private val fetchCharacters: FetchCharacters
@@ -37,9 +39,6 @@ class CharactersViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
-
-    private val _toastMsg = MutableStateFlow<String?>(null)
-    val toastMsg = _toastMsg
 
     private val _characters = MutableStateFlow(CharacterListModel(emptyList()))
     val characters = _characters
@@ -51,7 +50,7 @@ class CharactersViewModel @Inject constructor(
             page = page,
             onStart = { _uiState.value = UIState.Loading },
             onComplete = { _uiState.value = UIState.Success },
-            onError = { _toastMsg.value = it }
+            onError = { _uiState.value = UIState.Error(it) }
         )
     }.stateIn(
         scope = viewModelScope,

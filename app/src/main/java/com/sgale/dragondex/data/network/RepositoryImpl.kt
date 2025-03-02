@@ -42,7 +42,7 @@ class RepositoryImpl @Inject constructor(
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: (String?) -> Unit
+        onError: (String) -> Unit
     ): Flow<List<CharacterModel>> {
         return flow {
             val response = dragonBallClient.fetchCharacters(page = page)

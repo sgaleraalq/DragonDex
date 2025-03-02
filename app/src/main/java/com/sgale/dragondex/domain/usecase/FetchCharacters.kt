@@ -26,7 +26,7 @@ class FetchCharacters @Inject constructor(
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: (String?) -> Unit
+        onError: (String) -> Unit
     ) = repository.fetchCharacters(
         page = page,
         onStart = onStart,

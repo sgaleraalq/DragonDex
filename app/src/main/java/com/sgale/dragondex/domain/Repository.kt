@@ -25,7 +25,7 @@ interface Repository {
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: (String?) -> Unit
+        onError: (String) -> Unit
     ): Flow<List<CharacterModel>>
 
     suspend fun getCharacter(id: Int): CharacterModel?

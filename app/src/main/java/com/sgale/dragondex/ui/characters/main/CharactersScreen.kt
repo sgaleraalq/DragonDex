@@ -53,13 +53,8 @@ fun CharactersScreen(
 ) {
     val context = LocalContext.current
     val uiState             by viewModel.uiState.collectAsState()
-    val toastMsg            by viewModel.toastMsg.collectAsState()
     val charactersList      by viewModel.characterList.collectAsState()
 //    val charactersList      by viewModel.characters.collectAsState()
-
-    LaunchedEffect(toastMsg) {
-        if (toastMsg != null) { Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show() }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize().background(primaryDark)
