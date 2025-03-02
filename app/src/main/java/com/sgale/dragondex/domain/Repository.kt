@@ -16,9 +16,9 @@
 
 package com.sgale.dragondex.domain
 
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
     suspend fun fetchCharacters(
@@ -26,7 +26,8 @@ interface Repository {
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
-    ): CharacterListModel?
+    ): Flow<List<CharacterModel>>
+
     suspend fun getCharacter(id: Int): CharacterModel?
     suspend fun getAllPlanets(): PlanetsListModel?
 }

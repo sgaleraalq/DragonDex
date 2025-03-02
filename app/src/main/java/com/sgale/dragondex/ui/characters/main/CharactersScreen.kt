@@ -17,6 +17,7 @@
 package com.sgale.dragondex.ui.characters.main
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,9 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.R
+import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.theme.primaryDark
 
 @Composable
 fun CharactersScreen(
@@ -49,16 +52,17 @@ fun CharactersScreen(
     navigateHome: () -> Unit
 ) {
     val context = LocalContext.current
-    val isLoading           by viewModel.isLoading.collectAsState()
+    val uiState             by viewModel.uiState.collectAsState()
     val toastMsg            by viewModel.toastMsg.collectAsState()
-    val charactersList      by viewModel.characters.collectAsState()
+    val charactersList      by viewModel.characterList.collectAsState()
+//    val charactersList      by viewModel.characters.collectAsState()
 
     LaunchedEffect(toastMsg) {
         if (toastMsg != null) { Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show() }
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(primaryDark)
     ) {
         Header(
             text = stringResource(R.string.characters),
@@ -66,16 +70,16 @@ fun CharactersScreen(
         )
         Spacer(Modifier.height(8.dp))
         LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
+            modifier = Modifier.fillMaxSize(),
             columns = GridCells.Fixed(2)
         ) {
             val threadHold = 2
             itemsIndexed(
-                items = charactersList.items,
+                items = charactersList,
                 key = { _, character -> character.name }
             ) { index, character ->
                 // Load more items when there are only two items left
-                if ((index + threadHold) >= charactersList.items.size && !isLoading) {
+                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading) {
                     viewModel.fetchNextCharacters()
                 }
 
@@ -94,7 +98,7 @@ fun CharactersScreen(
         }
     }
 
-    if (isLoading) {
+    if (uiState == UIState.Loading) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {

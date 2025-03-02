@@ -17,6 +17,8 @@
 package com.sgale.dragondex.data.network.services
 
 import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
+import com.sgale.dragondex.data.network.response.characters.CharacterResponse
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DragonBallClient @Inject constructor(
@@ -33,4 +35,10 @@ class DragonBallClient @Inject constructor(
         )
     }
 
+    suspend fun testCharacters(page: Int): Flow<List<CharacterResponse>> {
+        return apiService.testCharacters(
+            limit = LIMIT * page,
+            page = page
+        )
+    }
 }

@@ -65,7 +65,7 @@ fun ItemCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp)
+            .padding(16.dp)
             .clickable {
                 onItemClicked(id)
             },

@@ -19,6 +19,6 @@ package com.sgale.dragondex.domain.core
 // TODO
 sealed class UIState {
     data object Loading: UIState()
-    data class Success<T>(val data: T): UIState()
+    data object Success: UIState()
     data class Error(val message: String): UIState()
 }

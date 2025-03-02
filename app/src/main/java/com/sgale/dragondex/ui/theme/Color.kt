@@ -6,6 +6,7 @@ val primary             = Color(0xFFFE7F0C)
 val bluePrimary         = Color(0xFF0E5FD3)
 val blueSecondary       = Color(0xFFAAE3F6)
 val grayTransparent     = Color(0xCCC9C8C8)
+val primaryDark         = Color(0xFF2B292B)
 
 
 // Characters colors

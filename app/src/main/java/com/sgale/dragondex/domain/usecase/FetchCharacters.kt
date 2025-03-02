@@ -17,7 +17,6 @@
 package com.sgale.dragondex.domain.usecase
 
 import com.sgale.dragondex.domain.Repository
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import javax.inject.Inject
 
 class FetchCharacters @Inject constructor(
@@ -28,10 +27,10 @@ class FetchCharacters @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
-    ): CharacterListModel? = repository.fetchCharacters(
+    ) = repository.fetchCharacters(
         page = page,
         onStart = onStart,
         onComplete = onComplete,
-        onError = onError
+        onError = { onError(it) }
     )
 }

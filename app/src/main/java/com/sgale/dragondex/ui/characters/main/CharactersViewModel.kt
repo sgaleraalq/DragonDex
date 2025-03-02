@@ -16,17 +16,18 @@
 
 package com.sgale.dragondex.ui.characters.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,49 +41,27 @@ class CharactersViewModel @Inject constructor(
     private val _toastMsg = MutableStateFlow<String?>(null)
     val toastMsg = _toastMsg
 
-    private var _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading
-
     private val _characters = MutableStateFlow(CharacterListModel(emptyList()))
     val characters = _characters
 
     private val charactersFetchingIndex = MutableStateFlow(0)
 
-    private suspend fun fetch() = fetchCharacters(
-        page    = charactersFetchingIndex.value,
-        onStart = { _isLoading.value = true },
-        onComplete = { _isLoading.value = false },
-        onError = { _toastMsg.value = it }
+    val characterList: StateFlow<List<CharacterModel>> = charactersFetchingIndex.flatMapLatest { page ->
+        fetchCharacters(
+            page = page,
+            onStart = { _uiState.value = UIState.Loading },
+            onComplete = { _uiState.value = UIState.Success },
+            onError = { _toastMsg.value = it }
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
     )
 
-    init {
-        viewModelScope.launch {
-            _isLoading.value = true
-            val charactersList = withContext(Dispatchers.IO){ fetch() }
-
-            if (charactersList != null) {
-                _characters.value = charactersList
-            }
-            _isLoading.value = false
-        }
-    }
-
-    /**
-     * When not loading, fetch next characters until reaching the end
-     */
     fun fetchNextCharacters() {
-        if (!_isLoading.value) {
+        if (_uiState.value != UIState.Loading) {
             charactersFetchingIndex.value++
-            Log.i("sgalera", "fetchNextCharacters: ${charactersFetchingIndex.value}")
-            viewModelScope.launch {
-                val charactersList = withContext(Dispatchers.IO) { fetch() }
-
-                if (charactersList != null) {
-                    _characters.value = _characters.value.copy(
-                        items = _characters.value.items + charactersList.items
-                    )
-                }
-            }
         }
     }
 }

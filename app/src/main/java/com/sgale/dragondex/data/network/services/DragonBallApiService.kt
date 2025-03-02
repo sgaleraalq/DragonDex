@@ -19,6 +19,7 @@ package com.sgale.dragondex.data.network.services
 import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,6 +31,13 @@ interface DragonBallApiService {
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int
     ): CharacterListResponse
+
+    @GET("characters")
+    suspend fun testCharacters(
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int
+    ): Flow<List<CharacterResponse>>
+
 
     @GET("characters/{id}")
     suspend fun getCharacter(@Path("id") id: Int): CharacterResponse

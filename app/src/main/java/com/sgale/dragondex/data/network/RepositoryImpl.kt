@@ -23,6 +23,11 @@ import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -38,12 +43,12 @@ class RepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String?) -> Unit
-    ): CharacterListModel? {
-        onStart()
-        runCatching { dragonBallClient.fetchCharacters(page = page) }
-            .onSuccess { onComplete();  return it.toDomain() }
-            .onFailure { onError(it.message) }
-        return null
+    ): Flow<List<CharacterModel>> {
+        return flow {
+            val response = dragonBallClient.fetchCharacters(page = page)
+            Log.i("sgalera", "Response: $response")
+            emit(response.items.map { it.toDomain() })
+        }.onStart { onStart() }.onCompletion { onComplete() }
     }
 
     override suspend fun getCharacter(id: Int): CharacterModel? {
