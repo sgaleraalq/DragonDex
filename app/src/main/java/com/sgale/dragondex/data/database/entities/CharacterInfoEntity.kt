@@ -16,12 +16,20 @@
 
 package com.sgale.dragondex.data.database.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class CharacterEntity(
-    val page: Int = 0,
-    @PrimaryKey val name: String,
-    val url: String
+data class CharacterInfoEntity(
+    @PrimaryKey                         val id: Int,
+    @ColumnInfo(name = "name")          val name: String,
+    @ColumnInfo(name = "image")         val image: String,
+    @ColumnInfo(name = "race")          val race: String,
+    @ColumnInfo(name = "ki")            val ki: String,
+    @ColumnInfo(name = "maxKi")         val maxKi: String,
+    @ColumnInfo(name = "gender")        val gender: String,
+    @ColumnInfo(name = "description")   val description: String,
+    @ColumnInfo(name = "affiliation")   val affiliation: String,
+    @ColumnInfo(name = "deletedAt")     val deletedAt: String? = null
 )

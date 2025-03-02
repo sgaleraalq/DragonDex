@@ -21,7 +21,7 @@ import androidx.room.RoomDatabase
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.CharacterEntity
 
-@Database(entities = [CharacterEntity::class], version = 1)
+@Database(entities = [CharacterEntity::class], version = 1, exportSchema = false)
 abstract class CharactersDatabase: RoomDatabase() {
     abstract fun getCharacterDao(): CharacterDao
 }

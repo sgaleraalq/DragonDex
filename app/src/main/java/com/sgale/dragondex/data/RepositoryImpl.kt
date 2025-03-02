@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network
+package com.sgale.dragondex.data
 
 import android.util.Log
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -46,8 +43,9 @@ class RepositoryImpl @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
-//        var characters = charactersDao.getCharacters(page).asDomain()
-        var characters = listOf<CharacterModel>()
+        var characters = charactersDao.getAllCharacters(page = page)
+        Log.i("repository", "Characters: $characters")
+//        var characters = listOf<CharacterModel>()
         if (characters.isEmpty()){
             val response = dragonBallClient.fetchCharacters(page = page)
             Log.i("sgalera", "Response: $response")

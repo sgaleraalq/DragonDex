@@ -18,14 +18,18 @@ package com.sgale.dragondex.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sgale.dragondex.data.database.entities.CharacterEntity
 
 @Dao
 interface CharacterDao {
 
-    @Query("SELECT * FROM characters_table ORDER BY id DESC")
-    suspend fun getAllCharacters() : List<CharacterEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharactersList(characters: List<CharacterEntity>)
+
+    @Query("SELECT * FROM CharacterEntity WHERE page = :page")
+    suspend fun getAllCharacters(page: Int) : List<CharacterEntity>
 
     @Insert
     suspend fun insertAllCharacters(characters: List<CharacterEntity>)

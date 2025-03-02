@@ -4,7 +4,6 @@ agp = "8.8.2"
 animation = "1.7.8"
 coilCompose = "2.0.0"
 converterGson = "2.11.0"
-googleAccompanistSystemuicontroller = "0.37.2"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -17,14 +16,16 @@ hiltNavigationCompose = "1.2.0"
 hilt = "2.55"
 loggingInterceptor = "4.12.0"
 retrofit = "2.11.0"
+roomKtx = "2.6.1"
 transportationConsumer = "3.0.0"
 volley = "1.2.1"
 
 [libraries]
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
-accompanist-systemuicontroller-v0372 = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "googleAccompanistSystemuicontroller" }
 androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

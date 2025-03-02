@@ -53,6 +53,10 @@ android {
 }
 
 dependencies {
+    // Room
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
+
     // Status bar color
     implementation(libs.accompanist.systemuicontroller)
 
