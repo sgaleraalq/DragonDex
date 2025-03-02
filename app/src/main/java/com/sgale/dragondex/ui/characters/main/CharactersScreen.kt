@@ -1,6 +1,6 @@
 package com.sgale.dragondex.ui.characters.main
 
-import android.util.Log
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,8 +29,8 @@ fun CharactersScreen(
     navigateToDetail: (Int) -> Unit,
     navigateHome: () -> Unit
 ) {
-    val uiState         by viewModel.uiState.collectAsState()
-    val charactersList  by viewModel.characters.collectAsState()
+    val isLoading           by viewModel.isLoading.collectAsState()
+    val charactersList      by viewModel.characters.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -41,26 +44,38 @@ fun CharactersScreen(
             modifier = Modifier.fillMaxSize().padding(8.dp),
             columns = GridCells.Fixed(2)
         ) {
-            items(charactersList?.items?.size ?: 0) { index ->
-                val character = charactersList?.items?.get(index)
-//                Log.i(
-//                    "CharactersScreen",
-//                    "Character: ${character?.name}, ${character?.characterRace} ${character?.race}"
-//                )
-                if (character != null) {
-                    ItemCard(
-                        id = character.id,
-                        content = {
-                            CharacterCardContent(
-                                name = character.name,
-                                image = character.image
-                            )
-                        },
-                        color = character.characterRace.color,
-                        onItemClicked = { navigateToDetail(it) }
-                    )
+            val threadHold = 2
+            itemsIndexed(
+                items = charactersList.items,
+                key = { _, character -> character.name }
+            ) { index, character ->
+                // Load more items when there are only two items left
+                if ((index + threadHold) >= charactersList.items.size && !isLoading) {
+                    viewModel.fetchNextCharacters()
                 }
+
+                ItemCard(
+                    id = character.id,
+                    content = {
+                        CharacterCardContent(
+                            name = character.name,
+                            image = character.image
+                        )
+                    },
+                    color = character.race.color,
+                    onItemClicked = { navigateToDetail(it) }
+                )
             }
+        }
+    }
+
+    if (isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center)
+            )
         }
     }
 }

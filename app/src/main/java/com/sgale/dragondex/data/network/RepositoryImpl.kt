@@ -23,6 +23,8 @@ import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -33,10 +35,19 @@ class RepositoryImpl @Inject constructor(
     /*
     * Get characters from the API
      */
-    override suspend fun fetchCharacters(): CharacterListModel? {
-        runCatching { dragonBallClient.fetchCharacters() }
-            .onSuccess { return it.toDomain() }
-            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
+    override suspend fun fetchCharacters(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String?) -> Unit
+    ): CharacterListModel? {
+        onStart()
+        runCatching { dragonBallClient.fetchCharacters(page = page) }
+            .onSuccess {
+                onComplete()
+                return it.toDomain()
+            }
+            .onFailure { onError(it.message) }
         return null
     }
 

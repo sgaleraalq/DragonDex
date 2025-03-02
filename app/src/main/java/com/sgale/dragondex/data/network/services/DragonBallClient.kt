@@ -23,13 +23,13 @@ class DragonBallClient @Inject constructor(
     private val apiService: DragonBallApiService
 ) {
     companion object {
-        const val LIMIT = 20
+        const val LIMIT = 10
     }
 
-    suspend fun fetchCharacters() : CharacterListResponse {
+    suspend fun fetchCharacters(page: Int): CharacterListResponse {
         return apiService.fetchCharacters(
-            limit = LIMIT
-            // TODO offset?
+            limit = LIMIT * page,
+            page = page
         )
     }
 

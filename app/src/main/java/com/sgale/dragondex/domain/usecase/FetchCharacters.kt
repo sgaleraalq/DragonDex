@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.domain.usecase
 
-import android.util.Log
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import javax.inject.Inject
@@ -24,9 +23,15 @@ import javax.inject.Inject
 class FetchCharacters @Inject constructor(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(): CharacterListModel? {
-        val characters = repository.fetchCharacters()
-        Log.i("GetAllCharacters", "characters: $characters")
-        return characters
-    }
+    suspend operator fun invoke(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String?) -> Unit
+    ): CharacterListModel? = repository.fetchCharacters(
+        page = page,
+        onStart = onStart,
+        onComplete = onComplete,
+        onError = onError
+    )
 }

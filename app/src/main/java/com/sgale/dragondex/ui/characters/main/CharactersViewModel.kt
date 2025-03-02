@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.ui.characters.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
@@ -36,21 +37,48 @@ class CharactersViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
 
-    private val _characters = MutableStateFlow<CharacterListModel?>(null)
+    private var _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading
+
+    private val _characters = MutableStateFlow(CharacterListModel(emptyList()))
     val characters = _characters
+
+    private val charactersFetchingIndex = MutableStateFlow(1)
+
+    private suspend fun fetch() = fetchCharacters(
+        page    = charactersFetchingIndex.value,
+        onStart = { _isLoading.value = true },
+        onComplete = { _isLoading.value = false },
+        onError = { /* TODO */ }
+    )
 
     init {
         viewModelScope.launch {
-            _uiState.value = UIState.Loading
             val charactersList = withContext(Dispatchers.IO){
-                fetchCharacters()
+                fetch()
             }
 
             if (charactersList != null) {
                 _characters.value = charactersList
-                _uiState.value = UIState.Success(charactersList)
-            } else {
-                _uiState.value = UIState.Error("Ha ocurrido un error")
+            }
+        }
+    }
+
+    /**
+     * When not loading, fetch next characters until reaching the end
+     */
+    fun fetchNextCharacters() {
+        if (!_isLoading.value) {
+            charactersFetchingIndex.value++
+            viewModelScope.launch {
+                val charactersList = withContext(Dispatchers.IO) { fetch() }
+
+                if (charactersList != null) {
+                    Log.i("CharactersViewModel", "fetchNextCharacters: $charactersList")
+                    _characters.value = _characters.value.copy(
+                        items = _characters.value.items + charactersList.items
+                    )
+                }
             }
         }
     }
