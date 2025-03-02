@@ -1,5 +1,6 @@
 package com.sgale.dragondex.ui.characters.main
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,10 @@ fun CharactersScreen(
         ) {
             items(charactersList?.items?.size ?: 0) { index ->
                 val character = charactersList?.items?.get(index)
+//                Log.i(
+//                    "CharactersScreen",
+//                    "Character: ${character?.name}, ${character?.characterRace} ${character?.race}"
+//                )
                 if (character != null) {
                     ItemCard(
                         id = character.id,

@@ -29,6 +29,8 @@ import com.sgale.dragondex.ui.theme.majinColor
 import com.sgale.dragondex.ui.theme.namekianColor
 import com.sgale.dragondex.ui.theme.nucleicoColor
 import com.sgale.dragondex.ui.theme.saiyanColor
+import com.sgale.dragondex.ui.theme.unknownColor
+import java.util.UnknownFormatConversionException
 
 
 /**
@@ -53,7 +55,7 @@ sealed class CharacterRace(
     data object God:                CharacterRace(RaceType.GOD, godColor)
     data object Angel:              CharacterRace(RaceType.ANGEL, angelColor)
     data object Evil:               CharacterRace(RaceType.EVIL, evilColor)
-    data object Unknown:            CharacterRace(RaceType.UNKNOWN, Color.Black)
+    data object Unknown:            CharacterRace(RaceType.UNKNOWN, unknownColor)
     data object NucleicoBenigno:    CharacterRace(RaceType.NUCLEICO_BENIGNO, nucleicoColor)
     data object Nucleico:           CharacterRace(RaceType.NUCLEICO, nucleicoColor)
 }
@@ -65,8 +67,8 @@ fun mapRace(race: String): CharacterRace {
         "Namekian"  -> Namekian
         "Human"     -> Human
         "Majin"     -> Majin
-        "Frieza"    -> FriezaRace
-        "Jiren"     -> JirenRace
+        "Frieza Race"    -> FriezaRace
+        "Jiren Race"     -> JirenRace
         "Android"   -> Android
         "God"       -> God
         "Angel"     -> Angel
