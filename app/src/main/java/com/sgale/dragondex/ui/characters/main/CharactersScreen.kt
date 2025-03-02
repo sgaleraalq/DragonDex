@@ -51,6 +51,7 @@ fun CharactersScreen(
                                 image = character.image
                             )
                         },
+                        color = character.characterRace.color,
                         onItemClicked = { navigateToDetail(it) }
                     )
                 }

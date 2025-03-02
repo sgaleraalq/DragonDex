@@ -44,3 +44,13 @@ val saiyanSans = TextStyle(
     fontSize = 16.sp,
     letterSpacing = 0.5.sp
 )
+
+val roboto = TextStyle(
+    fontFamily =  FontFamily(
+        Font(R.font.roboto_regular, FontWeight.Normal),
+        Font(R.font.roboto_bold,    FontWeight.Bold),
+        Font(R.font.roboto_italic,  FontWeight.Normal, FontStyle.Italic)
+    ),
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+)

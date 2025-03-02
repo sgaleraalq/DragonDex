@@ -21,11 +21,11 @@ import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import javax.inject.Inject
 
-class GetAllCharacters @Inject constructor(
+class FetchCharacters @Inject constructor(
     private val repository: Repository
 ) {
     suspend operator fun invoke(): CharacterListModel? {
-        val characters = repository.getAllCharacters()
+        val characters = repository.fetchCharacters()
         Log.i("GetAllCharacters", "characters: $characters")
         return characters
     }

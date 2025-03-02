@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
-import com.sgale.dragondex.domain.usecase.GetAllCharacters
+import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val getAllCharacters: GetAllCharacters
+    private val fetchCharacters: FetchCharacters
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
@@ -43,7 +43,7 @@ class CharactersViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = UIState.Loading
             val charactersList = withContext(Dispatchers.IO){
-                getAllCharacters()
+                fetchCharacters()
             }
 
             if (charactersList != null) {

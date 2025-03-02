@@ -53,12 +53,14 @@ import coil.request.ImageRequest
 import com.sgale.dragondex.R
 import com.sgale.dragondex.ui.theme.grayTransparent
 import com.sgale.dragondex.ui.theme.primary
+import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
 fun ItemCard(
     content: @Composable () -> Unit,
     id: Int,
+    color: Color? = null,
     onItemClicked: (Int) -> Unit,
 ) {
     Card(
@@ -72,9 +74,9 @@ fun ItemCard(
             pressedElevation = 16.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = color ?: Color.White
         ),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         content()
     }
@@ -109,7 +111,7 @@ fun CharacterCardContent(
             text = name,
             style = saiyanSans.copy(
                 fontSize = 16.sp,
-                color = Color.Black,
+                color = Color.White,
                 textAlign = TextAlign.Center
             )
         )
@@ -165,13 +167,19 @@ fun Header(
             tint = Color.White
         )
         Spacer(Modifier.width(16.dp))
+        Icon(
+            modifier = Modifier.size(32.dp).padding(4.dp),
+            painter = painterResource(R.drawable.ic_dragon_ball_logo),
+            contentDescription = stringResource(R.string.description_app_icon),
+            tint = Color.Unspecified
+        )
+        Spacer(Modifier.width(16.dp))
         Text(
             text = text,
-            style = saiyanSans.copy(
+            style = roboto.copy(
                 fontSize = 22.sp,
                 color = Color.White,
-                fontWeight = Bold,
-                letterSpacing = 1.5.sp
+                fontWeight = Bold
             )
         )
     }

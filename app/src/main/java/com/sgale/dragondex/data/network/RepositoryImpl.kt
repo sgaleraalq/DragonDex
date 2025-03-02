@@ -18,6 +18,7 @@ package com.sgale.dragondex.data.network
 
 import android.util.Log
 import com.sgale.dragondex.data.network.services.DragonBallApiService
+import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterListModel
 import com.sgale.dragondex.domain.model.characters.CharacterModel
@@ -25,14 +26,15 @@ import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
-    private val dragonBallApiService: DragonBallApiService
+    private val dragonBallApiService: DragonBallApiService,
+    private val dragonBallClient: DragonBallClient
 ): Repository {
 
     /*
     * Get characters from the API
      */
-    override suspend fun getAllCharacters(): CharacterListModel? {
-        runCatching { dragonBallApiService.getAllCharacters() }
+    override suspend fun fetchCharacters(): CharacterListModel? {
+        runCatching { dragonBallClient.fetchCharacters() }
             .onSuccess { return it.toDomain() }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
         return null

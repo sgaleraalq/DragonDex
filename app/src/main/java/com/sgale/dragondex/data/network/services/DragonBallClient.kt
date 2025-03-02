@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.sgale.dragondex.data.network.services
 
 import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import javax.inject.Inject
 
-interface DragonBallApiService {
+class DragonBallClient @Inject constructor(
+    private val apiService: DragonBallApiService
+) {
+    companion object {
+        const val LIMIT = 20
+    }
 
-    @GET("characters")
-    suspend fun fetchCharacters(
-        @Query("limit") limit: Int = 20
-    ): CharacterListResponse
+    suspend fun fetchCharacters() : CharacterListResponse {
+        return apiService.fetchCharacters(
+            limit = LIMIT
+            // TODO offset?
+        )
+    }
 
-    @GET("characters/{id}")
-    suspend fun getCharacter(@Path("id") id: Int): CharacterResponse
-
-    @GET("planets")
-    suspend fun getAllPlanets(): PlanetsListResponse
 }

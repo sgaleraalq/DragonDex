@@ -18,6 +18,7 @@ package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
 import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.characters.mapRace
 
 data class CharacterResponse (
     @SerializedName("id")           val id: Int,
@@ -36,6 +37,7 @@ data class CharacterResponse (
             id = id,
             name = name,
             image = image,
+            characterRace = mapRace(race),
             ki = ki,
             maxKi = maxKi,
             race = race,
