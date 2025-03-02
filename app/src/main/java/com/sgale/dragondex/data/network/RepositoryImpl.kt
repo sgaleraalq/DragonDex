@@ -17,6 +17,7 @@
 package com.sgale.dragondex.data.network
 
 import android.util.Log
+import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
@@ -32,8 +33,9 @@ import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val dragonBallApiService: DragonBallApiService,
-    private val dragonBallClient: DragonBallClient
-): Repository {
+    private val dragonBallClient: DragonBallClient,
+    private val charactersDao: CharacterDao
+) : Repository {
 
     /*
     * Get characters from the API
@@ -43,13 +45,17 @@ class RepositoryImpl @Inject constructor(
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
-    ): Flow<List<CharacterModel>> {
-        return flow {
+    ) = flow {
+//        var characters = charactersDao.getCharacters(page).asDomain()
+        var characters = listOf<CharacterModel>()
+        if (characters.isEmpty()){
             val response = dragonBallClient.fetchCharacters(page = page)
             Log.i("sgalera", "Response: $response")
+
             emit(response.items.map { it.toDomain() })
-        }.onStart { onStart() }.onCompletion { onComplete() }
-    }
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }
+
 
     override suspend fun getCharacter(id: Int): CharacterModel? {
         runCatching { dragonBallApiService.getCharacter(id) }
