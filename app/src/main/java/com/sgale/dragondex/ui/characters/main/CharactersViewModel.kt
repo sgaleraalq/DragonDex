@@ -37,30 +37,33 @@ class CharactersViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
 
+    private val _toastMsg = MutableStateFlow<String?>(null)
+    val toastMsg = _toastMsg
+
     private var _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading
 
     private val _characters = MutableStateFlow(CharacterListModel(emptyList()))
     val characters = _characters
 
-    private val charactersFetchingIndex = MutableStateFlow(1)
+    private val charactersFetchingIndex = MutableStateFlow(0)
 
     private suspend fun fetch() = fetchCharacters(
         page    = charactersFetchingIndex.value,
         onStart = { _isLoading.value = true },
         onComplete = { _isLoading.value = false },
-        onError = { /* TODO */ }
+        onError = { _toastMsg.value = it }
     )
 
     init {
         viewModelScope.launch {
-            val charactersList = withContext(Dispatchers.IO){
-                fetch()
-            }
+            _isLoading.value = true
+            val charactersList = withContext(Dispatchers.IO){ fetch() }
 
             if (charactersList != null) {
                 _characters.value = charactersList
             }
+            _isLoading.value = false
         }
     }
 
@@ -70,11 +73,11 @@ class CharactersViewModel @Inject constructor(
     fun fetchNextCharacters() {
         if (!_isLoading.value) {
             charactersFetchingIndex.value++
+            Log.i("sgalera", "fetchNextCharacters: ${charactersFetchingIndex.value}")
             viewModelScope.launch {
                 val charactersList = withContext(Dispatchers.IO) { fetch() }
 
                 if (charactersList != null) {
-                    Log.i("CharactersViewModel", "fetchNextCharacters: $charactersList")
                     _characters.value = _characters.value.copy(
                         items = _characters.value.items + charactersList.items
                     )
