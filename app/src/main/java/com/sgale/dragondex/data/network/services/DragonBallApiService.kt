@@ -32,7 +32,6 @@ interface DragonBallApiService {
         @Query("page") page: Int
     ): MainResponse<CharacterResponse>
 
-
     @GET("characters/{id}")
     suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse
 

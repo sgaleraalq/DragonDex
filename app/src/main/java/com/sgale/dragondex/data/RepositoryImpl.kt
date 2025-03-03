@@ -52,13 +52,12 @@ class RepositoryImpl @Inject constructor(
         onError: (String) -> Unit
     ) = flow {
         var characters = charactersDao.getCharactersList(page = page).asDomain()
-
         if (characters.isEmpty()){
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response        = dragonBallClient.fetchCharacters(page = page).characters
-            characters  = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
+            val response    = dragonBallClient.fetchCharacters(page = page).characters
+            characters      = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
             charactersDao.insertCharactersList(characters.asEntity())
             emit(charactersDao.getAllCharactersList(page).asDomain())
         } else {

@@ -29,7 +29,7 @@ class DragonBallClient @Inject constructor(
 
     suspend fun fetchCharacters(page: Int): MainResponse<CharacterResponse> {
         return apiService.fetchCharacters(
-            limit = LIMIT * page,
+            limit = LIMIT,
             page = page
         )
     }
