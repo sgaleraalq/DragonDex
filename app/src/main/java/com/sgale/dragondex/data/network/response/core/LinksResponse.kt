@@ -14,23 +14,13 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.services
+package com.sgale.dragondex.data.network.response.core
 
-import com.sgale.dragondex.data.network.response.characters.CharacterInfoResponse
-import com.sgale.dragondex.data.network.response.characters.CharactersResponse
-import javax.inject.Inject
+import com.google.gson.annotations.SerializedName
 
-class DragonBallClient @Inject constructor(
-    private val apiService: DragonBallApiService
-) {
-    companion object {
-        const val LIMIT = 10
-    }
-
-    suspend fun fetchCharacters(page: Int): CharactersResponse {
-        return apiService.fetchCharacters(
-            limit = LIMIT * page,
-            page = page
-        )
-    }
-}
+data class LinksResponse(
+    @SerializedName("first")        val first: String?,
+    @SerializedName("previous")     val prev: String?,
+    @SerializedName("next")         val next: String?,
+    @SerializedName("last")         val last: String
+)

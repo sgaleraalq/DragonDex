@@ -19,11 +19,11 @@ package com.sgale.dragondex.data
 import android.util.Log
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
+import com.sgale.dragondex.data.network.response.characters.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.characters.CharacterRace
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
@@ -49,19 +49,16 @@ class RepositoryImpl @Inject constructor(
         Log.i("repository", "Characters: $characters")
 //        var characters = listOf<CharacterInfo>()
         if (characters.isEmpty()){
-            val response = dragonBallClient.fetchCharacters(page = page)
+            val response = dragonBallClient.fetchCharacters(page = page) // All list of characters
             Log.i("sgalera", "Response: $response")
-            emit(listOf(CharacterInfo(
-                id = 0, name = "", image = "", race = CharacterRace.Android, ki = "", maxKi = "", gender = "", description = "", affiliation = ""
-            )))
-//            emit(response.map { it() })
+            emit(response.characters.asDomain())
         }
     }.onStart { onStart() }.onCompletion { onComplete() }
 
 
     override suspend fun getCharacter(id: Int): CharacterInfo? {
         runCatching { dragonBallApiService.getCharacter(id) }
-            .onSuccess { return it.toDomain() }
+            .onSuccess { return null }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
         return null
     }

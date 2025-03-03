@@ -17,10 +17,8 @@
 package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.characters.mapRace
 
-data class CharacterResponse (
+data class CharacterInfoResponse (
     @SerializedName("id")           val id: Int,
     @SerializedName("name")         val name: String,
     @SerializedName("image")        val image: String,
@@ -31,18 +29,4 @@ data class CharacterResponse (
     @SerializedName("description")  val description: String,
     @SerializedName("affiliation")  val affiliation: String,
     @SerializedName("deletedAt")    val deletedAt: String? = null
-) {
-    fun toDomain() =
-        CharacterInfo(
-            id = id,
-            name = name,
-            image = image,
-            race = mapRace(race),
-            ki = ki,
-            maxKi = maxKi,
-            gender = gender,
-            description = description,
-            affiliation = affiliation,
-            deletedAt = deletedAt
-        )
-}
+)
