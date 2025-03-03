@@ -52,7 +52,8 @@ class RepositoryImpl @Inject constructor(
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response        = dragonBallClient.fetchCharacters(page = page)
+            val response        = dragonBallClient.fetchCharacters(page = page).characters
+            Log.i("sgalera", "Response: $response")
             val charactersList  = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
             charactersDao.insertCharactersList(charactersList.asEntity())
             emit(charactersDao.getAllCharactersList(page).asDomain())

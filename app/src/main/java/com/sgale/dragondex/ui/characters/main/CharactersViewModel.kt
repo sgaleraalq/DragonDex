@@ -39,7 +39,7 @@ class CharactersViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
 
-    private val charactersFetchingIndex = MutableStateFlow(0)
+    private val charactersFetchingIndex = MutableStateFlow(1)
 
     val characterList: StateFlow<List<CharacterModel>> = charactersFetchingIndex.flatMapLatest { page ->
         fetchCharacters(
