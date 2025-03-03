@@ -20,13 +20,17 @@ import android.util.Log
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
+import com.sgale.dragondex.data.network.Dispatcher
+import com.sgale.dragondex.data.network.DragonDexAppDispatchers
 import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
@@ -34,7 +38,8 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val dragonBallApiService: DragonBallApiService,
     private val dragonBallClient: DragonBallClient,
-    private val charactersDao: CharacterDao
+    private val charactersDao: CharacterDao,
+    @Dispatcher(DragonDexAppDispatchers.IO) private val ioDispatchers: CoroutineDispatcher
 ) : Repository {
 
     /*
@@ -53,9 +58,8 @@ class RepositoryImpl @Inject constructor(
              * If we can't get characters from database, we take it from API and insert it into database
              */
             val response        = dragonBallClient.fetchCharacters(page = page).characters
-            Log.i("sgalera", "Response: $response")
-            val charactersList  = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
-            charactersDao.insertCharactersList(charactersList.asEntity())
+            characters  = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
+            charactersDao.insertCharactersList(characters.asEntity())
             emit(charactersDao.getAllCharactersList(page).asDomain())
         } else {
             /**
@@ -63,7 +67,7 @@ class RepositoryImpl @Inject constructor(
              */
             emit(charactersDao.getAllCharactersList(page).asDomain())
         }
-    }.onStart { onStart() }.onCompletion { onComplete() }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 
 
     override suspend fun getCharacter(id: Int): CharacterInfo? {

@@ -20,6 +20,8 @@ import com.sgale.dragondex.BuildConfig.BASE_URL
 import com.sgale.dragondex.data.core.interceptor.DbInterceptor
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.RepositoryImpl
+import com.sgale.dragondex.data.network.Dispatcher
+import com.sgale.dragondex.data.network.DragonDexAppDispatchers
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
@@ -27,6 +29,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -72,12 +75,14 @@ internal object NetworkModule {
     fun provideRepository(
         client: DragonBallClient,
         apiService: DragonBallApiService,
-        characterDao: CharacterDao
+        characterDao: CharacterDao,
+        @Dispatcher(DragonDexAppDispatchers.IO) ioDispatchers: CoroutineDispatcher
     ): Repository {
         return RepositoryImpl(
             dragonBallClient = client,
             dragonBallApiService = apiService,
-            charactersDao = characterDao
+            charactersDao = characterDao,
+            ioDispatchers = ioDispatchers
         )
     }
 }
