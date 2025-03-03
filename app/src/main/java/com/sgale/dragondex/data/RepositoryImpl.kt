@@ -46,12 +46,12 @@ class RepositoryImpl @Inject constructor(
         onError: (String) -> Unit
     ) = flow {
         var characters = charactersDao.getCharactersList(page = page).asDomain()
-        Log.i("repository", "Characters: $characters")
-//        var characters = listOf<CharacterInfo>()
         if (characters.isEmpty()){
-            val response = dragonBallClient.fetchCharacters(page = page) // All list of characters
+            val response        = dragonBallClient.fetchCharacters(page = page) // All list of characters
+            val charactersList  = response.characters.map { it.asDomain() }
+
             Log.i("sgalera", "Response: $response")
-            emit(response.characters.asDomain())
+            emit(charactersList)
         }
     }.onStart { onStart() }.onCompletion { onComplete() }
 
