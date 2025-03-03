@@ -29,8 +29,8 @@ interface CharacterDao {
     suspend fun insertCharactersList(characters: List<CharacterEntity>)
 
     @Query("SELECT * FROM CharacterEntity WHERE page = :page")
-    suspend fun getAllCharacters(page: Int) : List<CharacterEntity>
+    suspend fun getCharactersList(page: Int) : List<CharacterEntity>
 
-    @Insert
-    suspend fun insertAllCharacters(characters: List<CharacterEntity>)
+    @Query("SELECT * FROM CharacterEntity WHERE page <= :page")
+    suspend fun getAllCharactersList(page: Int): List<CharacterEntity>
 }

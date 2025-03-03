@@ -18,10 +18,12 @@ package com.sgale.dragondex.data
 
 import android.util.Log
 import com.sgale.dragondex.data.database.dao.CharacterDao
+import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.CharacterRace
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onCompletion
@@ -43,19 +45,21 @@ class RepositoryImpl @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
-        var characters = charactersDao.getAllCharacters(page = page)
+        var characters = charactersDao.getCharactersList(page = page).asDomain()
         Log.i("repository", "Characters: $characters")
-//        var characters = listOf<CharacterModel>()
+//        var characters = listOf<CharacterInfo>()
         if (characters.isEmpty()){
             val response = dragonBallClient.fetchCharacters(page = page)
             Log.i("sgalera", "Response: $response")
-
-            emit(response.items.map { it.toDomain() })
+            emit(listOf(CharacterInfo(
+                id = 0, name = "", image = "", race = CharacterRace.Android, ki = "", maxKi = "", gender = "", description = "", affiliation = ""
+            )))
+//            emit(response.map { it() })
         }
     }.onStart { onStart() }.onCompletion { onComplete() }
 
 
-    override suspend fun getCharacter(id: Int): CharacterModel? {
+    override suspend fun getCharacter(id: Int): CharacterInfo? {
         runCatching { dragonBallApiService.getCharacter(id) }
             .onSuccess { return it.toDomain() }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }

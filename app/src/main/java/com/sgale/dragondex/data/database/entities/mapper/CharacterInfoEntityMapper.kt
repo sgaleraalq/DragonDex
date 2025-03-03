@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.services
+package com.sgale.dragondex.data.database.entities.mapper
 
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
+import com.sgale.dragondex.domain.model.characters.CharacterInfo
 
-class DragonBallClient @Inject constructor(
-    private val apiService: DragonBallApiService
-) {
-    companion object {
-        const val LIMIT = 10
+object CharacterInfoEntityMapper : EntityMapper<CharacterInfo, CharacterInfoEntity>{
+    override fun asEntity(domain: CharacterInfo): CharacterInfoEntity {
+        TODO("Not yet implemented")
     }
 
-    suspend fun fetchCharacters(page: Int): Flow<List<CharacterResponse>> {
-        return apiService.fetchCharacters(
-            limit = LIMIT * page,
-            page = page
-        )
+    override fun asDomain(entity: CharacterInfoEntity): CharacterInfo {
+        TODO("Not yet implemented")
     }
 }

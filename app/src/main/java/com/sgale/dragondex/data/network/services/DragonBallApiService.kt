@@ -16,7 +16,6 @@
  
 package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterListResponse
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
 import kotlinx.coroutines.flow.Flow
@@ -28,12 +27,6 @@ interface DragonBallApiService {
 
     @GET("characters")
     suspend fun fetchCharacters(
-        @Query("limit") limit: Int = 10,
-        @Query("page") page: Int
-    ): CharacterListResponse
-
-    @GET("characters")
-    suspend fun testCharacters(
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int
     ): Flow<List<CharacterResponse>>

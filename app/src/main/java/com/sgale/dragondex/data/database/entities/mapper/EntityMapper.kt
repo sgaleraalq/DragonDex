@@ -14,15 +14,9 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response.characters
+package com.sgale.dragondex.data.database.entities.mapper
 
-import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.domain.model.characters.CharacterListModel
-
-data class CharacterListResponse(
-    @SerializedName("items") val items: List<CharacterResponse>
-) {
-    fun toDomain() = CharacterListModel(
-        items = items.map { it.toDomain() }
-    )
+interface EntityMapper<Domain, Entity> {
+    fun asEntity(domain: Domain): Entity
+    fun asDomain(entity: Entity): Domain
 }

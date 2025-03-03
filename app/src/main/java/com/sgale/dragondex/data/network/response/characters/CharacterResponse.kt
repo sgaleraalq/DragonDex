@@ -17,7 +17,7 @@
 package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.mapRace
 
 data class CharacterResponse (
@@ -33,7 +33,7 @@ data class CharacterResponse (
     @SerializedName("deletedAt")    val deletedAt: String? = null
 ) {
     fun toDomain() =
-        CharacterModel(
+        CharacterInfo(
             id = id,
             name = name,
             image = image,

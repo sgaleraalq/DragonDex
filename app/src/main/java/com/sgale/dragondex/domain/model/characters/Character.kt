@@ -16,6 +16,8 @@
 
 package com.sgale.dragondex.domain.model.characters
 
-data class CharacterListModel(
-    val items: List<CharacterModel>
+data class Character(
+    var page: Int = 0,
+    val name: String,
+    val url: String
 )

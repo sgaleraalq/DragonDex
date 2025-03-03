@@ -16,7 +16,7 @@
 
 package com.sgale.dragondex.domain.model.characters
 
-data class CharacterModel(
+data class CharacterInfo(
     val id: Int,
     val name: String,
     val image: String,
