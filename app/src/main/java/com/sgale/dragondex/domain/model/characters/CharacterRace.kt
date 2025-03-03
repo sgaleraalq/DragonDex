@@ -37,45 +37,41 @@ import java.util.UnknownFormatConversionException
  * Painting characters background thanks to these classes
  */
 
-enum class RaceType {
-    SAIYAN, NAMEKIAN, HUMAN, MAJIN, FRIEZA_RACE, JIREN_RACE, ANDROID, GOD, ANGEL, EVIL, UNKNOWN, NUCLEICO_BENIGNO, NUCLEICO
-}
-
 sealed class CharacterRace(
-    val race: RaceType,
+    val name: String,
     val color: Color
 ) {
-    data object Saiyan:             CharacterRace(RaceType.SAIYAN, saiyanColor)
-    data object Namekian:           CharacterRace(RaceType.NAMEKIAN, namekianColor)
-    data object Human:              CharacterRace(RaceType.HUMAN, humanColor)
-    data object Majin:              CharacterRace(RaceType.MAJIN, majinColor)
-    data object FriezaRace:         CharacterRace(RaceType.FRIEZA_RACE, friezaRaceColor)
-    data object JirenRace:          CharacterRace(RaceType.JIREN_RACE, jirenRaceColor)
-    data object Android:            CharacterRace(RaceType.ANDROID, androidRaceColor)
-    data object God:                CharacterRace(RaceType.GOD, godColor)
-    data object Angel:              CharacterRace(RaceType.ANGEL, angelColor)
-    data object Evil:               CharacterRace(RaceType.EVIL, evilColor)
-    data object Unknown:            CharacterRace(RaceType.UNKNOWN, unknownColor)
-    data object NucleicoBenigno:    CharacterRace(RaceType.NUCLEICO_BENIGNO, nucleicoColor)
-    data object Nucleico:           CharacterRace(RaceType.NUCLEICO, nucleicoColor)
+    data object Saiyan:             CharacterRace("Saiyan", saiyanColor)
+    data object Namekian:           CharacterRace("Namekian", namekianColor)
+    data object Human:              CharacterRace("Human", humanColor)
+    data object Majin:              CharacterRace("Majin", majinColor)
+    data object FriezaRace:         CharacterRace("Frieza Race", friezaRaceColor)
+    data object JirenRace:          CharacterRace("Jiren Race", jirenRaceColor)
+    data object Android:            CharacterRace("Android", androidRaceColor)
+    data object God:                CharacterRace("God", godColor)
+    data object Angel:              CharacterRace("Angel", angelColor)
+    data object Evil:               CharacterRace("Evil", evilColor)
+    data object Unknown:            CharacterRace("Unknown", unknownColor)
+    data object NucleicoBenigno:    CharacterRace("Nucleico Benigno", nucleicoColor)
+    data object Nucleico:           CharacterRace("Nucleico", nucleicoColor)
 }
 
 
 fun mapRace(race: String): CharacterRace {
     return when (race) {
-        "Saiyan"    -> Saiyan
-        "Namekian"  -> Namekian
-        "Human"     -> Human
-        "Majin"     -> Majin
-        "Frieza Race"    -> FriezaRace
-        "Jiren Race"     -> JirenRace
-        "Android"   -> Android
-        "God"       -> God
-        "Angel"     -> Angel
-        "Evil"      -> Evil
-        "Unknown"   -> Unknown
-        "Nucleico Benigno" -> NucleicoBenigno
-        "Nucleico"  -> Nucleico
+        "Saiyan"            -> Saiyan
+        "Namekian"          -> Namekian
+        "Human"             -> Human
+        "Majin"             -> Majin
+        "Frieza Race"       -> FriezaRace
+        "Jiren Race"        -> JirenRace
+        "Android"           -> Android
+        "God"               -> God
+        "Angel"             -> Angel
+        "Evil"              -> Evil
+        "Unknown"           -> Unknown
+        "Nucleico Benigno"  -> NucleicoBenigno
+        "Nucleico"          -> Nucleico
         else -> Unknown
     }
 }

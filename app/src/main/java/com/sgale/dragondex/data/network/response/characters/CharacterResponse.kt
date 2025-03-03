@@ -17,11 +17,16 @@
 package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.data.network.response.core.LinksResponse
-import com.sgale.dragondex.data.network.response.core.MetaResponse
 
-data class CharactersResponse(
-    @SerializedName("items")    val characters: List<CharacterInfoResponse>,
-    @SerializedName("meta")     val meta: MetaResponse,
-    @SerializedName("links")    val links: LinksResponse
+data class CharacterResponse(
+    @SerializedName("id")           val id: Int,
+    @SerializedName("name")         val name: String,
+    @SerializedName("image")        val image: String,
+    @SerializedName("ki")           val ki: String,
+    @SerializedName("maxKi")        val maxKi: String,
+    @SerializedName("race")         val race: String,
+    @SerializedName("gender")       val gender: String,
+    @SerializedName("description")  val description: String,
+    @SerializedName("affiliation")  val affiliation: String,
+    @SerializedName("deletedAt")    val deletedAt: String? = null
 )

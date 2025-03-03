@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response.characters
+package com.sgale.dragondex.data.network.response.core
 
-data class CharacterErrorResponse(
-    val message: String
+import com.google.gson.annotations.SerializedName
+
+data class MainResponse<T>(
+    @SerializedName("items")    val characters: List<T>,
+    @SerializedName("meta")     val meta: MetaResponse,
+    @SerializedName("links")    val links: LinksResponse
 )

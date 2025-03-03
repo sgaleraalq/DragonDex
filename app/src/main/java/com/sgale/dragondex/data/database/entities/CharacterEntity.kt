@@ -18,10 +18,19 @@ package com.sgale.dragondex.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sgale.dragondex.domain.model.characters.CharacterRace
 
 @Entity
 data class CharacterEntity(
     val page: Int = 0,
-    @PrimaryKey val name: String,
-    val url: String
+    @PrimaryKey val id: Int,
+    val name: String,
+    val image: String,
+    val race: String,
+    val ki: String,
+    val maxKi: String,
+    val gender: String,
+    val description: String,
+    val affiliation: String,
+    val deletedAt: String? = null
 )

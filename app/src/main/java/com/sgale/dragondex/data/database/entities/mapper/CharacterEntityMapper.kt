@@ -17,34 +17,51 @@
 package com.sgale.dragondex.data.database.entities.mapper
 
 import com.sgale.dragondex.data.database.entities.CharacterEntity
-import com.sgale.dragondex.domain.model.characters.Character
+import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.characters.mapRace
 
-object CharacterEntityMapper : EntityMapper<List<Character>, List<CharacterEntity>> {
-    override fun asEntity(domain: List<Character>): List<CharacterEntity> {
+object CharacterEntityMapper : EntityMapper<List<CharacterModel>, List<CharacterEntity>> {
+    override fun asEntity(domain: List<CharacterModel>): List<CharacterEntity> {
         return domain.map { character ->
             CharacterEntity(
                 page    = character.page,
+                id      = character.id,
                 name    = character.name,
-                url     = character.url
+                image   = character.image,
+                race    = character.race.name,
+                ki      = character.ki,
+                maxKi   = character.maxKi,
+                gender  = character.gender,
+                description = character.description,
+                affiliation = character.affiliation,
+                deletedAt = character.deletedAt
             )
         }
     }
 
-    override fun asDomain(entity: List<CharacterEntity>): List<Character> {
+    override fun asDomain(entity: List<CharacterEntity>): List<CharacterModel> {
         return entity.map { characterEntity ->
-            Character(
+            CharacterModel(
                 page    = characterEntity.page,
+                id      = characterEntity.id,
                 name    = characterEntity.name,
-                url     = characterEntity.url
+                image   = characterEntity.image,
+                race    = mapRace(characterEntity.race),
+                ki      = characterEntity.ki,
+                maxKi   = characterEntity.maxKi,
+                gender  = characterEntity.gender,
+                description = characterEntity.description,
+                affiliation = characterEntity.affiliation,
+                deletedAt = characterEntity.deletedAt
             )
         }
     }
 }
 
-fun List<Character>.asEntity(): List<CharacterEntity> {
+fun List<CharacterModel>.asEntity(): List<CharacterEntity> {
     return CharacterEntityMapper.asEntity(this)
 }
 
-fun List<CharacterEntity>?.asDomain(): List<Character> {
+fun List<CharacterEntity>?.asDomain(): List<CharacterModel> {
     return CharacterEntityMapper.asDomain(this.orEmpty())
 }

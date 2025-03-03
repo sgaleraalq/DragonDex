@@ -19,7 +19,8 @@ package com.sgale.dragondex.data
 import android.util.Log
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
-import com.sgale.dragondex.data.network.response.characters.asDomain
+import com.sgale.dragondex.data.database.entities.mapper.asEntity
+import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
@@ -46,12 +47,20 @@ class RepositoryImpl @Inject constructor(
         onError: (String) -> Unit
     ) = flow {
         var characters = charactersDao.getCharactersList(page = page).asDomain()
-        if (characters.isEmpty()){
-            val response        = dragonBallClient.fetchCharacters(page = page) // All list of characters
-            val charactersList  = response.characters.map { it.asDomain() }
 
-            Log.i("sgalera", "Response: $response")
-            emit(charactersList)
+        if (characters.isEmpty()){
+            /**
+             * If we can't get characters from database, we take it from API and insert it into database
+             */
+            val response        = dragonBallClient.fetchCharacters(page = page)
+            val charactersList  = response.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
+            charactersDao.insertCharactersList(charactersList.asEntity())
+            emit(charactersDao.getAllCharactersList(page).asDomain())
+        } else {
+            /**
+             * If we have characters in database, we just emit them
+             */
+            emit(charactersDao.getAllCharactersList(page).asDomain())
         }
     }.onStart { onStart() }.onCompletion { onComplete() }
 

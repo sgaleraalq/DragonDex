@@ -16,8 +16,16 @@
 
 package com.sgale.dragondex.domain.model.characters
 
-data class Character(
-    var page: Int = 0,
+data class CharacterModel(
+    val page: Int = 0,
+    val id: Int,
     val name: String,
-    val url: String
+    val image: String,
+    val race: CharacterRace,
+    val ki: String,
+    val maxKi: String,
+    val gender: String,
+    val description: String,
+    val affiliation: String,
+    val deletedAt: String? = null
 )
