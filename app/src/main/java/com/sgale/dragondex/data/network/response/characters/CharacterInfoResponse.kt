@@ -19,14 +19,16 @@ package com.sgale.dragondex.data.network.response.characters
 import com.google.gson.annotations.SerializedName
 
 data class CharacterInfoResponse (
-    @SerializedName("id")           val id: Int,
-    @SerializedName("name")         val name: String,
-    @SerializedName("image")        val image: String,
-    @SerializedName("ki")           val ki: String,
-    @SerializedName("maxKi")        val maxKi: String,
-    @SerializedName("race")         val race: String,
-    @SerializedName("gender")       val gender: String,
-    @SerializedName("description")  val description: String,
-    @SerializedName("affiliation")  val affiliation: String,
-    @SerializedName("deletedAt")    val deletedAt: String? = null
+    @SerializedName("id")               val id: Int,
+    @SerializedName("name")             val name: String,
+    @SerializedName("image")            val image: String,
+    @SerializedName("ki")               val ki: String,
+    @SerializedName("maxKi")            val maxKi: String,
+    @SerializedName("race")             val race: String,
+    @SerializedName("gender")           val gender: String,
+    @SerializedName("description")      val description: String,
+    @SerializedName("affiliation")      val affiliation: String,
+    @SerializedName("deletedAt")        val deletedAt: String? = null,
+    @SerializedName("originPlanet")     val originPlanet: OriginPlanetResponse,
+    @SerializedName("transformations")  val transformations: List<TransformationResponse>
 )

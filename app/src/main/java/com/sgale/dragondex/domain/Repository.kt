@@ -22,13 +22,24 @@ import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
+
+    /**
+     * Characters repository functions to handle characters data
+     */
     suspend fun fetchCharacters(
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
-    ): Flow<List<CharacterModel>>
+    ): Flow<List<CharacterModel?>>
 
-    suspend fun getCharacter(id: Int): CharacterInfo?
+    suspend fun fetchCharacterById(
+        id: Int
+    ): CharacterInfo?
+
+
+    /**
+     * Planets repository functions to handle planets data
+     */
     suspend fun getAllPlanets(): PlanetsListModel?
 }

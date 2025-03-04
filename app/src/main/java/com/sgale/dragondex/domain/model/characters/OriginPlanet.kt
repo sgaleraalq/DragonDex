@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.usecase
+package com.sgale.dragondex.domain.model.characters
 
-import com.sgale.dragondex.domain.Repository
-import javax.inject.Inject
-
-class GetCharacter @Inject constructor(
-    private val repository: Repository
-) {
-    suspend operator fun invoke(id: Int) = repository.getCharacter(id)
-}
+data class OriginPlanet(
+    val id: Int,
+    val name: String,
+    val image: String,
+    val description: String,
+    val isDestroyed: Boolean,
+    val deletedAt: String? = null,
+)

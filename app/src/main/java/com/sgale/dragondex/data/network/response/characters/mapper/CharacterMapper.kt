@@ -33,7 +33,9 @@ object CharacterInfoMapper : ResponseMapper<CharacterInfo, CharacterInfoResponse
             maxKi = response.maxKi,
             gender = response.gender,
             description = response.description,
-            affiliation = response.affiliation
+            affiliation = response.affiliation,
+            originPlanet = null,//response.originPlanet.asDomain(), // TODO
+            transformations = null, //response.transformations.asDomain() // TODO
         )
 }
 

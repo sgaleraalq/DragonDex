@@ -51,6 +51,7 @@ class RepositoryImpl @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
+        // TODO error handling
         var characters = charactersDao.getCharactersList(page = page).asDomain()
         if (characters.isEmpty()){
             /**
@@ -69,7 +70,7 @@ class RepositoryImpl @Inject constructor(
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 
 
-    override suspend fun getCharacter(id: Int): CharacterInfo? {
+    override suspend fun fetchCharacterById(id: Int): CharacterInfo? {
         runCatching { dragonBallApiService.getCharacter(id) }
             .onSuccess { return null }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
