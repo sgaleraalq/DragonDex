@@ -30,7 +30,8 @@ interface Repository {
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
     ): Flow<List<CharacterModel>>
 
     suspend fun fetchCharacterById(

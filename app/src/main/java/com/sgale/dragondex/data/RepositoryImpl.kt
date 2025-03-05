@@ -48,7 +48,8 @@ class RepositoryImpl @Inject constructor(
         page: Int,
         onStart: () -> Unit,
         onComplete: () -> Unit,
-        onError: (String) -> Unit
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
     ) = flow {
         var characters = charactersDao.getCharactersList(page = page).asDomain()
         if (characters.isEmpty()){
@@ -57,6 +58,7 @@ class RepositoryImpl @Inject constructor(
              */
             val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure { onError(it.message ?: "Unknown Error")}.getOrNull()
             if (response != null) {
+                if (response.links.next == null) onLastCall()
                 characters = response.items.map { characterResponse -> characterResponse.asDomain().copy(page = page) }
                 charactersDao.insertCharactersList(characters.asEntity())
                 emit(charactersDao.getAllCharactersList(page).asDomain())

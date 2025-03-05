@@ -41,12 +41,16 @@ class CharactersViewModel @Inject constructor(
 
     private val charactersFetchingIndex = MutableStateFlow(1)
 
+    private var _isLastItem = MutableStateFlow(false)
+    val isLastItem = _isLastItem
+
     val characterList: StateFlow<List<CharacterModel>> = charactersFetchingIndex.flatMapLatest { page ->
         fetchCharacters(
             page = page,
             onStart =       { _uiState.value = UIState.Loading      },
             onComplete =    { _uiState.value = UIState.Success      },
-            onError =       { _uiState.value = UIState.Error(it)    }
+            onError =       { _uiState.value = UIState.Error(it)    },
+            onLastCall =    { _isLastItem.value = true              }
         )
     }.stateIn(
         scope = viewModelScope,

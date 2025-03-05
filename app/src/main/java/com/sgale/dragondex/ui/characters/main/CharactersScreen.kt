@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.ui.characters.main
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,6 +50,7 @@ fun CharactersScreen(
 ) {
     val uiState             by viewModel.uiState.collectAsState()
     val charactersList      by viewModel.characterList.collectAsState()
+    val isLastItem          by viewModel.isLastItem.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize().background(primaryDark)
@@ -68,7 +70,8 @@ fun CharactersScreen(
                 key = { _, character -> character.name }
             ) { index, character ->
                 // Load more items when there are only two items left
-                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading) {
+                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && isLastItem) {
+                    Log.i("CharactersScreen", "Fetching next characters")
                     viewModel.fetchNextCharacters()
                 }
 
