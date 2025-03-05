@@ -17,6 +17,7 @@
 package com.sgale.dragondex.data
 
 import android.util.Log
+import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
@@ -45,9 +46,7 @@ class RepositoryImpl @Inject constructor(
     @Dispatcher(DragonDexAppDispatchers.IO) private val ioDispatchers: CoroutineDispatcher
 ) : Repository {
 
-    /*
-    * Get characters from the API
-     */
+    @WorkerThread
     override suspend fun fetchCharacters(
         page: Int,
         onStart: () -> Unit,
