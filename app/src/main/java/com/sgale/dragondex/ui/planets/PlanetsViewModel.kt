@@ -18,11 +18,17 @@ package com.sgale.dragondex.ui.planets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgale.dragondex.domain.core.UIState
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
 import com.sgale.dragondex.domain.usecase.GetAllPlanets
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -36,13 +42,13 @@ class PlanetsViewModel @Inject constructor(
     val planetsList = _planetsList
 
     init {
-        viewModelScope.launch {
-            val planetsList = withContext(Dispatchers.IO) {
-                getAllPlanets()
-            }
-            if (planetsList != null) {
-                _planetsList.value = planetsList
-            }
-        }
+//        viewModelScope.launch {
+//            val planetsList = withContext(Dispatchers.IO) {
+//                getAllPlanets()
+//            }
+//            if (planetsList != null) {
+//                _planetsList.value = planetsList
+//            }
+//        }
     }
 }

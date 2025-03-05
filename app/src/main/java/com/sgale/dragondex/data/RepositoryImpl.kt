@@ -28,7 +28,7 @@ import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import com.sgale.dragondex.domain.model.planets.PlanetModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -79,13 +79,17 @@ class RepositoryImpl @Inject constructor(
         return null
     }
 
-    /*
-    * Get planets from the API
+
+    /**
+     * Planets
      */
-    override suspend fun getAllPlanets(): PlanetsListModel? {
-        runCatching { dragonBallApiService.getAllPlanets() }
-            .onSuccess { return it.toDomain() }
-            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
-        return null
+    override suspend fun fetchPlanets(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
+    ) = flow {
+        emit(listOf<PlanetModel>())
     }
 }

@@ -18,7 +18,7 @@ package com.sgale.dragondex.domain
 
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.PlanetsListModel
+import com.sgale.dragondex.domain.model.planets.PlanetModel
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -42,5 +42,11 @@ interface Repository {
     /**
      * Planets repository functions to handle planets data
      */
-    suspend fun getAllPlanets(): PlanetsListModel?
+    suspend fun fetchPlanets(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
+    ): Flow<List<PlanetModel>>
 }
