@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.ui.characters.main
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,7 +50,6 @@ fun CharactersScreen(
     val uiState             by viewModel.uiState.collectAsState()
     val charactersList      by viewModel.characterList.collectAsState()
     val isLastItem          by viewModel.isLastItem.collectAsState()
-    Log.i("sgalera", "is last item: $isLastItem")
 
     Column(
         modifier = Modifier.fillMaxSize().background(primaryDark)
