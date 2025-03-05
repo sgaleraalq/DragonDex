@@ -18,6 +18,7 @@ package com.sgale.dragondex.data.network.services
 
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
+import com.skydoves.sandwich.ApiResponse
 import javax.inject.Inject
 
 class DragonBallClient @Inject constructor(
@@ -27,7 +28,7 @@ class DragonBallClient @Inject constructor(
         const val LIMIT = 10
     }
 
-    suspend fun fetchCharacters(page: Int): MainResponse<CharacterResponse>? {
+    suspend fun fetchCharacters(page: Int): ApiResponse<MainResponse<CharacterResponse>> {
         return apiService.fetchCharacters(
             limit = LIMIT,
             page = page

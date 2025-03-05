@@ -20,6 +20,7 @@ import com.sgale.dragondex.data.network.response.characters.CharacterInfoRespons
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
 import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
+import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,7 +31,7 @@ interface DragonBallApiService {
     suspend fun fetchCharacters(
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int
-    ): MainResponse<CharacterResponse>?
+    ): ApiResponse<MainResponse<CharacterResponse>>
 
     @GET("characters/{id}")
     suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse

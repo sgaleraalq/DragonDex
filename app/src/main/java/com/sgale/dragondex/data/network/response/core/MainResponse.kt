@@ -19,7 +19,7 @@ package com.sgale.dragondex.data.network.response.core
 import com.google.gson.annotations.SerializedName
 
 data class MainResponse<T>(
-    @SerializedName("items")    val characters: List<T>,
+    @SerializedName("items")    val items: List<T>,
     @SerializedName("meta")     val meta: MetaResponse,
     @SerializedName("links")    val links: LinksResponse
 )

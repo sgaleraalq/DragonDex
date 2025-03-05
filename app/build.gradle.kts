@@ -54,8 +54,8 @@ android {
 
 dependencies {
     // Sandwich
-//    implementation(libs.sandwich)
-//    implementation(libs.sandwich.retrofit)
+    implementation(libs.sandwich)
+    implementation(libs.sandwich.retrofit)
 
     // Room
     implementation(libs.androidx.room.ktx)
