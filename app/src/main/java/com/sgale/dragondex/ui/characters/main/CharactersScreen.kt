@@ -51,6 +51,7 @@ fun CharactersScreen(
     val uiState             by viewModel.uiState.collectAsState()
     val charactersList      by viewModel.characterList.collectAsState()
     val isLastItem          by viewModel.isLastItem.collectAsState()
+    Log.i("sgalera", "is last item: $isLastItem")
 
     Column(
         modifier = Modifier.fillMaxSize().background(primaryDark)
@@ -70,8 +71,7 @@ fun CharactersScreen(
                 key = { _, character -> character.name }
             ) { index, character ->
                 // Load more items when there are only two items left
-                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && isLastItem) {
-                    Log.i("CharactersScreen", "Fetching next characters")
+                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && !isLastItem) {
                     viewModel.fetchNextCharacters()
                 }
 
