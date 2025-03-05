@@ -31,7 +31,7 @@ interface Repository {
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
-    ): Flow<List<CharacterModel?>>
+    ): Flow<List<CharacterModel>>
 
     suspend fun fetchCharacterById(
         id: Int

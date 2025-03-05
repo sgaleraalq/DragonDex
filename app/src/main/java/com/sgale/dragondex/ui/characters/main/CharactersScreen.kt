@@ -65,7 +65,7 @@ fun CharactersScreen(
             val threadHold = 2
             itemsIndexed(
                 items = charactersList,
-                key = { _, character -> character?.name ?: "" }
+                key = { _, character -> character.name }
             ) { index, character ->
                 // Load more items when there are only two items left
                 if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading) {
@@ -73,14 +73,14 @@ fun CharactersScreen(
                 }
 
                 ItemCard(
-                    id = character?.id ?: 0,
+                    id = character.id,
                     content = {
                         CharacterCardContent(
-                            name = character?.name ?: "",
-                            image = character?.image ?: ""
+                            name = character.name,
+                            image = character.image
                         )
                     },
-                    color = character?.race?.color,
+                    color = character.race.color,
                     onItemClicked = { navigateToDetail(it) }
                 )
             }
