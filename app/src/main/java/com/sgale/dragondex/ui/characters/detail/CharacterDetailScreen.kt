@@ -18,16 +18,12 @@ package com.sgale.dragondex.ui.characters.detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.ui.core.BackManagement
 
@@ -45,10 +41,10 @@ fun CharacterDetailScreen(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CardDetailInformation( characterInfo = character )
+        CardDetailInformation( modifier = Modifier.weight(1f), characterInfo = character )
     }
 
     BackManagement(
