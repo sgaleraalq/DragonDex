@@ -29,9 +29,6 @@ import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
-import com.skydoves.sandwich.message
-import com.skydoves.sandwich.onFailure
-import com.skydoves.sandwich.suspendOnSuccess
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -58,17 +55,12 @@ class RepositoryImpl @Inject constructor(
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response = dragonBallClient.fetchCharacters(page = page)
-            response.suspendOnSuccess {
-                characters = data.items.map { characterResponse -> characterResponse.asDomain().copy(page = page)}
+            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure { onError(it.message ?: "Unknown Error")}.getOrNull()
+            if (response != null) {
+                characters = response.items.map { characterResponse -> characterResponse.asDomain().copy(page = page) }
                 charactersDao.insertCharactersList(characters.asEntity())
                 emit(charactersDao.getAllCharactersList(page).asDomain())
-            }.onFailure {
-                /**
-                 * Handles errors and exceptions if network not available
-                 */
-                onError(message())
-            }
+            } else { onError("API ERROR") }
         } else {
             /**
              * If we have characters in database, we just emit them
