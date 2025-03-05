@@ -50,7 +50,6 @@ class RepositoryImpl @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
-        // TODO error handling
         var characters = charactersDao.getCharactersList(page = page).asDomain()
         if (characters.isEmpty()){
             /**
