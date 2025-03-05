@@ -31,17 +31,23 @@ import javax.inject.Inject
 class CharacterDetailViewModel @Inject constructor(
     private val getCharacter: FetchCharacterById
 ): ViewModel() {
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading
+
     private val _character = MutableStateFlow<CharacterInfo?>(null)
     val character = _character
 
     fun getCharacterById(id: Int) {
         viewModelScope.launch {
+            _isLoading.value = true
             val character = withContext(Dispatchers.IO) {
                 getCharacter(id)
             }
             if (character != null) {
                 _character.value = character
             }
+            _isLoading.value = false
         }
     }
 }

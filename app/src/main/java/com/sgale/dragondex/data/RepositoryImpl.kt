@@ -74,7 +74,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun fetchCharacterById(id: Int): CharacterInfo? {
         runCatching { dragonBallApiService.getCharacter(id) }
-            .onSuccess { return null }
+            .onSuccess { return it.asDomain() }
             .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
         return null
     }

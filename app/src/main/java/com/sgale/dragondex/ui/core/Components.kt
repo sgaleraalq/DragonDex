@@ -33,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,6 +56,29 @@ import com.sgale.dragondex.ui.theme.grayTransparent
 import com.sgale.dragondex.ui.theme.primary
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
+
+@Composable
+fun BackManagement(
+    navigateBack: () -> Unit,
+    isLoading: Boolean
+) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Icon(
+            modifier = Modifier.clickable { navigateBack() }.size(50.dp).padding(12.dp),
+            painter = painterResource(R.drawable.ic_back),
+            contentDescription = stringResource(R.string.description_back)
+        )
+
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = primary
+            )
+        }
+    }
+}
 
 @Composable
 fun ItemCard(
