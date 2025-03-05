@@ -30,7 +30,7 @@ interface DragonBallApiService {
     suspend fun fetchCharacters(
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int
-    ): MainResponse<CharacterResponse>
+    ): MainResponse<CharacterResponse>?
 
     @GET("characters/{id}")
     suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse

@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.androidHilt)
-    kotlin("kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -53,9 +53,13 @@ android {
 }
 
 dependencies {
+    // Sandwich
+//    implementation(libs.sandwich)
+//    implementation(libs.sandwich.retrofit)
+
     // Room
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     // Status bar color
     implementation(libs.accompanist.systemuicontroller)
@@ -67,7 +71,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.transportation.consumer)
     implementation(libs.volley)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     // Navigation
     implementation(libs.androidx.hilt.navigation.compose)

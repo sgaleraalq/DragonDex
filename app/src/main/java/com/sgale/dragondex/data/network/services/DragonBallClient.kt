@@ -27,7 +27,7 @@ class DragonBallClient @Inject constructor(
         const val LIMIT = 10
     }
 
-    suspend fun fetchCharacters(page: Int): MainResponse<CharacterResponse> {
+    suspend fun fetchCharacters(page: Int): MainResponse<CharacterResponse>? {
         return apiService.fetchCharacters(
             limit = LIMIT,
             page = page
