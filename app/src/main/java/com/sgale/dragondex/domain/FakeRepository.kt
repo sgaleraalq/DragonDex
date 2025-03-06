@@ -1,0 +1,42 @@
+/*
+ * Designed and developed by 2025 sgaleraalq (Sergio Galera)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.sgale.dragondex.domain
+
+import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.planets.PlanetModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+
+class FakeRepository: Repository {
+    override suspend fun fetchCharacters(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
+    ): Flow<List<CharacterModel>> = flowOf()
+
+    override suspend fun fetchCharacterById(id: Int) = null
+
+    override suspend fun fetchPlanets(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
+    ): Flow<List<PlanetModel>> = flowOf()
+}

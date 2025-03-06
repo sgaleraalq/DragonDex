@@ -16,6 +16,8 @@
 
 package com.sgale.dragondex.ui.characters.main
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,14 +34,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.R
+import com.sgale.dragondex.domain.FakeRepository
 import com.sgale.dragondex.domain.core.UIState
+import com.sgale.dragondex.domain.usecase.FetchCharacters
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.primaryDark
+
 
 @Composable
 fun CharactersScreen(
@@ -94,6 +101,27 @@ fun CharactersScreen(
         ) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
+            )
+        }
+    }
+}
+
+
+
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Preview
+@Composable
+private fun CharactersMainPreview(){
+    DragonDexTheme {
+        SharedTransitionScope {
+            CharactersScreen(
+                viewModel = CharactersViewModel(
+                    fetchCharacters = FetchCharacters(
+                        repository = FakeRepository()
+                    )
+                ),
+                navigateToDetail = { },
+                navigateHome = { }
             )
         }
     }

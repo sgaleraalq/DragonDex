@@ -22,5 +22,11 @@ import javax.inject.Inject
 class GetAllPlanets @Inject constructor(
     private val repository: Repository
 ) {
-    suspend operator fun invoke() = repository.getAllPlanets()
+    suspend operator fun invoke() = repository.fetchPlanets(
+        page = 0,
+        onStart = {},
+        onError = {},
+        onComplete = {},
+        onLastCall = {}
+    )
 }
