@@ -103,15 +103,6 @@ fun ItemCard(
         shape = RoundedCornerShape(16.dp)
     ) {
         content()
-//        Box(
-//            modifier = Modifier.fillMaxSize()
-//        ) {
-//            Text(
-//                text = id.toString(),
-//                modifier = Modifier.align(TopCenter),
-//                color = Color.White
-//            )
-//        }
     }
 }
 

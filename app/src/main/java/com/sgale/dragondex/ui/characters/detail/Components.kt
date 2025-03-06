@@ -18,6 +18,7 @@ package com.sgale.dragondex.ui.characters.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +46,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.OriginPlanet
+import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.core.PlanetCardContent
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.primary
 import com.sgale.dragondex.ui.theme.primaryDark
@@ -58,19 +63,7 @@ fun CardDetailInformation(
 ) {
     if (characterInfo == null) return
 
-    val context = LocalContext.current
-
-    Spacer(Modifier.height(16.dp))
-    AsyncImage(
-        model = ImageRequest.Builder(context).data(characterInfo.image).crossfade(true).build(),
-        contentDescription = stringResource(R.string.description_character_image),
-        modifier = Modifier.height(400.dp),
-        contentScale = ContentScale.Fit,
-        placeholder = painterResource(R.drawable.ic_placeholder)
-    )
-
-    Spacer(Modifier.height(16.dp))
-
+    CharImage(characterInfo.image, characterInfo.affiliation)
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -82,15 +75,32 @@ fun CardDetailInformation(
         Spacer(Modifier.height(8.dp))
         CharacterInformation(characterInfo.gender, characterInfo.race.name, characterInfo.ki, characterInfo.maxKi)
         Spacer(Modifier.height(16.dp))
+        Description(characterInfo.description)
+        ExtraInformation(characterInfo.originPlanet, characterInfo.transformations)
+    }
+}
+
+@Composable
+fun CharImage(image: String, affiliation: String) {
+    val context = LocalContext.current
+    Box(
+        modifier = Modifier.height(400.dp).padding(vertical = 16.dp)
+    ) {
+        AsyncImage(
+            modifier = Modifier.fillMaxSize(),
+            model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
+            contentDescription = stringResource(R.string.description_character_image),
+            contentScale = ContentScale.Fit,
+            placeholder = painterResource(R.drawable.ic_placeholder)
+        )
         Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            text = characterInfo.description,
+            modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            text = affiliation,
             style = roboto.copy(
                 fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
                 color = White,
-                textAlign = TextAlign.Justify
+                textAlign = TextAlign.Center
             )
         )
     }
@@ -155,6 +165,54 @@ fun CharInformation(statTitle: String, stat: String) {
         )
     }
 }
+
+@Composable
+fun Description(description: String) {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        text = description,
+        style = roboto.copy(
+            fontSize = 16.sp,
+            color = White,
+            textAlign = TextAlign.Justify
+        )
+    )
+}
+
+@Composable
+fun ExtraInformation(planet: OriginPlanet?, transformation: List<Transformation>) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        ItemCard(
+            id = 0,
+            onItemClicked = {},
+            content = {
+                PlanetCardContent(
+                    name = "Planets",
+                    image = ""
+                )
+            }
+        )
+        ItemCard(
+            id = 0,
+            onItemClicked = {},
+            content = {
+                PlanetCardContent(
+                    name = "Planets",
+                    image = ""
+                )
+            }
+        )
+    }
+}
+
+
+
+
 
 @Preview
 @Composable
