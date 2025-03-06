@@ -26,9 +26,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.domain.FakeRepository
 import com.sgale.dragondex.domain.usecase.FetchCharacterById
 import com.sgale.dragondex.ui.core.BackManagement
+import com.sgale.dragondex.ui.core.PreviewUtils
 
 @Composable
 fun CharacterDetailScreen(
@@ -36,8 +38,8 @@ fun CharacterDetailScreen(
     navigateBack: () -> Unit,
     viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
-    val isLoading       by viewModel.isLoading.collectAsState()
-    val character       by viewModel.character.collectAsState()
+    val isLoading       by viewModel.isLoading.collectAsStateWithLifecycle()
+    val character       by viewModel.character.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.getCharacterById(id)
@@ -53,19 +55,5 @@ fun CharacterDetailScreen(
     BackManagement(
         navigateBack = navigateBack,
         isLoading = isLoading
-    )
-}
-
-@Preview
-@Composable
-private fun CharacterDetailPreview(){
-    CharacterDetailScreen(
-        id = 0,
-        navigateBack = {},
-        viewModel = CharacterDetailViewModel(
-            getCharacter = FetchCharacterById(
-                repository = FakeRepository()
-            )
-        )
     )
 }

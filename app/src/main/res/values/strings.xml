@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">DragonDex</string>
 
-    // Launch Screen
+    // Character Main
     <string name="characters">Characters</string>
     <string name="planets">Planets</string>
+
+    // Character Detail
+    <string name="info">Info:</string>
+    <string name="base_ki">Base ki:</string>
+    <string name="max_ki">Max ki:</string>
 
     // Descriptions
     <string name="description_planet">Planet image</string>
@@ -12,4 +17,5 @@
     <string name="description_dragon_ball_logo">Dragon ball logo</string>
     <string name="description_back">Back Icon\n</string>
     <string name="description_app_icon">App icon</string>
+
 </resources>

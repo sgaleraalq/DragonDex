@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.FakeRepository
 import com.sgale.dragondex.domain.core.UIState
@@ -54,9 +55,9 @@ fun CharactersScreen(
     navigateToDetail: (Int) -> Unit,
     navigateHome: () -> Unit
 ) {
-    val uiState             by viewModel.uiState.collectAsState()
-    val charactersList      by viewModel.characterList.collectAsState()
-    val isLastItem          by viewModel.isLastItem.collectAsState()
+    val uiState             by viewModel.uiState.collectAsStateWithLifecycle()
+    val charactersList      by viewModel.characterList.collectAsStateWithLifecycle()
+    val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier.fillMaxSize().background(primaryDark)
