@@ -82,7 +82,7 @@ fun CardDetailInformation(
             characterInfo.ki,
             characterInfo.maxKi
         )
-        Spacer(Modifier.height(22.dp))
+        Spacer(Modifier.height(32.dp))
         Description(characterInfo.description)
         ExtraInformation()
     }
