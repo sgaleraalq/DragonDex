@@ -52,8 +52,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.characters.OriginPlanet
-import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.primary
@@ -84,9 +82,9 @@ fun CardDetailInformation(
             characterInfo.ki,
             characterInfo.maxKi
         )
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(22.dp))
         Description(characterInfo.description)
-        ExtraInformation(characterInfo.originPlanet, characterInfo.transformations)
+        ExtraInformation()
     }
 }
 
@@ -134,7 +132,8 @@ fun CharName(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = primary
+            color = primary,
+            letterSpacing = 2.sp
         )
     )
 }
@@ -207,9 +206,17 @@ fun Description(description: String) {
 }
 
 @Composable
-fun ExtraInformation(planet: OriginPlanet?, transformation: List<Transformation>) {
+fun ExtraInformation() {
     val planetsComposition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.lottie_origin_planet))
 
+    Text(
+        modifier = Modifier.padding(horizontal = 8.dp).padding(top = 22.dp),
+        text = stringResource(R.string.extra_information),
+        style = roboto.copy(
+            fontSize = 16.sp,
+            color = primary
+        )
+    )
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically

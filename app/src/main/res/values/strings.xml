@@ -11,6 +11,9 @@
     <string name="base_ki">Base ki:</string>
     <string name="max_ki">Max ki:</string>
     <string name="description">Description:</string>
+    <string name="extra_information">Extra information:</string>
+    <string name="origin_planet">Origin planet</string>
+    <string name="transformations">Transformations</string>
 
     // Descriptions
     <string name="description_planet">Planet image</string>
@@ -19,6 +22,4 @@
     <string name="description_back">Back Icon\n</string>
     <string name="description_app_icon">App icon</string>
     <string name="description_extra_information">Extra information image</string>
-    <string name="origin_planet">Origin planet</string>
-    <string name="transformations">Transformations</string>
 </resources>
