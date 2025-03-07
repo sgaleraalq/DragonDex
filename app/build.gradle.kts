@@ -53,6 +53,9 @@ android {
 }
 
 dependencies {
+    // Lottie
+    implementation(libs.lottie.compose)
+
     // Room
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)

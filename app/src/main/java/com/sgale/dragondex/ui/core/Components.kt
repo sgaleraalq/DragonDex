@@ -81,13 +81,14 @@ fun BackManagement(
 
 @Composable
 fun ItemCard(
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
     id: Int,
     color: Color? = null,
     onItemClicked: (Int) -> Unit,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp)
             .clickable {
                 onItemClicked(id)

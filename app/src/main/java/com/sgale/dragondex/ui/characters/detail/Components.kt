@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.ui.characters.detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -73,7 +75,12 @@ fun CardDetailInformation(
     ) {
         CharName(characterInfo.name)
         Spacer(Modifier.height(8.dp))
-        CharacterInformation(characterInfo.gender, characterInfo.race.name, characterInfo.ki, characterInfo.maxKi)
+        CharacterInformation(
+            characterInfo.gender,
+            characterInfo.race.name,
+            characterInfo.ki,
+            characterInfo.maxKi
+        )
         Spacer(Modifier.height(16.dp))
         Description(characterInfo.description)
         ExtraInformation(characterInfo.originPlanet, characterInfo.transformations)
@@ -84,7 +91,9 @@ fun CardDetailInformation(
 fun CharImage(image: String, affiliation: String) {
     val context = LocalContext.current
     Box(
-        modifier = Modifier.height(400.dp).padding(vertical = 16.dp)
+        modifier = Modifier
+            .height(400.dp)
+            .padding(vertical = 16.dp)
     ) {
         AsyncImage(
             modifier = Modifier.fillMaxSize(),
@@ -94,7 +103,9 @@ fun CharImage(image: String, affiliation: String) {
             placeholder = painterResource(R.drawable.ic_placeholder)
         )
         Text(
-            modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
             text = affiliation,
             style = roboto.copy(
                 fontSize = 16.sp,
@@ -131,7 +142,7 @@ fun CharacterInformation(
     race: String,
     ki: String,
     maxKi: String
-){
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -186,37 +197,41 @@ fun ExtraInformation(planet: OriginPlanet?, transformation: List<Transformation>
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         ItemCard(
+            modifier = Modifier.weight(1f),
             id = 0,
             onItemClicked = {},
             content = {
-                PlanetCardContent(
-                    name = "Planets",
-                    image = ""
-                )
+                ExtraInformationImage("", R.drawable.img_origin_planet)
             }
         )
+        Spacer(Modifier.width(12.dp))
         ItemCard(
+            modifier = Modifier.weight(1f),
             id = 0,
             onItemClicked = {},
             content = {
-                PlanetCardContent(
-                    name = "Planets",
-                    image = ""
-                )
+
             }
         )
     }
 }
 
 
-
+@Composable
+fun ExtraInformationImage(title: String, image: Int) {
+    Image(
+        painter = painterResource(image),
+        contentDescription = stringResource(R.string.description_extra_information),
+        contentScale = ContentScale.Crop
+    )
+}
 
 
 @Preview
 @Composable
-private fun CharacterDetailPreview(){
+private fun CharacterDetailPreview() {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
