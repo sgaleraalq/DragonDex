@@ -32,7 +32,7 @@ class CharacterDetailViewModel @Inject constructor(
     private val getCharacter: FetchCharacterById
 ): ViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
+    private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading
 
     private val _character = MutableStateFlow<CharacterInfo?>(null)

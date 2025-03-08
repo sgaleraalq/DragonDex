@@ -87,7 +87,6 @@ class RepositoryImpl @Inject constructor(
     override suspend fun fetchCharacterById(id: Int): CharacterInfo? {
         val characterFromDb = charactersInfoDao.getCharacterInfoById(id)
 
-        Log.i("sgalera", "characterFromDb: $characterFromDb")
         if (characterFromDb == null) {
             runCatching { dragonBallApiService.getCharacter(id) }
                 .onSuccess {
@@ -96,7 +95,6 @@ class RepositoryImpl @Inject constructor(
                     return characterInfoModel
                 }
                 .onFailure {
-                    Log.i("sgalera", "Ha ocurrido un error ${it.message}")
                     return null
                 }
         } else {
