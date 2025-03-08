@@ -6,10 +6,10 @@ import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 
 object PreviewUtils {
-    private fun mockCharacter() = CharacterModel(
+    private fun mockCharacter(id: Int) = CharacterModel(
         page = 1,
         id = 1,
-        name = "Goku",
+        name = "Goku $id",
         image = "https://dragonball-api.com/characters/goku_normal.webp",
         race = "Saiyan",
         ki = "60.000.000",
@@ -20,7 +20,7 @@ object PreviewUtils {
     )
 
     fun mockCharacterList() = List(10) {
-        mockCharacter()
+        mockCharacter(it)
     }
 
     fun mockTransformation() = Transformation(

@@ -16,8 +16,7 @@
 
 package com.sgale.dragondex.ui.characters.main
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,12 +37,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
-import com.sgale.dragondex.domain.FakeRepository
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.usecase.FetchCharacters
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.core.getCharacterRaceColor
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 
@@ -54,45 +53,27 @@ fun CharactersScreen(
     navigateToDetail: (Int) -> Unit,
     navigateHome: () -> Unit
 ) {
-    val uiState             by viewModel.uiState.collectAsStateWithLifecycle()
-    val charactersList      by viewModel.characterList.collectAsStateWithLifecycle()
-    val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val charactersList by viewModel.characterList.collectAsStateWithLifecycle()
+    val isLastItem by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier.fillMaxSize().background(DragonDexTheme.colors.backgroundDark)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DragonDexTheme.colors.backgroundDark)
     ) {
         Header(
             text = stringResource(R.string.characters),
             onBackPressed = { navigateHome() }
         )
         Spacer(Modifier.height(8.dp))
-        LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize(),
-            columns = GridCells.Fixed(2)
-        ) {
-            val threadHold = 2
-            itemsIndexed(
-                items = charactersList,
-                key = { _, character -> character.name }
-            ) { index, character ->
-                // Load more items when there are only two items left
-                if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && !isLastItem) {
-                    viewModel.fetchNextCharacters()
-                }
-
-                ItemCard(
-                    id = character.id,
-                    content = {
-                        CharacterCardContent(
-                            name = character.name,
-                            image = character.image
-                        )
-                    },
-                    color = getCharacterRaceColor(character.race),
-                    onItemClicked = { navigateToDetail(it) }
-                )
-            }
-        }
+        CharactersList(
+            charactersList = charactersList,
+            isLastItem = isLastItem,
+            uiState = uiState,
+            fetchNextCharacters = { viewModel.fetchNextCharacters() },
+            navigateToDetail = { navigateToDetail(it) }
+        )
     }
 
     if (uiState == UIState.Loading) {
@@ -106,23 +87,54 @@ fun CharactersScreen(
     }
 }
 
-
-
-@OptIn(ExperimentalSharedTransitionApi::class)
-@Preview
 @Composable
-private fun CharactersMainPreview(){
-    DragonDexTheme {
-        SharedTransitionScope {
-            CharactersScreen(
-                viewModel = CharactersViewModel(
-                    fetchCharacters = FetchCharacters(
-                        repository = FakeRepository()
+fun CharactersList(
+    charactersList: List<CharacterModel>,
+    isLastItem: Boolean,
+    uiState: UIState,
+    fetchNextCharacters: () -> Unit,
+    navigateToDetail: (Int) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
+        columns = GridCells.Fixed(2)
+    ) {
+        val threadHold = 2
+        itemsIndexed(
+            items = charactersList,
+            key = { _, character -> character.name }
+        ) { index, character ->
+            // Load more items when there are only two items left
+            if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && !isLastItem) {
+                fetchNextCharacters()
+            }
+
+            ItemCard(
+                id = character.id,
+                content = {
+                    CharacterCardContent(
+                        name = character.name,
+                        image = character.image
                     )
-                ),
-                navigateToDetail = { },
-                navigateHome = { }
+                },
+                color = getCharacterRaceColor(character.race),
+                onItemClicked = { navigateToDetail(it) }
             )
         }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun CharactersMainPreview() {
+    DragonDexTheme {
+        CharactersList(
+            charactersList = PreviewUtils.mockCharacterList(),
+            isLastItem = false,
+            uiState = UIState.Success,
+            fetchNextCharacters = {},
+            navigateToDetail = {}
+        )
     }
 }
