@@ -19,7 +19,7 @@ package com.sgale.dragondex.data.network.services
 import com.sgale.dragondex.data.network.response.characters.CharacterInfoResponse
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetsListResponse
+import com.sgale.dragondex.data.network.response.planets.PlanetResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -36,5 +36,5 @@ interface DragonBallApiService {
     suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse
 
     @GET("planets")
-    suspend fun FetchPlanets(): PlanetsListResponse
+    suspend fun fetchPlanets(): MainResponse<PlanetResponse>
 }

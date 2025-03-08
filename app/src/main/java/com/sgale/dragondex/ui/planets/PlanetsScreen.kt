@@ -42,7 +42,7 @@ fun PlanetsScreen(
 ) {
     val planetsList by viewModel.planetsList.collectAsState()
 
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Header(
@@ -50,23 +50,23 @@ fun PlanetsScreen(
             onBackPressed = { navigateHome() }
         )
         LazyVerticalGrid(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
             columns = GridCells.Fixed(2)
         ) {
-            items(planetsList?.items?.size ?: 0) { index ->
-                val planet = planetsList?.items?.get(index)
-                if (planet != null){
-                    ItemCard(
-                        id = planet.id,
-                        content = {
-                            PlanetCardContent(
-                                name = planet.name,
-                                image = planet.image
-                            )
-                        },
-                        onItemClicked = { }
-                    )
-                }
+            items(planetsList.size) { index ->
+                val planet = planetsList[index]
+                ItemCard(
+                    id = planet.id,
+                    content = {
+                        PlanetCardContent(
+                            name = planet.name,
+                            image = planet.image
+                        )
+                    },
+                    onItemClicked = { }
+                )
             }
         }
     }
