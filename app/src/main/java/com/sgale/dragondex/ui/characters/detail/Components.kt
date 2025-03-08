@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -72,6 +74,7 @@ import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
+import com.sgale.dragondex.ui.theme.grayTransparent
 import com.sgale.dragondex.ui.theme.primary
 import com.sgale.dragondex.ui.theme.primaryDark
 import com.sgale.dragondex.ui.theme.roboto
@@ -402,6 +405,78 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
         Toast.makeText(LocalContext.current, noTransformationMsg, Toast.LENGTH_SHORT).show()
         onHideDialog()
         return
+    }
+
+    Dialog(
+        onDismissRequest = { onHideDialog() }
+    ) {
+        Card(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column {
+                Text(
+                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                    text = stringResource(R.string.transformations),
+                    style = saiyanSans.copy(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Black,
+                        letterSpacing = 2.sp,
+                        textAlign = TextAlign.Center
+                    )
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2)
+                ) {
+                    items(transformations.size) {
+                        TransformationCard(transformations[it])
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+@Composable
+fun TransformationCard(transformation: Transformation) {
+    Box(
+        modifier = Modifier.padding(8.dp)
+    ) {
+        SubcomposeAsyncImage(
+            modifier = Modifier.height(200.dp).align(Alignment.Center),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(transformation.image)
+                .crossfade(true)
+                .build(),
+            loading = { CircularProgressIndicator() },
+            contentDescription = stringResource(R.string.description_character_image),
+            contentScale = ContentScale.Fit
+        )
+        Column(
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(grayTransparent).padding(vertical = 4.dp)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = transformation.name,
+                style = saiyanSans.copy(
+                    color = primary,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = transformation.ki,
+                style = roboto.copy(
+                    color = White,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            )
+        }
     }
 }
 
