@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.dao
+package com.sgale.dragondex.data.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
+import com.sgale.dragondex.data.database.entities.planets.PlanetEntity
 
-@Dao
-interface CharacterInfoDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacterById(characterInfo: CharacterInfoEntity)
-
-    @Query("SELECT * FROM CharacterInfoEntity WHERE id = :id")
-    suspend fun getCharacterInfoById(id: Int): CharacterInfoEntity?
+@Database(
+    entities = [PlanetEntity::class],
+    version = 1,
+    exportSchema = false
+)
+abstract class PlanetsDatabase: RoomDatabase() {
+    abstract fun getPlanetsDao(): PlanetsDao
 }

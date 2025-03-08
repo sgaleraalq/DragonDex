@@ -16,10 +16,9 @@
 
 package com.sgale.dragondex.data
 
-import android.util.Log
 import androidx.annotation.WorkerThread
-import com.sgale.dragondex.data.database.dao.CharacterDao
-import com.sgale.dragondex.data.database.dao.CharacterInfoDao
+import com.sgale.dragondex.data.database.dao.characters.CharacterDao
+import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
@@ -116,4 +115,14 @@ class RepositoryImpl @Inject constructor(
     ) = flow {
         emit(listOf<Planet>())
     }
+
+//    override suspend fun fetchPlanets(
+//        page: Int,
+//        onStart: () -> Unit,
+//        onComplete: () -> Unit,
+//        onError: (String) -> Unit,
+//        onLastCall: () -> Unit
+//    ) = flow {
+//
+//    }
 }

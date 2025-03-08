@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.entities
+package com.sgale.dragondex.data.database.entities.characters
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

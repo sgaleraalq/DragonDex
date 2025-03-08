@@ -21,20 +21,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sgale.dragondex.domain.FakeRepository
-import com.sgale.dragondex.domain.usecase.FetchCharacterById
-import com.sgale.dragondex.ui.core.BackManagement
-import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.core.BackManagement
 
 @Composable
 fun CharacterDetailScreen(

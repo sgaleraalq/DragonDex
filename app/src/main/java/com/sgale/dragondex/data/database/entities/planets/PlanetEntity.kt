@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.usecase
+package com.sgale.dragondex.data.database.entities.planets
 
-import com.sgale.dragondex.domain.Repository
-import javax.inject.Inject
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class FetchPlanets @Inject constructor(
-    private val repository: Repository
-) {
-    suspend operator fun invoke() = repository.fetchPlanets(
-        page = 0,
-        onStart = {},
-        onError = {},
-        onComplete = {},
-        onLastCall = {}
-    )
-}
+@Entity
+data class PlanetEntity(
+    val page: Int = 0,
+    @PrimaryKey val id: Int,
+    val name: String,
+    val image: String,
+    val description: String,
+    val isDestroyed: Boolean
+)

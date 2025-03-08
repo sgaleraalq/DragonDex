@@ -16,7 +16,7 @@
 
 package com.sgale.dragondex.data.database.entities.mapper
 
-import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
+import com.sgale.dragondex.data.database.entities.characters.CharacterInfoEntity
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 
 object CharacterInfoEntityMapper : EntityMapper<CharacterInfo, CharacterInfoEntity>{

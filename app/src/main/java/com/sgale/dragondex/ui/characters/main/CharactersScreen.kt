@@ -53,9 +53,9 @@ fun CharactersScreen(
     navigateToDetail: (Int) -> Unit,
     navigateHome: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val charactersList by viewModel.characterList.collectAsStateWithLifecycle()
-    val isLastItem by viewModel.isLastItem.collectAsStateWithLifecycle()
+    val uiState         by viewModel.uiState.collectAsStateWithLifecycle()
+    val charactersList  by viewModel.characterList.collectAsStateWithLifecycle()
+    val isLastItem      by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier

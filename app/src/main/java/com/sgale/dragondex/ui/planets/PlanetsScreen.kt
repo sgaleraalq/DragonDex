@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,16 +32,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.R
+import com.sgale.dragondex.domain.core.UIState
+import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PlanetCardContent
+import com.sgale.dragondex.ui.core.PreviewUtils
+import com.sgale.dragondex.ui.core.getCharacterRaceColor
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
 fun PlanetsScreen(
     viewModel: PlanetsViewModel = hiltViewModel(),
     navigateHome: () -> Unit
 ) {
+    val uiState     by viewModel.uiState.collectAsState()
     val planetsList by viewModel.planetsList.collectAsState()
+    val isLastItem  by viewModel.isLastItem.collectAsState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -49,34 +59,64 @@ fun PlanetsScreen(
             text = stringResource(R.string.planets),
             onBackPressed = { navigateHome() }
         )
-        LazyVerticalGrid(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            columns = GridCells.Fixed(2)
-        ) {
-            items(planetsList.size) { index ->
-                val planet = planetsList[index]
-                ItemCard(
-                    id = planet.id,
-                    content = {
-                        PlanetCardContent(
-                            name = planet.name,
-                            image = planet.image
-                        )
-                    },
-                    onItemClicked = { }
-                )
+        PlanetsList(
+            planetsList = planetsList,
+            isLastItem = isLastItem,
+            uiState = uiState,
+            fetchNextCharacters = { viewModel.fetchNextPlanets() },
+            navigateToDetail = { }
+        )
+    }
+}
+
+@Composable
+fun PlanetsList(
+    planetsList: List<Planet>,
+    isLastItem: Boolean,
+    uiState: UIState,
+    fetchNextCharacters: () -> Unit,
+    navigateToDetail: (Int) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
+        columns = GridCells.Fixed(2)
+    ) {
+        val threadHold = 2
+        itemsIndexed(
+            items = planetsList,
+            key = { _, planet -> planet.id }
+        ) { index, planet ->
+            // Load more items when there are only two items left
+            if ((index + threadHold) >= planetsList.size && uiState != UIState.Loading && !isLastItem) {
+                fetchNextCharacters()
             }
+
+            ItemCard(
+                id = planet.id,
+                content = {
+                    PlanetCardContent(
+                        name = planet.name,
+                        image = planet.image
+                    )
+                },
+                onItemClicked = { }
+            )
         }
     }
 }
+
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PlanetsMainPreview() {
-    PlanetsScreen(
-        navigateHome = {}
-    )
+    DragonDexTheme {
+        PlanetsList(
+            planetsList = PreviewUtils.mockPlanetList(),
+            isLastItem = false,
+            uiState = UIState.Success,
+            fetchNextCharacters = {},
+            navigateToDetail = {}
+        )
+    }
 }

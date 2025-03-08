@@ -28,6 +28,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -51,6 +54,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sgale.dragondex.R
+import com.sgale.dragondex.domain.core.UIState
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans

@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.entities
+package com.sgale.dragondex.domain.usecase
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.sgale.dragondex.domain.Repository
+import javax.inject.Inject
 
-@Entity
-data class CharacterEntity(
-    val page: Int = 0,
-    @PrimaryKey val id: Int,
-    val name: String,
-    val image: String,
-    val race: String,
-    val ki: String,
-    val maxKi: String,
-    val gender: String,
-    val description: String,
-    val affiliation: String,
-    val deletedAt: String? = null
-)
+class FetchPlanets @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(
+        page: Int,
+        onStart: () -> Unit,
+        onComplete: () -> Unit,
+        onError: (String) -> Unit,
+        onLastCall: () -> Unit
+    ) = repository.fetchPlanets(
+        page = 0,
+        onStart = {},
+        onError = {},
+        onComplete = {},
+        onLastCall = {}
+    )
+}

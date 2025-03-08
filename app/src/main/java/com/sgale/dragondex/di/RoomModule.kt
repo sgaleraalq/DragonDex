@@ -19,6 +19,7 @@ package com.sgale.dragondex.di
 import android.content.Context
 import androidx.room.Room
 import com.sgale.dragondex.data.database.CharactersDatabase
+import com.sgale.dragondex.data.database.PlanetsDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,10 +35,19 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideRoom(@ApplicationContext context: Context) =
+    fun provideCharactersDb(@ApplicationContext context: Context) =
         Room.databaseBuilder(
             context = context,
             klass = CharactersDatabase::class.java,
+            name = CHARACTER_DATABASE_NAME
+        ).build()
+
+    @Singleton
+    @Provides
+    fun providePlanetsDb(@ApplicationContext context: Context) =
+        Room.databaseBuilder(
+            context = context,
+            klass = PlanetsDatabase::class.java,
             name = CHARACTER_DATABASE_NAME
         ).build()
 
@@ -49,4 +59,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideCharacterInfoDao(database: CharactersDatabase) = database.getCharacterInfoDao()
+
+    @Singleton
+    @Provides
+    fun providePlanetsDao(database: PlanetsDatabase) = database.getPlanetsDao()
 }

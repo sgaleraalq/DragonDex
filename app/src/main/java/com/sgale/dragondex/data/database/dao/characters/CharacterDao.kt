@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.dao
+package com.sgale.dragondex.data.database.dao.characters
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sgale.dragondex.data.database.entities.CharacterEntity
-import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
+import com.sgale.dragondex.data.database.entities.characters.CharacterEntity
 
 @Dao
 interface CharacterDao {

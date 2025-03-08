@@ -19,36 +19,48 @@ package com.sgale.dragondex.ui.planets
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.Planet
 import com.sgale.dragondex.domain.usecase.FetchPlanets
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PlanetsViewModel @Inject constructor(
     private val fetchPlanets: FetchPlanets
 ): ViewModel() {
 
-    private val _planetsList = MutableStateFlow<List<Planet>>(emptyList())
-    val planetsList = _planetsList
+    private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
+    val uiState = _uiState
 
-    init {
-//        viewModelScope.launch {
-//            val planetsList = withContext(Dispatchers.IO) {
-//                FetchPlanets()
-//            }
-//            if (planetsList != null) {
-//                _planetsList.value = planetsList
-//            }
-//        }
+    private val charactersFetchingIndex = MutableStateFlow(1)
+
+    private var _isLastItem = MutableStateFlow(false)
+    val isLastItem = _isLastItem
+
+    val planetsList: StateFlow<List<Planet>> = charactersFetchingIndex.flatMapLatest { page ->
+        fetchPlanets(
+            page = page,
+            onStart =       { _uiState.value = UIState.Loading      },
+            onComplete =    { _uiState.value = UIState.Success      },
+            onError =       { _uiState.value = UIState.Error(it)    },
+            onLastCall =    { _isLastItem.value = true              }
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = emptyList()
+    )
+
+    fun fetchNextPlanets() {
+        if (_uiState.value != UIState.Loading) {
+            charactersFetchingIndex.value++
+        }
     }
 }

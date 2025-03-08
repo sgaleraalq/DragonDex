@@ -295,8 +295,8 @@ fun ExtraInformationCard(
 }
 
 @Composable
-fun DialogOriginPlanet(originPlanet: Planet?, onHideDialog: () -> Unit = {}) {
-    if (originPlanet == null) return
+fun DialogOriginPlanet(planet: Planet?, onHideDialog: () -> Unit = {}) {
+    if (planet == null) return
 
     Dialog(
         onDismissRequest = { onHideDialog() }
@@ -313,10 +313,10 @@ fun DialogOriginPlanet(originPlanet: Planet?, onHideDialog: () -> Unit = {}) {
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                PlanetDialogHeader(originPlanet)
+                PlanetDialogHeader(planet)
                 SubcomposeAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(originPlanet.image)
+                        .data(planet.image)
                         .crossfade(true)
                         .build(),
                     loading = { CircularProgressIndicator() },
@@ -326,7 +326,7 @@ fun DialogOriginPlanet(originPlanet: Planet?, onHideDialog: () -> Unit = {}) {
                 )
                 Text(
                     modifier = Modifier.fillMaxWidth().padding(12.dp),
-                    text = originPlanet.description,
+                    text = planet.description,
                     style = roboto.copy(
                         fontSize = 16.sp,
                         color = DragonDexTheme.colors.black,
@@ -339,7 +339,7 @@ fun DialogOriginPlanet(originPlanet: Planet?, onHideDialog: () -> Unit = {}) {
 }
 
 @Composable
-fun PlanetDialogHeader(originPlanet: Planet) {
+fun PlanetDialogHeader(planet: Planet) {
     val context = LocalContext.current
     val planetDestroyedMsg = stringResource(R.string.planet_destroyed_msg)
     val planetNotDestroyedMsg = stringResource(R.string.planet_not_destroyed_msg)
@@ -355,11 +355,11 @@ fun PlanetDialogHeader(originPlanet: Planet) {
                 .clickable {
                     Toast.makeText(
                         context,
-                        if (originPlanet.isDestroyed) planetDestroyedMsg else planetNotDestroyedMsg,
+                        if (planet.isDestroyed) planetDestroyedMsg else planetNotDestroyedMsg,
                         Toast.LENGTH_SHORT
                     ).show()
                 },
-            painter = painterResource(if (originPlanet.isDestroyed) R.drawable.ic_planet_destroyed else R.drawable.ic_planet),
+            painter = painterResource(if (planet.isDestroyed) R.drawable.ic_planet_destroyed else R.drawable.ic_planet),
             contentDescription = stringResource(R.string.description_planet),
             tint = Color.Unspecified
         )
@@ -367,7 +367,7 @@ fun PlanetDialogHeader(originPlanet: Planet) {
             modifier = Modifier
                 .weight(1f)
                 .padding(top = 4.dp),
-            text = originPlanet.name.uppercase(),
+            text = planet.name.uppercase(),
             style = saiyanSans.copy(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
@@ -495,7 +495,7 @@ private fun CharacterDetailPreview() {
 private fun CharacterOriginPlanetPreview() {
     DragonDexTheme {
         DialogOriginPlanet(
-            originPlanet = PreviewUtils.mockOriginPlanet()
+            planet = PreviewUtils.mockPlanet(1)
         )
     }
 }
