@@ -14,6 +14,11 @@
     <string name="extra_information">Extra information:</string>
     <string name="origin_planet">Origin planet</string>
     <string name="transformations">Transformations</string>
+    <string name="planet_destroyed_msg">Planet is destroyed</string>
+    <string name="planet_not_destroyed_msg">Planet is not destroyed</string>
+
+    // Errors
+    <string name="error_msg">An error has occurred</string>
 
     // Descriptions
     <string name="description_planet">Planet image</string>
@@ -22,5 +27,4 @@
     <string name="description_back">Back Icon\n</string>
     <string name="description_app_icon">App icon</string>
     <string name="description_extra_information">Extra information image</string>
-    <string name="error_msg">An error has occurred</string>
 </resources>

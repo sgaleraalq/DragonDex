@@ -32,6 +32,15 @@ object PreviewUtils {
         deletedAt = null
     )
 
+    fun mockOriginPlanet() = OriginPlanet(
+        id = 3,
+        name = "Vegeta",
+        isDestroyed = true,
+        image = "https://dragonball-api.com/planetas/Planeta_Vegeta_en_Dragon_Ball_Super_Broly.webp",
+        description = "Test description Test description Test description Test description Test description Test description Test description Test description Test description Test description ",
+        deletedAt = null
+    )
+
     fun mockCharacterInfo() = CharacterInfo(
         id = 1,
         name = "Goku",
@@ -42,14 +51,7 @@ object PreviewUtils {
         gender = "Male",
         description = "Test description Test description Test description Test description Test description Test description Test description Test description Test description Test description ",
         affiliation = "Z Fighter",
-        originPlanet = OriginPlanet(
-            id = 3,
-            name = "Vegeta",
-            isDestroyed = true,
-            image = "https://dragonball-api.com/planetas/Planeta_Vegeta_en_Dragon_Ball_Super_Broly.webp",
-            description = "Test description Test description Test description Test description Test description Test description Test description Test description Test description Test description ",
-            deletedAt = null
-        ),
+        originPlanet = mockOriginPlanet(),
         transformations = List(5) {
             mockTransformation()
         }
