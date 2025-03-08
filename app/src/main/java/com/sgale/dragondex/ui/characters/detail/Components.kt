@@ -31,8 +31,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -57,6 +60,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImage
+import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
@@ -268,7 +272,6 @@ fun ExtraInformation(
     }
 }
 
-
 @Composable
 fun ExtraInformationCard(
     modifier: Modifier,
@@ -301,7 +304,6 @@ fun ExtraInformationCard(
     }
 }
 
-
 @Composable
 fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {}) {
     if (originPlanet == null) return
@@ -310,9 +312,7 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
@@ -321,14 +321,14 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 PlanetDialogHeader(originPlanet)
-                AsyncImage(
+                SubcomposeAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(originPlanet.image)
                         .crossfade(true)
                         .build(),
-                    placeholder = painterResource(R.drawable.ic_placeholder),
+                    loading = { CircularProgressIndicator() },
                     contentDescription = stringResource(R.string.description_character_image),
-                    modifier = Modifier.height(150.dp).padding(vertical = 12.dp),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp).clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Fit
                 )
                 Text(
@@ -358,7 +358,7 @@ fun PlanetDialogHeader(originPlanet: OriginPlanet) {
     ) {
         Icon(
             modifier = Modifier
-                .size(24.dp)
+                .size(32.dp)
                 .clickable {
                     Toast.makeText(
                         context,
@@ -376,7 +376,7 @@ fun PlanetDialogHeader(originPlanet: OriginPlanet) {
                 .padding(top = 4.dp),
             text = originPlanet.name.uppercase(),
             style = saiyanSans.copy(
-                fontSize = 16.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Black,
                 letterSpacing = 2.sp,
