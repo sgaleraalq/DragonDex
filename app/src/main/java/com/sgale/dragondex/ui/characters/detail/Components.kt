@@ -36,6 +36,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -74,8 +75,8 @@ import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
+import com.sgale.dragondex.ui.theme.dragonBallOrange
 import com.sgale.dragondex.ui.theme.grayTransparent
-import com.sgale.dragondex.ui.theme.primary
 import com.sgale.dragondex.ui.theme.primaryDark
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
@@ -128,11 +129,12 @@ fun CharImage(image: String, affiliation: String) {
     val context = LocalContext.current
     Box(
         modifier = Modifier
-            .height(400.dp)
+            .height(200.dp)
             .padding(vertical = 16.dp)
+            .fillMaxWidth()
     ) {
         AsyncImage(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.height(200.dp).align(Alignment.Center),
             model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
             contentDescription = stringResource(R.string.description_character_image),
             contentScale = ContentScale.Fit,
@@ -166,7 +168,7 @@ fun CharName(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = primary,
+            color = dragonBallOrange,
             letterSpacing = 2.sp
         )
     )
@@ -198,7 +200,7 @@ fun CharInformation(statTitle: String, stat: String) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                color = primary
+                color = dragonBallOrange
             )
         )
         Spacer(Modifier.height(2.dp))
@@ -223,7 +225,7 @@ fun Description(description: String) {
         style = roboto.copy(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = primary
+            color = dragonBallOrange
         )
     )
     Text(
@@ -253,7 +255,7 @@ fun ExtraInformation(
         text = stringResource(R.string.extra_information),
         style = roboto.copy(
             fontSize = 16.sp,
-            color = primary
+            color = dragonBallOrange
         )
     )
     Row(
@@ -316,7 +318,10 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = primaryDark
+            )
         ) {
             Column(
                 modifier = Modifier
@@ -400,7 +405,7 @@ fun PlanetDialogHeader(originPlanet: OriginPlanet) {
 
 @Composable
 fun DialogTransformation(transformations: List<Transformation>, onHideDialog: () -> Unit = {}) {
-    val noTransformationMsg = stringResource(R.string.error_msg)
+    val noTransformationMsg = stringResource(R.string.no_transformations_found)
     if (transformations.isEmpty()){
         Toast.makeText(LocalContext.current, noTransformationMsg, Toast.LENGTH_SHORT).show()
         onHideDialog()
@@ -411,11 +416,11 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
         ) {
             Column {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
                     text = stringResource(R.string.transformations),
                     style = saiyanSans.copy(
                         fontSize = 24.sp,
@@ -460,7 +465,7 @@ fun TransformationCard(transformation: Transformation) {
                 modifier = Modifier.fillMaxWidth(),
                 text = transformation.name,
                 style = saiyanSans.copy(
-                    color = primary,
+                    color = dragonBallOrange,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center

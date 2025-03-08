@@ -11,16 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = primary
+    // dragonBallOrange
+
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = primary
+    dragonBallOrange = primary
 )
+
+private val LocalColors = compositionLocalOf<DragonDexColors> {
+    error("No colors provided! Make sure to wrap all usages of DragonDexColors in DragonDexTheme.")
+}
 
 @Composable
 fun DragonDexTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    colors: DragonDexColors = DragonDexTheme.colors,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit

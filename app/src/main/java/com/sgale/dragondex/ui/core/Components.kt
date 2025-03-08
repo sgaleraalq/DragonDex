@@ -51,8 +51,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.theme.dragonBallOrange
 import com.sgale.dragondex.ui.theme.grayTransparent
-import com.sgale.dragondex.ui.theme.primary
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
 
@@ -73,7 +73,7 @@ fun BackManagement(
         if (isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
-                color = primary
+                color = dragonBallOrange
             )
         }
     }
@@ -180,7 +180,7 @@ fun Header(
     onBackPressed: () -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().background(primary).padding(vertical = 8.dp, horizontal = 4.dp),
+        modifier = Modifier.fillMaxWidth().background(dragonBallOrange).padding(vertical = 8.dp, horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
