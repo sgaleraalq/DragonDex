@@ -37,7 +37,6 @@ import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
-    private val dragonBallApiService: DragonBallApiService,
     private val dragonBallClient: DragonBallClient,
     private val charactersDao: CharacterDao,
     private val charactersInfoDao: CharacterInfoDao,
@@ -84,7 +83,7 @@ class RepositoryImpl @Inject constructor(
         val characterFromDb = charactersInfoDao.getCharacterInfoById(id)
 
         if (characterFromDb == null) {
-            runCatching { dragonBallApiService.getCharacter(id) }
+            runCatching { dragonBallClient.getCharacter(id) }
                 .onSuccess {
                     val characterInfoModel = it.asDomain()
                     charactersInfoDao.insertCharacterById(characterInfoModel.asEntity())

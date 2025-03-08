@@ -76,7 +76,6 @@ internal object NetworkModule {
     @Provides
     fun provideRepository(
         client: DragonBallClient,
-        apiService: DragonBallApiService,
         characterDao: CharacterDao,
         charactersInfoDao: CharacterInfoDao,
         planetsDao: PlanetsDao,
@@ -84,7 +83,6 @@ internal object NetworkModule {
     ): Repository {
         return RepositoryImpl(
             dragonBallClient = client,
-            dragonBallApiService = apiService,
             charactersDao = characterDao,
             charactersInfoDao = charactersInfoDao,
             planetsDao = planetsDao,
