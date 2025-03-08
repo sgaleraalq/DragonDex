@@ -39,12 +39,12 @@ class PlanetsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
 
-    private val charactersFetchingIndex = MutableStateFlow(1)
+    private val planetsFetchingIndex = MutableStateFlow(1)
 
     private var _isLastItem = MutableStateFlow(false)
     val isLastItem = _isLastItem
 
-    val planetsList: StateFlow<List<Planet>> = charactersFetchingIndex.flatMapLatest { page ->
+    val planetsList: StateFlow<List<Planet>> = planetsFetchingIndex.flatMapLatest { page ->
         fetchPlanets(
             page = page,
             onStart =       { _uiState.value = UIState.Loading      },
@@ -60,7 +60,7 @@ class PlanetsViewModel @Inject constructor(
 
     fun fetchNextPlanets() {
         if (_uiState.value != UIState.Loading) {
-            charactersFetchingIndex.value++
+            planetsFetchingIndex.value++
         }
     }
 }

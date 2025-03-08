@@ -32,6 +32,7 @@ import javax.inject.Singleton
 object RoomModule {
 
     private const val CHARACTER_DATABASE_NAME = "character_database"
+    private const val PLANETS_DATABASE_NAME = "planets_database"
 
     @Singleton
     @Provides
@@ -48,7 +49,7 @@ object RoomModule {
         Room.databaseBuilder(
             context = context,
             klass = PlanetsDatabase::class.java,
-            name = CHARACTER_DATABASE_NAME
+            name = PLANETS_DATABASE_NAME
         ).build()
 
 

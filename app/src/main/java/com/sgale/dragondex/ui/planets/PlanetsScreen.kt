@@ -19,7 +19,6 @@ package com.sgale.dragondex.ui.planets
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -29,18 +28,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.Planet
-import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PlanetCardContent
 import com.sgale.dragondex.ui.core.PreviewUtils
-import com.sgale.dragondex.ui.core.getCharacterRaceColor
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
@@ -63,7 +58,7 @@ fun PlanetsScreen(
             planetsList = planetsList,
             isLastItem = isLastItem,
             uiState = uiState,
-            fetchNextCharacters = { viewModel.fetchNextPlanets() },
+            fetchNextPlanets = { viewModel.fetchNextPlanets() },
             navigateToDetail = { }
         )
     }
@@ -74,7 +69,7 @@ fun PlanetsList(
     planetsList: List<Planet>,
     isLastItem: Boolean,
     uiState: UIState,
-    fetchNextCharacters: () -> Unit,
+    fetchNextPlanets: () -> Unit,
     navigateToDetail: (Int) -> Unit
 ) {
     LazyVerticalGrid(
@@ -88,7 +83,7 @@ fun PlanetsList(
         ) { index, planet ->
             // Load more items when there are only two items left
             if ((index + threadHold) >= planetsList.size && uiState != UIState.Loading && !isLastItem) {
-                fetchNextCharacters()
+                fetchNextPlanets()
             }
 
             ItemCard(
@@ -115,7 +110,7 @@ private fun PlanetsMainPreview() {
             planetsList = PreviewUtils.mockPlanetList(),
             isLastItem = false,
             uiState = UIState.Success,
-            fetchNextCharacters = {},
+            fetchNextPlanets = {},
             navigateToDetail = {}
         )
     }

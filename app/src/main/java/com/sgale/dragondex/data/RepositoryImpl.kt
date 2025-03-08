@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.data
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
@@ -112,7 +113,7 @@ class RepositoryImpl @Inject constructor(
     ) = flow {
         var planets = planetsDao.getPlanetsList(page).asDomain()
         if (planets.isEmpty()) {
-            val response = runCatching { dragonBallClient.fetchPlanets(page = page) }.onFailure { onError(it.message ?: "Unknown Error") }.getOrNull()
+            val response = runCatching { dragonBallClient.fetchPlanets(page) }.onFailure { onError(it.message ?: "Unknown Error") }.getOrNull()
 
             if (response != null) {
                 if (response.links.next.isNullOrBlank()) {
@@ -120,7 +121,7 @@ class RepositoryImpl @Inject constructor(
                 }
                 planets = response.items.map { it.asDomain().copy(page = page) }
                 planetsDao.insertPlanetsList(planets.asEntity())
-                emit(planetsDao.getPlanetsList(page).asDomain())
+                emit(planetsDao.getAllPlanets(page).asDomain())
             } else {
                 onError("API ERROR")
             }

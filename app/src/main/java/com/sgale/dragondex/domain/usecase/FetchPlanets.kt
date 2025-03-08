@@ -29,10 +29,10 @@ class FetchPlanets @Inject constructor(
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = repository.fetchPlanets(
-        page = 0,
-        onStart = {},
-        onError = {},
-        onComplete = {},
-        onLastCall = {}
+        page = page,
+        onStart = onStart,
+        onComplete = onComplete,
+        onError =  { onError(it) },
+        onLastCall = onLastCall
     )
 }

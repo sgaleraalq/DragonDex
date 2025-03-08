@@ -30,4 +30,7 @@ interface PlanetsDao {
 
     @Query("SELECT * FROM PlanetEntity WHERE page =:page")
     fun getPlanetsList(page: Int): List<PlanetEntity>
+
+    @Query("SELECT * FROM PlanetEntity WHERE page <=:page")
+    fun getAllPlanets(page: Int): List<PlanetEntity>
 }

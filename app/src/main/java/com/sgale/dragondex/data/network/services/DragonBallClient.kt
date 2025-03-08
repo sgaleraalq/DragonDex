@@ -42,7 +42,6 @@ class DragonBallClient @Inject constructor(
 
     suspend fun fetchPlanets(page: Int): MainResponse<PlanetResponse> {
         return apiService.fetchPlanets(
-            limit = LIMIT,
             page = page
         )
     }

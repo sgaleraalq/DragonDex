@@ -37,7 +37,6 @@ interface DragonBallApiService {
 
     @GET("planets")
     suspend fun fetchPlanets(
-        @Query("limit") limit: Int = 10,
         @Query("page") page: Int
     ): MainResponse<PlanetResponse>
 }
