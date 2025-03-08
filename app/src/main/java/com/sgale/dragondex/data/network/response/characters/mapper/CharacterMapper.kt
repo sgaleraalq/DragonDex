@@ -9,7 +9,6 @@ import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
-import com.sgale.dragondex.domain.model.characters.mapRace
 
 object CharacterMapper : ResponseMapper <CharacterModel, CharacterResponse> {
     override fun asDomain(response: CharacterResponse) =
@@ -17,7 +16,7 @@ object CharacterMapper : ResponseMapper <CharacterModel, CharacterResponse> {
             id = response.id,
             name = response.name,
             image = response.image,
-            race = mapRace(response.race),
+            race = response.race,
             ki = response.ki,
             maxKi = response.maxKi,
             gender = response.gender,
@@ -32,7 +31,7 @@ object CharacterInfoMapper : ResponseMapper<CharacterInfo, CharacterInfoResponse
             id = response.id,
             name = response.name,
             image = response.image,
-            race = mapRace(response.race),
+            race = response.race,
             ki = response.ki,
             maxKi = response.maxKi,
             gender = response.gender,

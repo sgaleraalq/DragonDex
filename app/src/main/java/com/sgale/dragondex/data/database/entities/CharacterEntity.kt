@@ -18,7 +18,6 @@ package com.sgale.dragondex.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sgale.dragondex.domain.model.characters.CharacterRace
 
 @Entity
 data class CharacterEntity(

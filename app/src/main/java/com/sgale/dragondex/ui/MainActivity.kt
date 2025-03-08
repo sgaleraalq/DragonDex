@@ -27,9 +27,6 @@ import com.sgale.dragondex.ui.core.Route.Planets
 import com.sgale.dragondex.ui.home.HomeScreen
 import com.sgale.dragondex.ui.planets.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
-import com.sgale.dragondex.ui.theme.bluePrimary
-import com.sgale.dragondex.ui.theme.blueSecondary
-import com.sgale.dragondex.ui.theme.dragonBallOrange
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +37,7 @@ class MainActivity : ComponentActivity() {
             val systemUiController  = rememberSystemUiController()
             val navController       = rememberNavController()
 
-            systemUiController.setStatusBarColor(color = dragonBallOrange)
+            systemUiController.setStatusBarColor(color = DragonDexTheme.colors.primary)
             DragonDexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Content(
@@ -70,7 +67,7 @@ fun Content(
     NavHost(
         modifier = modifier.background(
             brush = Brush.radialGradient(
-                colors = listOf(bluePrimary, blueSecondary),
+                colors = listOf(DragonDexTheme.colors.bluePrimary, DragonDexTheme.colors.bluePrimary),
                 center = Offset(x = 0.5f, y = 1f),
                 radius = 2500f
             )

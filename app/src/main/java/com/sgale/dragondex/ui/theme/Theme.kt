@@ -1,23 +1,13 @@
 package com.sgale.dragondex.ui.theme
 
-import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-
-private val DarkColorScheme = darkColorScheme(
-    // dragonBallOrange
-
-)
-
-private val LightColorScheme = lightColorScheme(
-    dragonBallOrange = primary
-)
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 
 private val LocalColors = compositionLocalOf<DragonDexColors> {
     error("No colors provided! Make sure to wrap all usages of DragonDexColors in DragonDexTheme.")
@@ -26,24 +16,36 @@ private val LocalColors = compositionLocalOf<DragonDexColors> {
 @Composable
 fun DragonDexTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    colors: DragonDexColors = DragonDexTheme.colors,
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    colors: DragonDexColors = if (darkTheme){
+        DragonDexColors.defaultDarkColors()
+    } else {
+        DragonDexColors.defaultLightColors()
+    },
+    background: DragonDexBackground = DragonDexBackground.defaultBackground(darkTheme),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    CompositionLocalProvider(
+        LocalColors provides colors,
+        LocalBackgroundTheme provides background
+    ) {
+        Box(
+            modifier = Modifier.background(background.color)
+        ) {
+            content()
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
     }
+}
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+object DragonDexTheme {
+
+    val colors: DragonDexColors
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalColors.current
+
+    val background: DragonDexBackground
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBackgroundTheme.current
+
 }

@@ -75,9 +75,7 @@ import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
-import com.sgale.dragondex.ui.theme.dragonBallOrange
-import com.sgale.dragondex.ui.theme.grayTransparent
-import com.sgale.dragondex.ui.theme.primaryDark
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
 
@@ -95,7 +93,7 @@ fun CardDetailInformation(
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .background(primaryDark)
+            .background(DragonDexTheme.colors.backgroundDark)
             .padding(16.dp)
             .padding(vertical = 8.dp)
     ) {
@@ -103,7 +101,7 @@ fun CardDetailInformation(
         Spacer(Modifier.height(8.dp))
         CharacterInformation(
             characterInfo.gender,
-            characterInfo.race.name,
+            characterInfo.race,
             characterInfo.ki,
             characterInfo.maxKi
         )
@@ -168,7 +166,7 @@ fun CharName(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            color = dragonBallOrange,
+            color = DragonDexTheme.colors.primary,
             letterSpacing = 2.sp
         )
     )
@@ -200,7 +198,7 @@ fun CharInformation(statTitle: String, stat: String) {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                color = dragonBallOrange
+                color = DragonDexTheme.colors.primary
             )
         )
         Spacer(Modifier.height(2.dp))
@@ -225,7 +223,7 @@ fun Description(description: String) {
         style = roboto.copy(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = dragonBallOrange
+            color = DragonDexTheme.colors.primary
         )
     )
     Text(
@@ -255,7 +253,7 @@ fun ExtraInformation(
         text = stringResource(R.string.extra_information),
         style = roboto.copy(
             fontSize = 16.sp,
-            color = dragonBallOrange
+            color = DragonDexTheme.colors.primary
         )
     )
     Row(
@@ -320,7 +318,7 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = primaryDark
+                containerColor = DragonDexTheme.colors.backgroundLight
             )
         ) {
             Column(
@@ -459,13 +457,13 @@ fun TransformationCard(transformation: Transformation) {
             contentScale = ContentScale.Fit
         )
         Column(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(grayTransparent).padding(vertical = 4.dp)
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(DragonDexTheme.colors.grayTransparent).padding(vertical = 4.dp)
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = transformation.name,
                 style = saiyanSans.copy(
-                    color = dragonBallOrange,
+                    color = DragonDexTheme.colors.primary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center

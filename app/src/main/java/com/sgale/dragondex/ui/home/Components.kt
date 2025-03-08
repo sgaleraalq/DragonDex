@@ -41,7 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgale.dragondex.R
-import com.sgale.dragondex.ui.theme.grayTransparent
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
@@ -76,7 +76,7 @@ fun LaunchCard(
                 contentScale = ContentScale.Crop
             )
             Text(
-                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(grayTransparent).padding(bottom = 8.dp, top = 8.dp),
+                modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(DragonDexTheme.colors.grayTransparent).padding(bottom = 8.dp, top = 8.dp),
                 text = text,
                 style = saiyanSans.copy(
                     fontSize = 18.sp,

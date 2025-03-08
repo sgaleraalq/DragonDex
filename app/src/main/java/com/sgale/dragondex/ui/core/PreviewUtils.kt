@@ -4,7 +4,6 @@ import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
-import com.sgale.dragondex.domain.model.characters.mapRace
 
 object PreviewUtils {
     fun mockCharacter() = CharacterModel(
@@ -12,7 +11,7 @@ object PreviewUtils {
         id = 1,
         name = "Goku",
         image = "https://dragonball-api.com/characters/goku_normal.webp",
-        race = mapRace("Saiyan"),
+        race = "Saiyan",
         ki = "60.000.000",
         maxKi = "90 Septillion",
         gender = "Male",
@@ -45,7 +44,7 @@ object PreviewUtils {
         id = 1,
         name = "Goku",
         image = "https://dragonball-api.com/characters/goku_normal.webp",
-        race = mapRace("Saiyan"),
+        race = "Saiyan",
         ki = "60.000.000",
         maxKi = "90 Septillion",
         gender = "Male",

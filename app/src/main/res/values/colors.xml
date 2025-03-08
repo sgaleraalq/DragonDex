@@ -5,6 +5,9 @@
     <color name="orange">#FFA726</color>
     <color name="green">#388E3C</color>
     <color name="blue">#0091EA</color>
+    <color name="bluePrimary">#FF0E5FD3</color>
+    <color name="blueSecondary">#FFAAE3F6</color>
+    <color name="grayTransparent">#CCC9C8C8</color>
     <color name="saiyanColor">#F6DC6A</color>
     <color name="namekianColor">#72CA28</color>
     <color name="humanColor">#DCA98B</color>

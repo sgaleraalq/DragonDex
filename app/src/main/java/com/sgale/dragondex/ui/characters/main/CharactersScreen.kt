@@ -29,7 +29,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,8 +44,8 @@ import com.sgale.dragondex.domain.usecase.FetchCharacters
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
+import com.sgale.dragondex.ui.core.getCharacterRaceColor
 import com.sgale.dragondex.ui.theme.DragonDexTheme
-import com.sgale.dragondex.ui.theme.primaryDark
 
 
 @Composable
@@ -60,7 +59,7 @@ fun CharactersScreen(
     val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier.fillMaxSize().background(primaryDark)
+        modifier = Modifier.fillMaxSize().background(DragonDexTheme.colors.backgroundDark)
     ) {
         Header(
             text = stringResource(R.string.characters),
@@ -89,7 +88,7 @@ fun CharactersScreen(
                             image = character.image
                         )
                     },
-                    color = character.race.color,
+                    color = getCharacterRaceColor(character.race),
                     onItemClicked = { navigateToDetail(it) }
                 )
             }

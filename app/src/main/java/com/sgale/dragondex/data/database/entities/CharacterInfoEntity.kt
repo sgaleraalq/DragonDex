@@ -19,7 +19,6 @@ package com.sgale.dragondex.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sgale.dragondex.domain.model.characters.CharacterRace
 import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 

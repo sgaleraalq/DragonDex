@@ -21,7 +21,7 @@ data class CharacterModel(
     val id: Int,
     val name: String,
     val image: String,
-    val race: CharacterRace,
+    val race: String,
     val ki: String,
     val maxKi: String,
     val gender: String,

@@ -18,7 +18,6 @@ package com.sgale.dragondex.data.database.entities.mapper
 
 import com.sgale.dragondex.data.database.entities.CharacterEntity
 import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.characters.mapRace
 
 object CharacterEntityMapper : EntityMapper<List<CharacterModel>, List<CharacterEntity>> {
     override fun asEntity(domain: List<CharacterModel>): List<CharacterEntity> {
@@ -28,7 +27,7 @@ object CharacterEntityMapper : EntityMapper<List<CharacterModel>, List<Character
                 id      = character.id,
                 name    = character.name,
                 image   = character.image,
-                race    = character.race.name,
+                race    = character.race,
                 ki      = character.ki,
                 maxKi   = character.maxKi,
                 gender  = character.gender,
@@ -46,7 +45,7 @@ object CharacterEntityMapper : EntityMapper<List<CharacterModel>, List<Character
                 id      = characterEntity.id,
                 name    = characterEntity.name,
                 image   = characterEntity.image,
-                race    = mapRace(characterEntity.race),
+                race    = characterEntity.race,
                 ki      = characterEntity.ki,
                 maxKi   = characterEntity.maxKi,
                 gender  = characterEntity.gender,
