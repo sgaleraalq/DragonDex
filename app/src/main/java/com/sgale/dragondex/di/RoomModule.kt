@@ -45,4 +45,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideCharacterDao(database: CharactersDatabase) = database.getCharacterDao()
+
+    @Singleton
+    @Provides
+    fun provideCharacterInfoDao(database: CharactersDatabase) = database.getCharacterInfoDao()
 }

@@ -18,13 +18,46 @@ package com.sgale.dragondex.data.database.entities.mapper
 
 import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.mapRace
 
 object CharacterInfoEntityMapper : EntityMapper<CharacterInfo, CharacterInfoEntity>{
-    override fun asEntity(domain: CharacterInfo): CharacterInfoEntity {
-        TODO("Not yet implemented")
-    }
+    override fun asEntity(domain: CharacterInfo) =
+        CharacterInfoEntity(
+            id      = domain.id,
+            name    = domain.name,
+            image   = domain.image,
+            race    = domain.race.name,
+            ki      = domain.ki,
+            maxKi   = domain.maxKi,
+            gender  = domain.gender,
+            description = domain.description,
+            affiliation = domain.affiliation,
+            deletedAt = domain.deletedAt,
+            originPlanet = domain.originPlanet,
+            transformations = domain.transformations
+        )
 
-    override fun asDomain(entity: CharacterInfoEntity): CharacterInfo {
-        TODO("Not yet implemented")
-    }
+    override fun asDomain(entity: CharacterInfoEntity) =
+        CharacterInfo(
+            id      = entity.id,
+            name    = entity.name,
+            image   = entity.image,
+            race    = mapRace(entity.race),
+            ki      = entity.ki,
+            maxKi   = entity.maxKi,
+            gender  = entity.gender,
+            description = entity.description,
+            affiliation = entity.affiliation,
+            deletedAt = entity.deletedAt,
+            originPlanet = entity.originPlanet,
+            transformations = entity.transformations
+        )
+}
+
+fun CharacterInfo.asEntity(): CharacterInfoEntity {
+    return CharacterInfoEntityMapper.asEntity(this)
+}
+
+fun CharacterInfoEntity.asDomain(): CharacterInfo {
+    return CharacterInfoEntityMapper.asDomain(this)
 }

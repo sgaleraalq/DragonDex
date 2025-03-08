@@ -21,6 +21,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sgale.dragondex.data.database.entities.CharacterEntity
+import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
 
 @Dao
 interface CharacterDao {

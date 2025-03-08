@@ -30,3 +30,20 @@ data class CharacterInfo(
     val originPlanet: OriginPlanet?,
     val transformations: List<Transformation> = emptyList()
 )
+
+data class OriginPlanet(
+    val id: Int,
+    val name: String,
+    val image: String,
+    val description: String,
+    val isDestroyed: Boolean,
+    val deletedAt: String? = null,
+)
+
+data class Transformation(
+    val id: Int,
+    val name: String,
+    val image: String,
+    val ki: String,
+    val deletedAt: String? = null
+)

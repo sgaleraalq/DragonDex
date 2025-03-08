@@ -19,6 +19,7 @@ package com.sgale.dragondex.data
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.CharacterDao
+import com.sgale.dragondex.data.database.dao.CharacterInfoDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
@@ -40,6 +41,7 @@ class RepositoryImpl @Inject constructor(
     private val dragonBallApiService: DragonBallApiService,
     private val dragonBallClient: DragonBallClient,
     private val charactersDao: CharacterDao,
+    private val charactersInfoDao: CharacterInfoDao,
     @Dispatcher(DragonDexAppDispatchers.IO) private val ioDispatchers: CoroutineDispatcher
 ) : Repository {
 
@@ -52,17 +54,27 @@ class RepositoryImpl @Inject constructor(
         onLastCall: () -> Unit
     ) = flow {
         var characters = charactersDao.getCharactersList(page = page).asDomain()
-        if (characters.isEmpty()){
+        if (characters.isEmpty()) {
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure { onError(it.message ?: "Unknown Error")}.getOrNull()
+            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure {
+                onError(
+                    it.message ?: "Unknown Error"
+                )
+            }.getOrNull()
             if (response != null) {
-                if (response.links.next.isNullOrBlank()) { onLastCall() }
-                characters = response.items.map { characterResponse -> characterResponse.asDomain().copy(page = page) }
+                if (response.links.next.isNullOrBlank()) {
+                    onLastCall()
+                }
+                characters = response.items.map { characterResponse ->
+                    characterResponse.asDomain().copy(page = page)
+                }
                 charactersDao.insertCharactersList(characters.asEntity())
                 emit(charactersDao.getAllCharactersList(page).asDomain())
-            } else { onError("API ERROR") }
+            } else {
+                onError("API ERROR")
+            }
         } else {
             /**
              * If we have characters in database, we just emit them
@@ -73,9 +85,23 @@ class RepositoryImpl @Inject constructor(
 
 
     override suspend fun fetchCharacterById(id: Int): CharacterInfo? {
-        runCatching { dragonBallApiService.getCharacter(id) }
-            .onSuccess { return it.asDomain() }
-            .onFailure { Log.i("sgalera", "Ha ocurrido un error ${it.message}") }
+        val characterFromDb = charactersInfoDao.getCharacterInfoById(id)
+
+        Log.i("sgalera", "characterFromDb: $characterFromDb")
+        if (characterFromDb == null) {
+            runCatching { dragonBallApiService.getCharacter(id) }
+                .onSuccess {
+                    val characterInfoModel = it.asDomain()
+                    charactersInfoDao.insertCharacterById(characterInfoModel.asEntity())
+                    return characterInfoModel
+                }
+                .onFailure {
+                    Log.i("sgalera", "Ha ocurrido un error ${it.message}")
+                    return null
+                }
+        } else {
+            return characterFromDb.asDomain()
+        }
         return null
     }
 

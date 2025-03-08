@@ -20,6 +20,7 @@ import com.sgale.dragondex.BuildConfig.BASE_URL
 import com.sgale.dragondex.data.core.interceptor.DbInterceptor
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.RepositoryImpl
+import com.sgale.dragondex.data.database.dao.CharacterInfoDao
 import com.sgale.dragondex.data.network.Dispatcher
 import com.sgale.dragondex.data.network.DragonDexAppDispatchers
 import com.sgale.dragondex.data.network.services.DragonBallApiService
@@ -76,12 +77,14 @@ internal object NetworkModule {
         client: DragonBallClient,
         apiService: DragonBallApiService,
         characterDao: CharacterDao,
+        charactersInfoDao: CharacterInfoDao,
         @Dispatcher(DragonDexAppDispatchers.IO) ioDispatchers: CoroutineDispatcher
     ): Repository {
         return RepositoryImpl(
             dragonBallClient = client,
             dragonBallApiService = apiService,
             charactersDao = characterDao,
+            charactersInfoDao = charactersInfoDao,
             ioDispatchers = ioDispatchers
         )
     }

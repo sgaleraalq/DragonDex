@@ -18,10 +18,20 @@ package com.sgale.dragondex.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.sgale.dragondex.data.database.dao.CharacterDao
+import com.sgale.dragondex.data.database.dao.CharacterInfoDao
+import com.sgale.dragondex.data.database.dao.Converters
 import com.sgale.dragondex.data.database.entities.CharacterEntity
+import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
 
-@Database(entities = [CharacterEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [CharacterEntity::class, CharacterInfoEntity::class],
+    version = 1,
+    exportSchema = false
+)
+@TypeConverters(Converters::class)
 abstract class CharactersDatabase: RoomDatabase() {
-    abstract fun getCharacterDao(): CharacterDao
+    abstract fun getCharacterDao():     CharacterDao
+    abstract fun getCharacterInfoDao(): CharacterInfoDao
 }

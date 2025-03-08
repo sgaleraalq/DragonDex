@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.model.characters
+package com.sgale.dragondex.data.database.dao
 
-data class OriginPlanet(
-    val id: Int,
-    val name: String,
-    val image: String,
-    val description: String,
-    val isDestroyed: Boolean,
-    val deletedAt: String? = null,
-)
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.sgale.dragondex.data.database.entities.CharacterInfoEntity
+
+@Dao
+interface CharacterInfoDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacterById(characterInfo: CharacterInfoEntity)
+
+    @Query("SELECT * FROM CharacterInfoEntity WHERE id = :id")
+    suspend fun getCharacterInfoById(id: Int): CharacterInfoEntity?
+}
