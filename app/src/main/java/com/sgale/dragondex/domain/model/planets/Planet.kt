@@ -17,6 +17,7 @@
 package com.sgale.dragondex.domain.model.planets
 
 data class Planet(
+    val page: Int = 0,
     val id: Int,
     val name: String,
     val isDestroyed: Boolean,

@@ -21,6 +21,7 @@ import com.sgale.dragondex.data.core.interceptor.DbInterceptor
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.RepositoryImpl
 import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
+import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
 import com.sgale.dragondex.data.network.Dispatcher
 import com.sgale.dragondex.data.network.DragonDexAppDispatchers
 import com.sgale.dragondex.data.network.services.DragonBallApiService
@@ -78,6 +79,7 @@ internal object NetworkModule {
         apiService: DragonBallApiService,
         characterDao: CharacterDao,
         charactersInfoDao: CharacterInfoDao,
+        planetsDao: PlanetsDao,
         @Dispatcher(DragonDexAppDispatchers.IO) ioDispatchers: CoroutineDispatcher
     ): Repository {
         return RepositoryImpl(
@@ -85,6 +87,7 @@ internal object NetworkModule {
             dragonBallApiService = apiService,
             charactersDao = characterDao,
             charactersInfoDao = charactersInfoDao,
+            planetsDao = planetsDao,
             ioDispatchers = ioDispatchers
         )
     }

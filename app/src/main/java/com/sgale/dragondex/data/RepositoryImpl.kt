@@ -19,6 +19,7 @@ package com.sgale.dragondex.data
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
+import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
@@ -28,7 +29,6 @@ import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -41,6 +41,7 @@ class RepositoryImpl @Inject constructor(
     private val dragonBallClient: DragonBallClient,
     private val charactersDao: CharacterDao,
     private val charactersInfoDao: CharacterInfoDao,
+    private val planetsDao: PlanetsDao,
     @Dispatcher(DragonDexAppDispatchers.IO) private val ioDispatchers: CoroutineDispatcher
 ) : Repository {
 
@@ -57,11 +58,7 @@ class RepositoryImpl @Inject constructor(
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure {
-                onError(
-                    it.message ?: "Unknown Error"
-                )
-            }.getOrNull()
+            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure {onError(it.message ?: "Unknown Error")}.getOrNull()
             if (response != null) {
                 if (response.links.next.isNullOrBlank()) {
                     onLastCall()
@@ -103,6 +100,7 @@ class RepositoryImpl @Inject constructor(
     }
 
 
+
     /**
      * Planets
      */
@@ -113,16 +111,20 @@ class RepositoryImpl @Inject constructor(
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = flow {
-        emit(listOf<Planet>())
-    }
+        var planets = planetsDao.getPlanetsList(page).asDomain()
+        if (planets.isEmpty()) {
+            val response = runCatching { dragonBallClient.fetchPlanets(page = page) }.onFailure { onError(it.message ?: "Unknown Error") }.getOrNull()
 
-//    override suspend fun fetchPlanets(
-//        page: Int,
-//        onStart: () -> Unit,
-//        onComplete: () -> Unit,
-//        onError: (String) -> Unit,
-//        onLastCall: () -> Unit
-//    ) = flow {
-//
-//    }
+            if (response != null) {
+                if (response.links.next.isNullOrBlank()) {
+                    onLastCall()
+                }
+                planets = response.items.map { it.asDomain().copy(page = page) }
+                planetsDao.insertPlanetsList(planets.asEntity())
+                emit(planetsDao.getPlanetsList(page).asDomain())
+            } else {
+                onError("API ERROR")
+            }
+        }
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 }
