@@ -3,11 +3,13 @@ package com.sgale.dragondex.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -17,7 +19,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.sgale.dragondex.ui.characters.detail.CharacterDetailScreen
 import com.sgale.dragondex.ui.characters.main.CharactersScreen
 import com.sgale.dragondex.ui.core.Route.CharacterDetail
@@ -26,27 +27,44 @@ import com.sgale.dragondex.ui.core.Route.Home
 import com.sgale.dragondex.ui.core.Route.Planets
 import com.sgale.dragondex.ui.home.HomeScreen
 import com.sgale.dragondex.ui.planets.PlanetsScreen
+import com.sgale.dragondex.ui.theme.DragonDexColors
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        setContent {
-            val systemUiController  = rememberSystemUiController()
-            val navController       = rememberNavController()
 
-            systemUiController.setStatusBarColor(color = DragonDexTheme.colors.primary)
-            DragonDexTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Content(
-                        modifier = Modifier.padding(innerPadding),
-                        navController = navController
-                    )
+        setContent {
+            val navController = rememberNavController()
+            CompositionLocalProvider {
+                DragonDexTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        Content(
+                            modifier = Modifier.padding(innerPadding),
+                            navController = navController
+                        )
+                    }
                 }
             }
         }
+
+//        setContent {
+//            val systemUiController  = rememberSystemUiController()
+//            val navController       = rememberNavController()
+//
+//            systemUiController.setStatusBarColor(color = DragonDexTheme.colors.primary)
+//            DragonDexTheme {
+//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+//                    Content(
+//                        modifier = Modifier.padding(innerPadding),
+//                        navController = navController
+//                    )
+//                }
+//            }
+//        }
     }
 }
 

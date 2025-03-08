@@ -16,113 +16,52 @@
 
 package com.sgale.dragondex.ui.theme
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import com.sgale.dragondex.R
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.Modifier
 
-data class DragonDexColors(
-    val primary: Color,
-    val background: Color,
-    val backgroundLight: Color,
-    val backgroundDark: Color,
-    val absoluteWhite: Color,
-    val absoluteBlack: Color,
-    val white: Color,
-    val white12: Color,
-    val white56: Color,
-    val white70: Color,
-    val black: Color,
-    val grayTransparent: Color,
-    val orange: Color,
-    val green: Color,
-    val blue: Color,
-    val bluePrimary: Color,
-    val blueSecondary: Color,
-    val saiyanColor: Color,
-    val namekianColor: Color,
-    val humanColor: Color,
-    val majinColor: Color,
-    val friezaRaceColor: Color,
-    val jirenRaceColor: Color,
-    val androidRaceColor: Color,
-    val godColor: Color,
-    val angelColor: Color,
-    val evilColor: Color,
-    val unknownColor: Color,
-    val nucleicoColor: Color
+private val LocalColors = compositionLocalOf<DragonDexColors> {
+    error("No colors provided! Make sure to wrap all usages of DragonDexColors in DragonDexTheme.")
+}
+
+@Composable
+fun DragonDexTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    colors: DragonDexColors = if (darkTheme){
+        DragonDexColors.defaultDarkColors()
+    } else {
+        DragonDexColors.defaultLightColors()
+    },
+    background: DragonDexBackground = DragonDexBackground.defaultBackground(darkTheme),
+    content: @Composable () -> Unit
 ) {
-    companion object {
-        /**
-         * Provides the default colors for the light mode of the app.
-         *
-         * @return A [DragonDexColors] instance holding our color palette.
-         */
-
-        @Composable
-        fun defaultDarkColors(): DragonDexColors = DragonDexColors(
-            primary = colorResource(R.color.colorPrimary),
-            background = colorResource(id = R.color.background_dark),
-            backgroundLight = colorResource(id = R.color.background800_dark),
-            backgroundDark = colorResource(id = R.color.background900_dark),
-            absoluteWhite = colorResource(id = R.color.white),
-            absoluteBlack = colorResource(id = R.color.black),
-            white = colorResource(id = R.color.white_dark),
-            white12 = colorResource(id = R.color.white_12_dark),
-            white56 = colorResource(id = R.color.white_56_dark),
-            white70 = colorResource(id = R.color.white_70_dark),
-            black = colorResource(id = R.color.black_dark),
-            grayTransparent = colorResource(id = R.color.grayTransparent),
-            orange = colorResource(id = R.color.orange),
-            green = colorResource(id = R.color.green),
-            blue = colorResource(id = R.color.blue),
-            bluePrimary = colorResource(id = R.color.bluePrimary),
-            blueSecondary = colorResource(id = R.color.blueSecondary),
-            saiyanColor = colorResource(id = R.color.saiyanColor),
-            namekianColor = colorResource(id = R.color.namekianColor),
-            humanColor = colorResource(id = R.color.humanColor),
-            majinColor = colorResource(id = R.color.majinColor),
-            friezaRaceColor = colorResource(id = R.color.friezaRaceColor),
-            jirenRaceColor = colorResource(id = R.color.jirenRaceColor),
-            androidRaceColor = colorResource(id = R.color.androidRaceColor),
-            godColor = colorResource(id = R.color.godColor),
-            angelColor = colorResource(id = R.color.angelColor),
-            evilColor = colorResource(id = R.color.evilColor),
-            unknownColor = colorResource(id = R.color.unknownColor),
-            nucleicoColor = colorResource(id = R.color.nucleicoColor)
-        )
-
-        @Composable
-        fun defaultLightColors(): DragonDexColors = DragonDexColors(
-            primary = colorResource(R.color.colorPrimary),
-            background = colorResource(id = R.color.background),
-            backgroundLight = colorResource(id = R.color.background800),
-            backgroundDark = colorResource(id = R.color.background900),
-            absoluteWhite = colorResource(id = R.color.white),
-            absoluteBlack = colorResource(id = R.color.black),
-            white = colorResource(id = R.color.white),
-            white12 = colorResource(id = R.color.white_12),
-            white56 = colorResource(id = R.color.white_56),
-            white70 = colorResource(id = R.color.white_70),
-            black = colorResource(id = R.color.black),
-            grayTransparent = colorResource(id = R.color.grayTransparent),
-            orange = colorResource(id = R.color.orange),
-            green = colorResource(id = R.color.green),
-            blue = colorResource(id = R.color.blue),
-            bluePrimary = colorResource(id = R.color.bluePrimary),
-            blueSecondary = colorResource(id = R.color.blueSecondary),
-            saiyanColor = colorResource(id = R.color.saiyanColor),
-            namekianColor = colorResource(id = R.color.namekianColor),
-            humanColor = colorResource(id = R.color.humanColor),
-            majinColor = colorResource(id = R.color.majinColor),
-            friezaRaceColor = colorResource(id = R.color.friezaRaceColor),
-            jirenRaceColor = colorResource(id = R.color.jirenRaceColor),
-            androidRaceColor = colorResource(id = R.color.androidRaceColor),
-            godColor = colorResource(id = R.color.godColor),
-            angelColor = colorResource(id = R.color.angelColor),
-            evilColor = colorResource(id = R.color.evilColor),
-            unknownColor = colorResource(id = R.color.unknownColor),
-            nucleicoColor = colorResource(id = R.color.nucleicoColor)
-        )
+    CompositionLocalProvider(
+        LocalColors provides colors,
+        LocalBackgroundTheme provides background
+    ) {
+        Box(
+            modifier = Modifier.background(background.color)
+        ) {
+            content()
+        }
     }
+}
+
+object DragonDexTheme {
+
+    val colors: DragonDexColors
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalColors.current
+
+    val background: DragonDexBackground
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBackgroundTheme.current
+
 }
