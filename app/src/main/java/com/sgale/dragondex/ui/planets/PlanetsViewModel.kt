@@ -21,7 +21,7 @@ import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.PlanetsListModel
-import com.sgale.dragondex.domain.usecase.GetAllPlanets
+import com.sgale.dragondex.domain.usecase.FetchPlanets
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlanetsViewModel @Inject constructor(
-    private val getAllPlanets: GetAllPlanets
+    private val FetchPlanets: FetchPlanets
 ): ViewModel() {
 
     private val _planetsList = MutableStateFlow<PlanetsListModel?>(null)
@@ -44,7 +44,7 @@ class PlanetsViewModel @Inject constructor(
     init {
 //        viewModelScope.launch {
 //            val planetsList = withContext(Dispatchers.IO) {
-//                getAllPlanets()
+//                FetchPlanets()
 //            }
 //            if (planetsList != null) {
 //                _planetsList.value = planetsList

@@ -3,12 +3,12 @@ package com.sgale.dragondex.data.network.response.characters.mapper
 import com.sgale.dragondex.data.network.response.ResponseMapper
 import com.sgale.dragondex.data.network.response.characters.CharacterInfoResponse
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
-import com.sgale.dragondex.data.network.response.characters.OriginPlanetResponse
 import com.sgale.dragondex.data.network.response.characters.TransformationResponse
+import com.sgale.dragondex.data.network.response.planets.PlanetResponse
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.domain.model.planets.Planet
 
 object CharacterMapper : ResponseMapper <CharacterModel, CharacterResponse> {
     override fun asDomain(response: CharacterResponse) =
@@ -42,8 +42,8 @@ object CharacterInfoMapper : ResponseMapper<CharacterInfo, CharacterInfoResponse
         )
 }
 
-object OriginPlanetMapper: ResponseMapper<OriginPlanet, OriginPlanetResponse> {
-    override fun asDomain(response: OriginPlanetResponse) = OriginPlanet(
+object OriginPlanetMapper: ResponseMapper<Planet, PlanetResponse> {
+    override fun asDomain(response: PlanetResponse) = Planet(
         id = response.id,
         name = response.name,
         isDestroyed = response.isDestroyed,
@@ -69,7 +69,7 @@ fun CharacterInfoResponse.asDomain(): CharacterInfo {
     return CharacterInfoMapper.asDomain(this)
 }
 
-fun OriginPlanetResponse.asDomain(): OriginPlanet {
+fun PlanetResponse.asDomain(): Planet {
     return OriginPlanetMapper.asDomain(this)
 }
 

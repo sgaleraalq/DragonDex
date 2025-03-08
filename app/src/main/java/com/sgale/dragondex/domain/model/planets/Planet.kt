@@ -16,11 +16,10 @@
 
 package com.sgale.dragondex.domain.model.planets
 
-data class PlanetModel(
+data class Planet(
     val id: Int,
     val name: String,
     val isDestroyed: Boolean,
     val description: String,
     val image: String,
-    val deletedAt: String?
 )

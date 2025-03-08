@@ -3,20 +3,20 @@ package com.sgale.dragondex.data.database.dao
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.domain.model.planets.Planet
 
 object Converters {
     private val gson = Gson()
 
     @TypeConverter
-    fun fromOriginPlanet(originPlanet: OriginPlanet?): String? {
+    fun fromOriginPlanet(originPlanet: Planet?): String? {
         return gson.toJson(originPlanet)
     }
 
     @TypeConverter
-    fun toOriginPlanet(data: String?): OriginPlanet? {
-        return gson.fromJson(data, OriginPlanet::class.java)
+    fun toOriginPlanet(data: String?): Planet? {
+        return gson.fromJson(data, Planet::class.java)
     }
 
     @TypeConverter

@@ -19,8 +19,8 @@ package com.sgale.dragondex.data.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.domain.model.planets.Planet
 
 @Entity
 data class CharacterInfoEntity(
@@ -34,6 +34,6 @@ data class CharacterInfoEntity(
     @ColumnInfo(name = "description")       val description: String,
     @ColumnInfo(name = "affiliation")       val affiliation: String,
     @ColumnInfo(name = "deletedAt")         val deletedAt: String? = null,
-    @ColumnInfo(name = "originPlanet")      val originPlanet: OriginPlanet?,
+    @ColumnInfo(name = "originPlanet")      val originPlanet: Planet?,
     @ColumnInfo(name = "transformations")   val transformations: List<Transformation> = emptyList()
 )

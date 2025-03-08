@@ -1,7 +1,7 @@
 package com.sgale.dragondex.data.network.response.planets
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.domain.model.planets.PlanetModel
+import com.sgale.dragondex.domain.model.planets.Planet
 
 data class PlanetResponse(
     @SerializedName("id") val id: Int,
@@ -12,12 +12,11 @@ data class PlanetResponse(
     @SerializedName("deletedAt") val deletedAt: String?
 ) {
     fun toDomain() =
-        PlanetModel(
+        Planet(
             id = id,
             name = name,
             isDestroyed = isDestroyed,
             description = description,
-            image = image,
-            deletedAt = deletedAt
+            image = image
         )
 }

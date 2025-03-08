@@ -19,7 +19,7 @@ package com.sgale.dragondex.domain.usecase
 import com.sgale.dragondex.domain.Repository
 import javax.inject.Inject
 
-class GetAllPlanets @Inject constructor(
+class FetchPlanets @Inject constructor(
     private val repository: Repository
 ) {
     suspend operator fun invoke() = repository.fetchPlanets(

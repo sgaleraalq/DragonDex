@@ -18,7 +18,7 @@ package com.sgale.dragondex.domain
 
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.PlanetModel
+import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
@@ -48,5 +48,5 @@ interface Repository {
         onComplete: () -> Unit,
         onError: (String) -> Unit,
         onLastCall: () -> Unit
-    ): Flow<List<PlanetModel>>
+    ): Flow<List<Planet>>
 }

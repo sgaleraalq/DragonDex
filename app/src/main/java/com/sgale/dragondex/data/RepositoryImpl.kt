@@ -29,7 +29,7 @@ import com.sgale.dragondex.data.network.services.DragonBallApiService
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.planets.PlanetModel
+import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -114,6 +114,6 @@ class RepositoryImpl @Inject constructor(
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = flow {
-        emit(listOf<PlanetModel>())
+        emit(listOf<Planet>())
     }
 }

@@ -16,6 +16,8 @@
 
 package com.sgale.dragondex.domain.model.characters
 
+import com.sgale.dragondex.domain.model.planets.Planet
+
 data class CharacterInfo(
     val id: Int,
     val name: String,
@@ -27,17 +29,8 @@ data class CharacterInfo(
     val description: String,
     val affiliation: String,
     val deletedAt: String? = null,
-    val originPlanet: OriginPlanet?,
+    val originPlanet: Planet?,
     val transformations: List<Transformation> = emptyList()
-)
-
-data class OriginPlanet(
-    val id: Int,
-    val name: String,
-    val image: String,
-    val description: String,
-    val isDestroyed: Boolean,
-    val deletedAt: String? = null,
 )
 
 data class Transformation(

@@ -17,6 +17,7 @@
 package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
+import com.sgale.dragondex.data.network.response.planets.PlanetResponse
 
 data class CharacterInfoResponse (
     @SerializedName("id")               val id: Int,
@@ -29,6 +30,14 @@ data class CharacterInfoResponse (
     @SerializedName("description")      val description: String,
     @SerializedName("affiliation")      val affiliation: String,
     @SerializedName("deletedAt")        val deletedAt: String? = null,
-    @SerializedName("originPlanet")     val originPlanet: OriginPlanetResponse,
+    @SerializedName("originPlanet")     val originPlanet: PlanetResponse,
     @SerializedName("transformations")  val transformations: List<TransformationResponse>
+)
+
+data class TransformationResponse(
+    @SerializedName("id")           val id: Int,
+    @SerializedName("name")         val name: String,
+    @SerializedName("image")        val image: String,
+    @SerializedName("ki")           val ki: String,
+    @SerializedName("deletedAt")    val deletedAt: String? = null
 )

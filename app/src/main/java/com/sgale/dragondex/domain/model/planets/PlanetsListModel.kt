@@ -17,5 +17,5 @@
 package com.sgale.dragondex.domain.model.planets
 
 data class PlanetsListModel(
-    val items: List<PlanetModel>
+    val items: List<Planet>
 )

@@ -36,5 +36,5 @@ interface DragonBallApiService {
     suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse
 
     @GET("planets")
-    suspend fun getAllPlanets(): PlanetsListResponse
+    suspend fun FetchPlanets(): PlanetsListResponse
 }

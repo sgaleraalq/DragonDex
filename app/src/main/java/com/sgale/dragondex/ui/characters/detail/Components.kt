@@ -69,8 +69,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
-import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.domain.model.planets.Planet
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.DragonDexTheme
@@ -295,7 +295,7 @@ fun ExtraInformationCard(
 }
 
 @Composable
-fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {}) {
+fun DialogOriginPlanet(originPlanet: Planet?, onHideDialog: () -> Unit = {}) {
     if (originPlanet == null) return
 
     Dialog(
@@ -339,7 +339,7 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
 }
 
 @Composable
-fun PlanetDialogHeader(originPlanet: OriginPlanet) {
+fun PlanetDialogHeader(originPlanet: Planet) {
     val context = LocalContext.current
     val planetDestroyedMsg = stringResource(R.string.planet_destroyed_msg)
     val planetNotDestroyedMsg = stringResource(R.string.planet_not_destroyed_msg)

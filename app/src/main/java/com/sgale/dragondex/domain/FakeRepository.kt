@@ -17,7 +17,7 @@
 package com.sgale.dragondex.domain
 
 import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.PlanetModel
+import com.sgale.dragondex.domain.model.planets.Planet
 import com.sgale.dragondex.ui.core.PreviewUtils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -39,5 +39,5 @@ class FakeRepository: Repository {
         onComplete: () -> Unit,
         onError: (String) -> Unit,
         onLastCall: () -> Unit
-    ): Flow<List<PlanetModel>> = flowOf()
+    ): Flow<List<Planet>> = flowOf()
 }
