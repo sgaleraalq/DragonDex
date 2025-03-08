@@ -16,10 +16,10 @@
 
 package com.sgale.dragondex.ui.characters.detail
 
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,8 +50,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -89,22 +87,15 @@ fun CardDetailInformation(
     var showPlanet by remember { mutableStateOf(false) }
     var showTrans by remember { mutableStateOf(false) }
 
-    CharImage(characterInfo.image, characterInfo.affiliation)
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
-            .background(DragonDexTheme.colors.backgroundDark)
+            .background(DragonDexTheme.background.color)
             .padding(16.dp)
             .padding(vertical = 8.dp)
     ) {
         CharName(characterInfo.name)
-        Spacer(Modifier.height(8.dp))
-        CharacterInformation(
-            characterInfo.gender,
-            characterInfo.race,
-            characterInfo.ki,
-            characterInfo.maxKi
-        )
+        CharMainInfo(characterInfo.image, characterInfo.race,characterInfo.ki,characterInfo.maxKi, characterInfo.affiliation)
         Spacer(Modifier.height(32.dp))
         Description(characterInfo.description)
         ExtraInformation(
@@ -123,37 +114,6 @@ fun CardDetailInformation(
 }
 
 @Composable
-fun CharImage(image: String, affiliation: String) {
-    val context = LocalContext.current
-    Box(
-        modifier = Modifier
-            .height(200.dp)
-            .padding(vertical = 16.dp)
-            .fillMaxWidth()
-    ) {
-        AsyncImage(
-            modifier = Modifier.height(200.dp).align(Alignment.Center),
-            model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
-            contentDescription = stringResource(R.string.description_character_image),
-            contentScale = ContentScale.Fit,
-            placeholder = painterResource(R.drawable.ic_placeholder)
-        )
-        Text(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            text = affiliation,
-            style = roboto.copy(
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                color = White,
-                textAlign = TextAlign.Center
-            )
-        )
-    }
-}
-
-@Composable
 fun CharName(
     name: String
 ) {
@@ -163,7 +123,7 @@ fun CharName(
             .padding(8.dp),
         text = name,
         style = saiyanSans.copy(
-            fontSize = 32.sp,
+            fontSize = 46.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             color = DragonDexTheme.colors.primary,
@@ -173,19 +133,43 @@ fun CharName(
 }
 
 @Composable
+fun CharMainInfo(
+    image: String,
+    race: String,
+    ki: String,
+    maxKi: String,
+    affiliation: String
+) {
+    val context = LocalContext.current
+    Row (
+        modifier = Modifier.padding(16.dp).fillMaxWidth()
+    ) {
+        AsyncImage(
+            modifier = Modifier.height(300.dp).weight(1f),
+            model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
+            contentDescription = stringResource(R.string.description_character_image),
+            contentScale = ContentScale.Fit,
+            placeholder = painterResource(R.drawable.img_goku)
+        )
+        Spacer(Modifier.width(12.dp))
+        CharacterInformation(Modifier.weight(1f), affiliation, race, ki, maxKi)
+    }
+}
+
+@Composable
 fun CharacterInformation(
-    gender: String,
+    modifier: Modifier,
+    affiliation: String,
     race: String,
     ki: String,
     maxKi: String
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+    Column(
+        modifier = modifier
     ) {
-        CharInformation(stringResource(R.string.info), "$race\n$gender")
         CharInformation(stringResource(R.string.base_ki), ki)
         CharInformation(stringResource(R.string.max_ki), maxKi)
+        CharInformation(stringResource(R.string.info), "$race - $affiliation")
     }
 }
 
@@ -193,9 +177,10 @@ fun CharacterInformation(
 fun CharInformation(statTitle: String, stat: String) {
     Column {
         Text(
+            modifier = Modifier.padding(top = 8.dp),
             text = statTitle,
             style = roboto.copy(
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = DragonDexTheme.colors.primary
@@ -205,9 +190,9 @@ fun CharInformation(statTitle: String, stat: String) {
         Text(
             text = stat,
             style = roboto.copy(
-                fontSize = 16.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                color = White
+                color = DragonDexTheme.colors.black
             )
         )
     }
@@ -233,7 +218,7 @@ fun Description(description: String) {
         text = description,
         style = roboto.copy(
             fontSize = 16.sp,
-            color = White,
+            color = DragonDexTheme.colors.black,
             textAlign = TextAlign.Justify
         )
     )
@@ -289,6 +274,7 @@ fun ExtraInformationCard(
     ) {
         ItemCard(
             onItemClicked = { onItemClicked() },
+            color = DragonDexTheme.colors.backgroundLight,
             content = {
                 LottieAnimation(
                     modifier = Modifier.height(100.dp),
@@ -302,7 +288,7 @@ fun ExtraInformationCard(
             style = roboto.copy(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = White
+                color = DragonDexTheme.colors.black
             )
         )
     }
@@ -343,7 +329,7 @@ fun DialogOriginPlanet(originPlanet: OriginPlanet?, onHideDialog: () -> Unit = {
                     text = originPlanet.description,
                     style = roboto.copy(
                         fontSize = 16.sp,
-                        color = Black,
+                        color = DragonDexTheme.colors.black,
                         textAlign = TextAlign.Justify
                     )
                 )
@@ -385,7 +371,7 @@ fun PlanetDialogHeader(originPlanet: OriginPlanet) {
             style = saiyanSans.copy(
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Black,
+                color = DragonDexTheme.colors.black,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center
             )
@@ -414,7 +400,10 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = DragonDexTheme.colors.backgroundLight
+            )
         ) {
             Column {
                 Text(
@@ -423,7 +412,7 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
                     style = saiyanSans.copy(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Black,
+                        color = DragonDexTheme.colors.black,
                         letterSpacing = 2.sp,
                         textAlign = TextAlign.Center
                     )
@@ -473,7 +462,7 @@ fun TransformationCard(transformation: Transformation) {
                 modifier = Modifier.fillMaxWidth(),
                 text = transformation.ki,
                 style = roboto.copy(
-                    color = White,
+                    color = DragonDexTheme.colors.black,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -484,33 +473,42 @@ fun TransformationCard(transformation: Transformation) {
 }
 
 @Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun CharacterDetailPreview() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CardDetailInformation(
-            modifier = Modifier.weight(1f),
-            characterInfo = PreviewUtils.mockCharacterInfo()
+    DragonDexTheme {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CardDetailInformation(
+                modifier = Modifier.weight(1f),
+                characterInfo = PreviewUtils.mockCharacterInfo()
+            )
+        }
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun CharacterOriginPlanetPreview() {
+    DragonDexTheme {
+        DialogOriginPlanet(
+            originPlanet = PreviewUtils.mockOriginPlanet()
         )
     }
 }
 
 @Preview
-@Composable
-private fun CharacterOriginPlanetPreview() {
-    DialogOriginPlanet(
-        originPlanet = PreviewUtils.mockOriginPlanet()
-    )
-}
-
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun CharacterTransformationPreview() {
-    DialogTransformation(
-        transformations = List(5) {
-            PreviewUtils.mockTransformation()
-        }
-    )
+    DragonDexTheme {
+        DialogTransformation(
+            transformations = List(5) {
+                PreviewUtils.mockTransformation()
+            }
+        )
+    }
 }

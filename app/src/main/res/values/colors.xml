@@ -33,7 +33,7 @@
     <color name="black_dark">#ffffff</color>
 
     <!-- light colors-->
-    <color name="background">#F4EBF4</color>
+    <color name="background">#FBF7FB</color>
     <color name="background800">#D0C7C7</color>
     <color name="background900">#FFFFFF</color>
     <color name="white_12">#1F000000</color>

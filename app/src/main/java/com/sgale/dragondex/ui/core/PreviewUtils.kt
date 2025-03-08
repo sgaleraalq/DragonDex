@@ -6,7 +6,7 @@ import com.sgale.dragondex.domain.model.characters.OriginPlanet
 import com.sgale.dragondex.domain.model.characters.Transformation
 
 object PreviewUtils {
-    fun mockCharacter() = CharacterModel(
+    private fun mockCharacter() = CharacterModel(
         page = 1,
         id = 1,
         name = "Goku",

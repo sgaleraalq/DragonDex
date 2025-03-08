@@ -66,7 +66,8 @@ fun BackManagement(
         Icon(
             modifier = Modifier.clickable { navigateBack() }.size(50.dp).padding(12.dp),
             painter = painterResource(R.drawable.ic_back),
-            contentDescription = stringResource(R.string.description_back)
+            contentDescription = stringResource(R.string.description_back),
+            tint = DragonDexTheme.colors.black
         )
 
         if (isLoading) {
