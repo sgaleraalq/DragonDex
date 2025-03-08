@@ -19,6 +19,7 @@
 
     // Errors
     <string name="error_msg">An error has occurred</string>
+    <string name="no_transformations_found">No transformations found</string>
 
     // Descriptions
     <string name="description_planet">Planet image</string>

@@ -24,7 +24,7 @@ object PreviewUtils {
         mockCharacter()
     }
 
-    private fun mockTransformation() = Transformation(
+    fun mockTransformation() = Transformation(
         id = 1,
         name = "Goku SSJ",
         image = "https://dragonball-api.com/transformaciones/goku_ssj.webp",

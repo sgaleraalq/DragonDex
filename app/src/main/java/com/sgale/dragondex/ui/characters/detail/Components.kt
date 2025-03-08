@@ -69,6 +69,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.OriginPlanet
+import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.primary
@@ -115,7 +116,7 @@ fun CardDetailInformation(
     }
 
     if (showTrans) {
-
+        DialogTransformation(characterInfo.transformations) { showTrans = false }
     }
 }
 
@@ -394,6 +395,16 @@ fun PlanetDialogHeader(originPlanet: OriginPlanet) {
     }
 }
 
+@Composable
+fun DialogTransformation(transformations: List<Transformation>, onHideDialog: () -> Unit = {}) {
+    val noTransformationMsg = stringResource(R.string.error_msg)
+    if (transformations.isEmpty()){
+        Toast.makeText(LocalContext.current, noTransformationMsg, Toast.LENGTH_SHORT).show()
+        onHideDialog()
+        return
+    }
+}
+
 @Preview
 @Composable
 private fun CharacterDetailPreview() {
@@ -413,5 +424,15 @@ private fun CharacterDetailPreview() {
 private fun CharacterOriginPlanetPreview() {
     DialogOriginPlanet(
         originPlanet = PreviewUtils.mockOriginPlanet()
+    )
+}
+
+@Preview
+@Composable
+private fun CharacterTransformationPreview() {
+    DialogTransformation(
+        transformations = List(5) {
+            PreviewUtils.mockTransformation()
+        }
     )
 }
