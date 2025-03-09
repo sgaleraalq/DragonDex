@@ -37,7 +37,7 @@ object CharacterInfoMapper : ResponseMapper<CharacterInfo, CharacterInfoResponse
             gender = response.gender,
             description = response.description,
             affiliation = response.affiliation,
-            originPlanet = response.originPlanet.asDomain(),
+            planet = response.planet.asDomain(),
             transformations = response.transformations.map { it.asDomain() }
         )
 }

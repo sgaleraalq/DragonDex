@@ -29,7 +29,7 @@ data class CharacterInfo(
     val description: String,
     val affiliation: String,
     val deletedAt: String? = null,
-    val originPlanet: Planet?,
+    val planet: Planet?,
     val transformations: List<Transformation> = emptyList()
 )
 

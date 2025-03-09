@@ -95,7 +95,7 @@ fun CardDetailInformation(
             .padding(vertical = 8.dp)
     ) {
         CharName(characterInfo.name)
-        CharMainInfo(characterInfo.image, characterInfo.race,characterInfo.ki,characterInfo.maxKi, characterInfo.affiliation)
+        CharMainInfo(characterInfo)
         Spacer(Modifier.height(32.dp))
         Description(characterInfo.description)
         ExtraInformation(
@@ -105,7 +105,7 @@ fun CardDetailInformation(
     }
 
     if (showPlanet) {
-        DialogOriginPlanet(characterInfo.originPlanet) { showPlanet = false }
+        DialogOriginPlanet(characterInfo.planet) { showPlanet = false }
     }
 
     if (showTrans) {
@@ -134,41 +134,36 @@ fun CharName(
 
 @Composable
 fun CharMainInfo(
-    image: String,
-    race: String,
-    ki: String,
-    maxKi: String,
-    affiliation: String
+    char: CharacterInfo
 ) {
     val context = LocalContext.current
     Row (
         modifier = Modifier.padding(16.dp).fillMaxWidth()
     ) {
         AsyncImage(
-            modifier = Modifier.height(300.dp).weight(1f),
-            model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
+            modifier = Modifier.height(250.dp).weight(1f),
+            model = ImageRequest.Builder(context).data(char.image).crossfade(true).build(),
             contentDescription = stringResource(R.string.description_character_image),
             contentScale = ContentScale.FillHeight,
             placeholder = painterResource(R.drawable.img_goku)
         )
         Spacer(Modifier.width(24.dp))
-        CharacterInformation(Modifier.weight(1f), affiliation, race, ki, maxKi)
+        CharacterInformation(char.ki, char.maxKi, char.gender, char.race, char.affiliation)
     }
 }
 
 @Composable
 fun CharacterInformation(
-    modifier: Modifier,
-    affiliation: String,
-    race: String,
     ki: String,
-    maxKi: String
+    maxKi: String,
+    gender: String,
+    race: String,
+    affiliation: String
 ) {
-    Column(
-        modifier = modifier
-    ) {
+    Column {
         CharInformation(stringResource(R.string.base_ki), ki)
         CharInformation(stringResource(R.string.max_ki), maxKi)
+        CharInformation(stringResource(R.string.gender), gender)
         CharInformation(stringResource(R.string.info), "$race - $affiliation")
     }
 }

@@ -53,7 +53,7 @@ object PreviewUtils {
         gender = "Male",
         description = "Test description Test description Test description Test description Test description Test description Test description Test description Test description Test description ",
         affiliation = "Z Fighter",
-        originPlanet = mockPlanet(1),
+        planet = mockPlanet(1),
         transformations = List(5) {
             mockTransformation()
         }

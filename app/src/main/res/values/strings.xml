@@ -28,4 +28,5 @@
     <string name="description_back">Back Icon\n</string>
     <string name="description_app_icon">App icon</string>
     <string name="description_extra_information">Extra information image</string>
+    <string name="gender">Gender:</string>
 </resources>

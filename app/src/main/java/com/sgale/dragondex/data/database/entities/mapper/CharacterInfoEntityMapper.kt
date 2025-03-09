@@ -32,7 +32,7 @@ object CharacterInfoEntityMapper : EntityMapper<CharacterInfo, CharacterInfoEnti
             description = domain.description,
             affiliation = domain.affiliation,
             deletedAt = domain.deletedAt,
-            originPlanet = domain.originPlanet,
+            planet = domain.planet,
             transformations = domain.transformations
         )
 
@@ -48,7 +48,7 @@ object CharacterInfoEntityMapper : EntityMapper<CharacterInfo, CharacterInfoEnti
             description = entity.description,
             affiliation = entity.affiliation,
             deletedAt = entity.deletedAt,
-            originPlanet = entity.originPlanet,
+            planet = entity.planet,
             transformations = entity.transformations
         )
 }
