@@ -27,7 +27,7 @@ import com.sgale.dragondex.ui.core.Route.Characters
 import com.sgale.dragondex.ui.core.Route.Home
 import com.sgale.dragondex.ui.core.Route.Planets
 import com.sgale.dragondex.ui.home.HomeScreen
-import com.sgale.dragondex.ui.planets.PlanetsScreen
+import com.sgale.dragondex.ui.planets.main.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.planets
+package com.sgale.dragondex.ui.planets.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

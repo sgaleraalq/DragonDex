@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.ui.planets
+package com.sgale.dragondex.ui.planets.main
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.planets.Planet
@@ -43,9 +44,9 @@ fun PlanetsScreen(
     viewModel: PlanetsViewModel = hiltViewModel(),
     navigateHome: () -> Unit
 ) {
-    val uiState     by viewModel.uiState.collectAsState()
-    val planetsList by viewModel.planetsList.collectAsState()
-    val isLastItem  by viewModel.isLastItem.collectAsState()
+    val uiState     by viewModel.uiState.collectAsStateWithLifecycle()
+    val planetsList by viewModel.planetsList.collectAsStateWithLifecycle()
+    val isLastItem  by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier.fillMaxSize()
