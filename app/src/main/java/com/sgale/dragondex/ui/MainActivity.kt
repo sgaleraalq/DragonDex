@@ -65,7 +65,7 @@ fun Content(
     ) {
         navController.navigate(destination) {
             launchSingleTop = true
-            restoreState = false
+            restoreState = true
         }
     }
 
@@ -109,7 +109,7 @@ fun Content(
         ) {
             CharacterDetailScreen(
                 id = it.arguments?.getInt("id") ?: 0,
-                navigateBack = { navigateTo(Characters.createRoute()) }
+                navigateBack = { navController.popBackStack() }
             )
         }
 

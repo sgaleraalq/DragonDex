@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.ui.characters.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
@@ -35,6 +36,14 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val fetchCharacters: FetchCharacters
 ): ViewModel() {
+
+    private val _scrollState = MutableStateFlow(Pair(0,0))
+    val scrollState = _scrollState
+
+    fun saveScrollState(index: Int, offset: Int) {
+        Log.i("ScrollState", "Index: $index, Offset: $offset")
+        _scrollState.value = Pair(index, offset)
+    }
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
