@@ -148,10 +148,10 @@ fun CharMainInfo(
             modifier = Modifier.height(300.dp).weight(1f),
             model = ImageRequest.Builder(context).data(image).crossfade(true).build(),
             contentDescription = stringResource(R.string.description_character_image),
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.FillHeight,
             placeholder = painterResource(R.drawable.img_goku)
         )
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(24.dp))
         CharacterInformation(Modifier.weight(1f), affiliation, race, ki, maxKi)
     }
 }
