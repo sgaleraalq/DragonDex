@@ -45,4 +45,8 @@ class DragonBallClient @Inject constructor(
             page = page
         )
     }
+
+    suspend fun getPlanet(id: Int): PlanetResponse {
+        return apiService.getPlanet(id)
+    }
 }

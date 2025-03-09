@@ -25,8 +25,10 @@ import com.sgale.dragondex.ui.characters.main.CharactersScreen
 import com.sgale.dragondex.ui.core.Route.CharacterDetail
 import com.sgale.dragondex.ui.core.Route.Characters
 import com.sgale.dragondex.ui.core.Route.Home
+import com.sgale.dragondex.ui.core.Route.PlanetDetail
 import com.sgale.dragondex.ui.core.Route.Planets
 import com.sgale.dragondex.ui.home.HomeScreen
+import com.sgale.dragondex.ui.planets.detail.PlanetDetailScreen
 import com.sgale.dragondex.ui.planets.main.PlanetsScreen
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -117,7 +119,20 @@ fun Content(
             route = Planets.route
         ) {
             PlanetsScreen(
-                navigateHome = { navigateTo(Home.createRoute()) }
+                navigateHome = { navigateTo(Home.createRoute()) },
+                navigateToDetail = { id -> navigateTo(PlanetDetail.createRoute(id)) }
+            )
+        }
+
+        composable(
+            route = PlanetDetail.route,
+            arguments = listOf(
+                navArgument("id") { type = NavType.IntType }
+            )
+        ) {
+            PlanetDetailScreen (
+                id = it.arguments?.getInt("id") ?: 0,
+                navigateBack = { navController.popBackStack() }
             )
         }
     }

@@ -34,9 +34,7 @@ interface Repository {
         onLastCall: () -> Unit
     ): Flow<List<CharacterModel>>
 
-    suspend fun fetchCharacterById(
-        id: Int
-    ): CharacterInfo?
+    suspend fun fetchCharacterById(id: Int): CharacterInfo?
 
 
     /**
@@ -49,4 +47,6 @@ interface Repository {
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ): Flow<List<Planet>>
+
+    suspend fun fetchPlanetById(id: Int): Planet?
 }

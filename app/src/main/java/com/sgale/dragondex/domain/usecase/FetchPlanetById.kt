@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.model.planets
+package com.sgale.dragondex.domain.usecase
 
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.Repository
+import javax.inject.Inject
 
-data class Planet(
-    val page: Int = 0,
-    val id: Int,
-    val name: String,
-    val isDestroyed: Boolean,
-    val description: String,
-    val image: String,
-    val characters: List<CharacterModel> = emptyList()
-)
+class FetchPlanetById @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(id: Int) = repository.fetchPlanetById(id)
+}

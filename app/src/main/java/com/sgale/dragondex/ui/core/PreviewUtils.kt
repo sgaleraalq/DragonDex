@@ -25,6 +25,7 @@ object PreviewUtils {
         isDestroyed = true,
         image = "https://dragonball-api.com/planetas/Planeta_Vegeta_en_Dragon_Ball_Super_Broly.webp",
         description = "Test description Test description Test description Test description Test description Test description Test description Test description Test description Test description ",
+        characters = List(5) { mockCharacter(it) }
     )
 
     fun mockCharacterList() = List(10) {

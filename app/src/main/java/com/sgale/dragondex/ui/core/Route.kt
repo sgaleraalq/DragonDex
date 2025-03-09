@@ -18,7 +18,7 @@ sealed class Route (val route: String) {
         fun createRoute() = "planets_screen"
     }
 
-    data object PlanetDetailScreen : Route("planet_detail_screen/{id}"){
-        fun createRoute(id: String) = "planet_detail_screen/$id"
+    data object PlanetDetail : Route("planet_detail_screen/{id}"){
+        fun createRoute(id: Int) = "planet_detail_screen/$id"
     }
 }

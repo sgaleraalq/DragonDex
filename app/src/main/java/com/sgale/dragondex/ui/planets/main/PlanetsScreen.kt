@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -42,7 +41,8 @@ import com.sgale.dragondex.ui.theme.DragonDexTheme
 @Composable
 fun PlanetsScreen(
     viewModel: PlanetsViewModel = hiltViewModel(),
-    navigateHome: () -> Unit
+    navigateHome: () -> Unit,
+    navigateToDetail: (Int) -> Unit
 ) {
     val uiState     by viewModel.uiState.collectAsStateWithLifecycle()
     val planetsList by viewModel.planetsList.collectAsStateWithLifecycle()
@@ -60,7 +60,7 @@ fun PlanetsScreen(
             isLastItem = isLastItem,
             uiState = uiState,
             fetchNextPlanets = { viewModel.fetchNextPlanets() },
-            navigateToDetail = { }
+            navigateToDetail = { navigateToDetail(it) }
         )
     }
 }
@@ -95,7 +95,9 @@ fun PlanetsList(
                         image = planet.image
                     )
                 },
-                onItemClicked = { }
+                onItemClicked = {
+                    navigateToDetail(planet.id)
+                }
             )
         }
     }

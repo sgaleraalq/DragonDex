@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.data
 
-import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
@@ -26,10 +25,11 @@ import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
 import com.sgale.dragondex.data.network.DragonDexAppDispatchers
 import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
-import com.sgale.dragondex.data.network.services.DragonBallApiService
+import com.sgale.dragondex.data.network.response.planets.mapper.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -127,4 +127,11 @@ class RepositoryImpl @Inject constructor(
             }
         }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
+
+    override suspend fun fetchPlanetById(id: Int): Planet? {
+        runCatching { dragonBallClient.getPlanet(id) }
+            .onSuccess { return it.asDomain() }
+            .onFailure { return null }
+        return null
+    }
 }

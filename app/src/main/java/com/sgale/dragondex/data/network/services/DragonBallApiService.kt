@@ -39,4 +39,7 @@ interface DragonBallApiService {
     suspend fun fetchPlanets(
         @Query("page") page: Int
     ): MainResponse<PlanetResponse>
+
+    @GET("planets/{id}")
+    suspend fun getPlanet(@Path("id") id: Int): PlanetResponse
 }
