@@ -400,7 +400,7 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(24.dp),
             colors = CardDefaults.cardColors(
                 containerColor = DragonDexTheme.colors.backgroundLight
             )
