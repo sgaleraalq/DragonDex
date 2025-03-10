@@ -97,7 +97,7 @@ fun PlanetsList(
                 },
                 onItemClicked = {
                     navigateToDetail(planet.id)
-                }
+                } 
             )
         }
     }

@@ -85,7 +85,7 @@ class RepositoryImpl @Inject constructor(
                 return character
             }
             .onFailure {
-                val characterFromDb = charactersDao.getCharacterInfoById(id)
+                val characterFromDb = charactersDao.getCharacterById(id)
                 return characterFromDb?.asDomain()
             }
         return null
@@ -121,8 +121,15 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun fetchPlanetById(id: Int): Planet? {
         runCatching { dragonBallClient.getPlanet(id) }
-            .onSuccess { return it.asDomain() }
-            .onFailure { return null }
+            .onSuccess {
+                val planet = it.asDomain()
+                planetsDao.insertPlanetById(planet.asEntity())
+                return planet
+            }
+            .onFailure {
+                val planetFromDb = planetsDao.getPlanetInfoById(id)
+                return planetFromDb?.asDomain()
+            }
         return null
     }
 }

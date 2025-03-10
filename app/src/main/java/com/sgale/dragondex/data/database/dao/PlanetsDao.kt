@@ -26,11 +26,17 @@ import com.sgale.dragondex.data.database.entities.PlanetEntity
 interface PlanetsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlanetsList(planets: List<PlanetEntity>)
+    suspend fun insertPlanetsList(planets: List<PlanetEntity>)
 
     @Query("SELECT * FROM PlanetEntity WHERE page =:page")
-    fun getPlanetsList(page: Int): List<PlanetEntity>
+    suspend fun getPlanetsList(page: Int): List<PlanetEntity>
 
     @Query("SELECT * FROM PlanetEntity WHERE page <=:page")
-    fun getAllPlanets(page: Int): List<PlanetEntity>
+    suspend fun getAllPlanets(page: Int): List<PlanetEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlanetById(planet: PlanetEntity)
+
+    @Query("SELECT * FROM PlanetEntity WHERE id = :id")
+    suspend fun getPlanetInfoById(id: Int): PlanetEntity?
 }

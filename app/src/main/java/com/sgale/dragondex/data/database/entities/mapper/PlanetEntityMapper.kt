@@ -19,34 +19,38 @@ package com.sgale.dragondex.data.database.entities.mapper
 import com.sgale.dragondex.data.database.entities.PlanetEntity
 import com.sgale.dragondex.domain.model.Planet
 
-object PlanetEntityMapper : EntityMapper<List<Planet>, List<PlanetEntity>> {
-    override fun asEntity(domain: List<Planet>) =
-        domain.map {
-            PlanetEntity(
-                id = it.id,
-                name = it.name,
-                isDestroyed = it.isDestroyed,
-                image = it.image,
-                description = it.description,
-            )
-        }
+object PlanetEntityMapper : EntityMapper<Planet, PlanetEntity> {
+    override fun asEntity(domain: Planet) =
+        PlanetEntity(
+            id = domain.id,
+            name = domain.name,
+            isDestroyed = domain.isDestroyed,
+            image = domain.image,
+            description = domain.description,
+        )
 
-    override fun asDomain(entity: List<PlanetEntity>) =
-        entity.map {
-            Planet(
-                id = it.id,
-                name = it.name,
-                isDestroyed = it.isDestroyed,
-                image = it.image,
-                description = it.description
-            )
-        }
+    override fun asDomain(entity: PlanetEntity) =
+        Planet(
+            id = entity.id,
+            name = entity.name,
+            isDestroyed = entity.isDestroyed,
+            image = entity.image,
+            description = entity.description
+        )
 }
 
 fun List<Planet>.asEntity(): List<PlanetEntity> {
-    return PlanetEntityMapper.asEntity(this)
+    return map { PlanetEntityMapper.asEntity(it) }
 }
 
 fun List<PlanetEntity>.asDomain(): List<Planet> {
+    return map { PlanetEntityMapper.asDomain(it) }
+}
+
+fun Planet.asEntity(): PlanetEntity {
+    return PlanetEntityMapper.asEntity(this)
+}
+
+fun PlanetEntity.asDomain(): Planet {
     return PlanetEntityMapper.asDomain(this)
 }

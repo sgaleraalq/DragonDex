@@ -18,14 +18,13 @@ package com.sgale.dragondex.data.database.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.sgale.dragondex.data.database.Converters
 import com.sgale.dragondex.data.database.dao.PlanetsDao
 import com.sgale.dragondex.data.database.entities.PlanetEntity
 
-@Database(
-    entities = [PlanetEntity::class],
-    version = 1,
-    exportSchema = false
-)
+@Database(entities = [PlanetEntity::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class PlanetsDatabase: RoomDatabase() {
     abstract fun getPlanetsDao(): PlanetsDao
 }

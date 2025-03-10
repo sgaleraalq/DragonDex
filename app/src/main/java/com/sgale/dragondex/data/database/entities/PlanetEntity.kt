@@ -18,6 +18,7 @@ package com.sgale.dragondex.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sgale.dragondex.domain.model.CharacterModel
 
 @Entity
 data class PlanetEntity(
@@ -25,6 +26,7 @@ data class PlanetEntity(
     @PrimaryKey val id: Int,
     val name: String,
     val image: String,
+    val isDestroyed: Boolean,
     val description: String,
-    val isDestroyed: Boolean
+    val characters: List<CharacterModel> = emptyList()
 )

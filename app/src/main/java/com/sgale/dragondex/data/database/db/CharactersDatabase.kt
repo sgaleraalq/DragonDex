@@ -23,11 +23,7 @@ import com.sgale.dragondex.data.database.Converters
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.entities.CharacterEntity
 
-@Database(
-    entities = [CharacterEntity::class],
-    version = 1,
-    exportSchema = false
-)
+@Database(entities = [CharacterEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class CharactersDatabase: RoomDatabase() {
     abstract fun getCharacterDao(): CharacterDao

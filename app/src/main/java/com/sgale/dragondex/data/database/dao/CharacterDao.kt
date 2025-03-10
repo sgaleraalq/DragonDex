@@ -35,8 +35,8 @@ interface CharacterDao {
     suspend fun getAllCharactersList(page: Int): List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacterById(characterInfo: CharacterEntity)
+    suspend fun insertCharacterById(character: CharacterEntity)
 
     @Query("SELECT * FROM CharacterEntity WHERE id = :id")
-    suspend fun getCharacterInfoById(id: Int): CharacterEntity?
+    suspend fun getCharacterById(id: Int): CharacterEntity?
 }
