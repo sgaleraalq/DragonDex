@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.data
 
-import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.dao.PlanetsDao

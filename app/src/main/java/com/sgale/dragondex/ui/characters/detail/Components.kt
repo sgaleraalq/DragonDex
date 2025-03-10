@@ -78,7 +78,7 @@ import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
-fun CardDetailInformation(
+fun CharDetailInformation(
     modifier: Modifier,
     characterInfo: CharacterModel?
 ) {
@@ -476,7 +476,7 @@ private fun CharacterDetailPreview() {
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardDetailInformation(
+            CharDetailInformation(
                 modifier = Modifier.weight(1f),
                 characterInfo = PreviewUtils.mockCharacterInfo()
             )

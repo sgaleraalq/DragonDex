@@ -56,7 +56,7 @@ fun CharacterDetailScreen(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CardDetailInformation( modifier = Modifier.weight(1f), characterInfo = character )
+        CharDetailInformation( modifier = Modifier.weight(1f), characterInfo = character )
     }
 
     BackManagement(
