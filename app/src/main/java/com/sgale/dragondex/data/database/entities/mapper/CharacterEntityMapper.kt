@@ -22,6 +22,7 @@ import com.sgale.dragondex.domain.model.CharacterModel
 object CharacterEntityMapper : EntityMapper<CharacterModel, CharacterEntity> {
     override fun asEntity(domain: CharacterModel) =
         CharacterEntity(
+            page    = domain.page,
             id      = domain.id,
             name    = domain.name,
             image   = domain.image,
