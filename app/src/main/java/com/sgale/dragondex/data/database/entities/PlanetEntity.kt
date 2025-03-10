@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response
+package com.sgale.dragondex.data.database.entities
 
-interface ResponseMapper <Domain, Response> {
-    fun asDomain(response: Response) : Domain
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class PlanetEntity(
+    val page: Int = 0,
+    @PrimaryKey val id: Int,
+    val name: String,
+    val image: String,
+    val description: String,
+    val isDestroyed: Boolean
+)

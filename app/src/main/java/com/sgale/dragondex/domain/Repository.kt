@@ -16,8 +16,8 @@
 
 package com.sgale.dragondex.domain
 
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.domain.model.Planet
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {

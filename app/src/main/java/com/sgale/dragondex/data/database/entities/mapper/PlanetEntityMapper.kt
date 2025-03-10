@@ -16,8 +16,8 @@
 
 package com.sgale.dragondex.data.database.entities.mapper
 
-import com.sgale.dragondex.data.database.entities.planets.PlanetEntity
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.data.database.entities.PlanetEntity
+import com.sgale.dragondex.domain.model.Planet
 
 object PlanetEntityMapper : EntityMapper<List<Planet>, List<PlanetEntity>> {
     override fun asEntity(domain: List<Planet>) =
@@ -48,5 +48,5 @@ fun List<Planet>.asEntity(): List<PlanetEntity> {
 }
 
 fun List<PlanetEntity>.asDomain(): List<Planet> {
-    return PlanetEntityMapper.asDomain(this)
+    return asDomain(this)
 }

@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.model.planets
+package com.sgale.dragondex.domain.model
 
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-
-data class Planet(
-    val page: Int = 0,
+data class CharacterModel(
+    val page: Int,
     val id: Int,
     val name: String,
-    val isDestroyed: Boolean,
-    val description: String,
     val image: String,
-    val characters: List<CharacterModel> = emptyList()
+    val race: String,
+    val ki: String,
+    val maxKi: String,
+    val gender: String,
+    val description: String,
+    val affiliation: String,
+    val deletedAt: String? = null,
+    val planet: Planet? = null,
+    val transformations: List<Transformation> = emptyList()
 )

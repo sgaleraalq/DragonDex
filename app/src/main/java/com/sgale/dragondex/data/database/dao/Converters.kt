@@ -3,8 +3,8 @@ package com.sgale.dragondex.data.database.dao
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.sgale.dragondex.domain.model.characters.Transformation
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.Transformation
+import com.sgale.dragondex.domain.model.Planet
 
 object Converters {
     private val gson = Gson()

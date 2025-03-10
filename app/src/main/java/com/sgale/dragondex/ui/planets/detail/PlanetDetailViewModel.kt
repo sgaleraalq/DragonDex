@@ -18,7 +18,7 @@ package com.sgale.dragondex.ui.planets.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.Planet
 import com.sgale.dragondex.domain.usecase.FetchPlanetById
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

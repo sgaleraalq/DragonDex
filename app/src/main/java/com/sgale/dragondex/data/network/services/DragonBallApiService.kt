@@ -16,9 +16,9 @@
  
 package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
+import com.sgale.dragondex.data.network.response.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetResponse
+import com.sgale.dragondex.data.network.response.PlanetResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

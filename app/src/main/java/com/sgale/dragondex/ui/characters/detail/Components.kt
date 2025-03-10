@@ -68,9 +68,9 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.characters.Transformation
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.domain.model.Transformation
+import com.sgale.dragondex.domain.model.Planet
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.DragonDexTheme

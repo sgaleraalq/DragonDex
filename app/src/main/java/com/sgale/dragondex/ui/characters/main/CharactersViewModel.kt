@@ -16,11 +16,10 @@
 
 package com.sgale.dragondex.ui.characters.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

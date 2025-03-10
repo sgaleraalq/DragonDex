@@ -1,13 +1,11 @@
-package com.sgale.dragondex.data.network.response.characters.mapper
+package com.sgale.dragondex.data.network.response.mappers
 
-import com.sgale.dragondex.data.network.response.ResponseMapper
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
-import com.sgale.dragondex.data.network.response.characters.TransformationResponse
-import com.sgale.dragondex.data.network.response.planets.mapper.asDomain
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.data.network.response.CharacterResponse
+import com.sgale.dragondex.data.network.response.TransformationResponse
+import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.domain.model.Transformation
 
-object CharacterMapper : ResponseMapper <CharacterModel, CharacterResponse> {
+object CharacterMapper : ResponseMapper<CharacterModel, CharacterResponse> {
     override fun asDomain(response: CharacterResponse) =
         CharacterModel(
             page = 0,

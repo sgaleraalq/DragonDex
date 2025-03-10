@@ -16,10 +16,10 @@
 
 package com.sgale.dragondex.data.database.entities.mapper
 
-import com.sgale.dragondex.data.database.entities.characters.CharacterEntity
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.data.database.entities.CharacterEntity
+import com.sgale.dragondex.domain.model.CharacterModel
 
-object CharacterEntityMapper : EntityMapper<CharacterModel, CharacterEntity>{
+object CharacterEntityMapper : EntityMapper<CharacterModel, CharacterEntity> {
     override fun asEntity(domain: CharacterModel) =
         CharacterEntity(
             id      = domain.id,

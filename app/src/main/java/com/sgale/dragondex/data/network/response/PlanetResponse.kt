@@ -1,7 +1,6 @@
-package com.sgale.dragondex.data.network.response.planets
+package com.sgale.dragondex.data.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 
 data class PlanetResponse(
     @SerializedName("id")           val id: Int,

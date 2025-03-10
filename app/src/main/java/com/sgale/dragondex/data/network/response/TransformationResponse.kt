@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.entities.planets
+package com.sgale.dragondex.data.network.response
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-@Entity
-data class PlanetEntity(
-    val page: Int = 0,
-    @PrimaryKey val id: Int,
-    val name: String,
-    val image: String,
-    val description: String,
-    val isDestroyed: Boolean
+data class TransformationResponse(
+    @SerializedName("id")           val id: Int,
+    @SerializedName("name")         val name: String,
+    @SerializedName("image")        val image: String,
+    @SerializedName("ki")           val ki: String,
+    @SerializedName("deletedAt")    val deletedAt: String? = null
 )

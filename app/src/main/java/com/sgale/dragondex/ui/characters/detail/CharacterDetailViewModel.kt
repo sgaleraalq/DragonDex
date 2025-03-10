@@ -18,7 +18,7 @@ package com.sgale.dragondex.ui.characters.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgale.dragondex.domain.model.characters.CharacterModel
+import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacterById
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

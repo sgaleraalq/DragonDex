@@ -14,10 +14,9 @@
  * limitations under the License.
  */
  
-package com.sgale.dragondex.data.network.response.characters
+package com.sgale.dragondex.data.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.data.network.response.planets.PlanetResponse
 
 data class CharacterResponse (
     @SerializedName("id")               val id: Int,

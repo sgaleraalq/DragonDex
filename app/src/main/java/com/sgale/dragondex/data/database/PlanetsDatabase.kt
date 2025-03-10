@@ -19,7 +19,7 @@ package com.sgale.dragondex.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
-import com.sgale.dragondex.data.database.entities.planets.PlanetEntity
+import com.sgale.dragondex.data.database.entities.PlanetEntity
 
 @Database(
     entities = [PlanetEntity::class],

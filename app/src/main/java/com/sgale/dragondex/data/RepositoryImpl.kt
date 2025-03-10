@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.data
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
@@ -23,12 +24,11 @@ import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
 import com.sgale.dragondex.data.network.DragonDexAppDispatchers
-import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
-import com.sgale.dragondex.data.network.response.planets.mapper.asDomain
+import com.sgale.dragondex.data.network.response.mappers.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
-import com.sgale.dragondex.domain.model.characters.CharacterModel
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.domain.model.Planet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -81,10 +81,12 @@ class RepositoryImpl @Inject constructor(
     override suspend fun fetchCharacterById(id: Int): CharacterModel? {
         val characterFromDb = charactersDao.getCharacterInfoById(id)
 
+        Log.i("fetchCharacterById", "characterFromDb: $characterFromDb")
         if (characterFromDb == null) {
             runCatching { dragonBallClient.getCharacter(id) }
                 .onSuccess {
                     val character = it.asDomain()
+                    Log.i("fetchCharacterById", "character: $character")
                     charactersDao.insertCharacterById(character.asEntity())
                     return character
                 }

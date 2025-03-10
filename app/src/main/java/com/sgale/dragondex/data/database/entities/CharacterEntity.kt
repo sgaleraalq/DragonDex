@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.network.response.characters
+package com.sgale.dragondex.data.database.entities
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.sgale.dragondex.domain.model.Transformation
+import com.sgale.dragondex.domain.model.Planet
 
-data class TransformationResponse(
-    @SerializedName("id")           val id: Int,
-    @SerializedName("name")         val name: String,
-    @SerializedName("image")        val image: String,
-    @SerializedName("ki")           val ki: String,
-    @SerializedName("deletedAt")    val deletedAt: String? = null
+@Entity
+data class CharacterEntity(
+    val page: Int = 0,
+    @PrimaryKey val id: Int,
+    val name: String,
+    val image: String,
+    val race: String,
+    val ki: String,
+    val maxKi: String,
+    val gender: String,
+    val description: String,
+    val affiliation: String,
+    val deletedAt: String? = null,
+    val planet: Planet? = null,
+    val transformations: List<Transformation> = emptyList()
 )

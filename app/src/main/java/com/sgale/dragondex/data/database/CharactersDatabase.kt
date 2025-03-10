@@ -21,7 +21,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.database.dao.Converters
-import com.sgale.dragondex.data.database.entities.characters.CharacterEntity
+import com.sgale.dragondex.data.database.entities.CharacterEntity
 
 @Database(
     entities = [CharacterEntity::class],

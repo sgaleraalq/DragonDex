@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.domain.model.Planet
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PlanetCardContent

@@ -16,9 +16,9 @@
 
 package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterResponse
+import com.sgale.dragondex.data.network.response.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
-import com.sgale.dragondex.data.network.response.planets.PlanetResponse
+import com.sgale.dragondex.data.network.response.PlanetResponse
 import javax.inject.Inject
 
 class DragonBallClient @Inject constructor(

@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.domain.model.characters
+package com.sgale.dragondex.data.network.response.mappers
 
-data class Transformation(
-    val id: Int,
-    val name: String,
-    val image: String,
-    val ki: String,
-    val deletedAt: String? = null
-)
+interface ResponseMapper <Domain, Response> {
+    fun asDomain(response: Response) : Domain
+}

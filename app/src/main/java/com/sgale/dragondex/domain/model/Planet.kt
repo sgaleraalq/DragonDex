@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.entities.characters
+package com.sgale.dragondex.domain.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.sgale.dragondex.domain.model.characters.Transformation
-import com.sgale.dragondex.domain.model.planets.Planet
-
-@Entity
-data class CharacterEntity(
+data class Planet(
     val page: Int = 0,
-    @PrimaryKey val id: Int,
+    val id: Int,
     val name: String,
-    val image: String,
-    val race: String,
-    val ki: String,
-    val maxKi: String,
-    val gender: String,
+    val isDestroyed: Boolean,
     val description: String,
-    val affiliation: String,
-    val deletedAt: String? = null,
-    val planet: Planet? = null,
-    val transformations: List<Transformation> = emptyList()
+    val image: String,
+    val characters: List<CharacterModel> = emptyList()
 )

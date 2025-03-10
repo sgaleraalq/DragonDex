@@ -1,9 +1,7 @@
-package com.sgale.dragondex.data.network.response.planets.mapper
+package com.sgale.dragondex.data.network.response.mappers
 
-import com.sgale.dragondex.data.network.response.ResponseMapper
-import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
-import com.sgale.dragondex.data.network.response.planets.PlanetResponse
-import com.sgale.dragondex.domain.model.planets.Planet
+import com.sgale.dragondex.data.network.response.PlanetResponse
+import com.sgale.dragondex.domain.model.Planet
 
 object PlanetMapper: ResponseMapper<Planet, PlanetResponse> {
     override fun asDomain(response: PlanetResponse) = Planet(
