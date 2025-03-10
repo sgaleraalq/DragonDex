@@ -60,7 +60,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.airbnb.lottie.LottieComposition
@@ -69,8 +68,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.model.CharacterModel
-import com.sgale.dragondex.domain.model.Transformation
 import com.sgale.dragondex.domain.model.Planet
+import com.sgale.dragondex.domain.model.Transformation
+import com.sgale.dragondex.ui.core.DragonDexImage
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
 import com.sgale.dragondex.ui.theme.DragonDexTheme
@@ -79,7 +79,6 @@ import com.sgale.dragondex.ui.theme.saiyanSans
 
 @Composable
 fun CharDetailInformation(
-    modifier: Modifier,
     characterInfo: CharacterModel?
 ) {
     if (characterInfo == null) return
@@ -88,11 +87,13 @@ fun CharDetailInformation(
     var showTrans by remember { mutableStateOf(false) }
 
     Column(
-        modifier = modifier
+        modifier = Modifier
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .background(DragonDexTheme.background.color)
             .padding(16.dp)
-            .padding(vertical = 8.dp)
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CharName(characterInfo.name)
         CharMainInfo(characterInfo)
@@ -136,16 +137,14 @@ fun CharName(
 fun CharMainInfo(
     char: CharacterModel
 ) {
-    val context = LocalContext.current
     Row (
         modifier = Modifier.padding(16.dp).fillMaxWidth()
     ) {
-        AsyncImage(
+        DragonDexImage(
             modifier = Modifier.height(250.dp).weight(1f),
-            model = ImageRequest.Builder(context).data(char.image).crossfade(true).build(),
-            contentDescription = stringResource(R.string.description_character_image),
-            contentScale = ContentScale.FillHeight,
-            placeholder = painterResource(R.drawable.img_goku)
+            imageUrl = char.image,
+            description = stringResource(R.string.description_character_image),
+            contentScale = ContentScale.FillHeight
         )
         Spacer(Modifier.width(24.dp))
         CharacterInformation(char.ki, char.maxKi, char.gender, char.race, char.affiliation)
@@ -472,15 +471,9 @@ fun TransformationCard(transformation: Transformation) {
 @Composable
 private fun CharacterDetailPreview() {
     DragonDexTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CharDetailInformation(
-                modifier = Modifier.weight(1f),
-                characterInfo = PreviewUtils.mockCharacterInfo()
-            )
-        }
+        CharDetailInformation(
+            characterInfo = PreviewUtils.mockCharacterInfo()
+        )
     }
 }
 

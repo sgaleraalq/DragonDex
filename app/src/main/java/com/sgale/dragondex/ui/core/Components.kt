@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -77,6 +78,18 @@ fun BackManagement(
             )
         }
     }
+}
+
+@Composable
+fun DragonDexImage(modifier: Modifier, imageUrl: String, description: String, contentScale: ContentScale, placeHolder: Int = R.drawable.img_goku) {
+    val context = LocalContext.current
+    AsyncImage(
+        modifier = modifier.clip(RoundedCornerShape(16.dp)),
+        model = ImageRequest.Builder(context).data(imageUrl).crossfade(true).build(),
+        contentDescription = description,
+        contentScale = contentScale,
+        placeholder = painterResource(placeHolder)
+    )
 }
 
 @Composable

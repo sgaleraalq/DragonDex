@@ -10,12 +10,18 @@
     <string name="info">Info:</string>
     <string name="base_ki">Base ki:</string>
     <string name="max_ki">Max ki:</string>
-    <string name="description">Description:</string>
+    <string name="gender">Gender:</string>
     <string name="extra_information">Extra information:</string>
+    <string name="description">Description:</string>
     <string name="origin_planet">Origin planet</string>
     <string name="transformations">Transformations</string>
     <string name="planet_destroyed_msg">Planet is destroyed</string>
     <string name="planet_not_destroyed_msg">Planet is not destroyed</string>
+
+    // Planet Detail
+    <string name="planet_alive">Planet is not destroyed</string>
+    <string name="planet_destroyed">Planet is destroyed</string>
+    <string name="no_characters">No characters live in this planet</string>
 
     // Errors
     <string name="error_msg">An error has occurred</string>
@@ -28,5 +34,5 @@
     <string name="description_back">Back Icon\n</string>
     <string name="description_app_icon">App icon</string>
     <string name="description_extra_information">Extra information image</string>
-    <string name="gender">Gender:</string>
+    <string name="description_planet_image">Planet image</string>
 </resources>

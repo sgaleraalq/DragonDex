@@ -17,14 +17,9 @@
 package com.sgale.dragondex.ui.planets.detail
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,11 +32,11 @@ fun PlanetDetailScreen(
     id: Int,
     navigateBack: () -> Unit,
     viewModel: PlanetDetailViewModel = hiltViewModel()
-){
-    val context     = LocalContext.current
-    val errorMsg    = stringResource(R.string.error_msg)
-    val isLoading   by viewModel.isLoading.collectAsStateWithLifecycle()
-    val planet      by viewModel.planet.collectAsStateWithLifecycle()
+) {
+    val context = LocalContext.current
+    val errorMsg = stringResource(R.string.error_msg)
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val planet by viewModel.planet.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.fetchPlanet(id)
@@ -53,11 +48,7 @@ fun PlanetDetailScreen(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
-    ) {
-        PlanetDetailInformation(planet = planet)
-    }
+    PlanetDetailInformation(planet = planet)
 
     BackManagement(
         navigateBack = navigateBack,

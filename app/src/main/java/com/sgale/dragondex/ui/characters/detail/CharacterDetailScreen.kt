@@ -17,13 +17,9 @@
 package com.sgale.dragondex.ui.characters.detail
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,10 +33,10 @@ fun CharacterDetailScreen(
     navigateBack: () -> Unit,
     viewModel: CharacterDetailViewModel = hiltViewModel()
 ) {
-    val errorMsg        = stringResource(R.string.error_msg)
-    val context         = LocalContext.current
-    val isLoading       by viewModel.isLoading.collectAsStateWithLifecycle()
-    val character       by viewModel.character.collectAsStateWithLifecycle()
+    val errorMsg = stringResource(R.string.error_msg)
+    val context = LocalContext.current
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val character by viewModel.character.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.getCharacterById(id)
@@ -52,12 +48,7 @@ fun CharacterDetailScreen(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CharDetailInformation( modifier = Modifier.weight(1f), characterInfo = character )
-    }
+    CharDetailInformation( characterInfo = character )
 
     BackManagement(
         navigateBack = navigateBack,
