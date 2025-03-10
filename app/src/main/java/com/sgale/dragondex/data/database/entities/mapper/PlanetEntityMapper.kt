@@ -48,5 +48,5 @@ fun List<Planet>.asEntity(): List<PlanetEntity> {
 }
 
 fun List<PlanetEntity>.asDomain(): List<Planet> {
-    return asDomain(this)
+    return PlanetEntityMapper.asDomain(this)
 }

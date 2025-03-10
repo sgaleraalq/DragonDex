@@ -18,8 +18,8 @@ package com.sgale.dragondex.di
 
 import android.content.Context
 import androidx.room.Room
-import com.sgale.dragondex.data.database.CharactersDatabase
-import com.sgale.dragondex.data.database.PlanetsDatabase
+import com.sgale.dragondex.data.database.db.CharactersDatabase
+import com.sgale.dragondex.data.database.db.PlanetsDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

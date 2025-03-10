@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database.dao.planets
+package com.sgale.dragondex.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sgale.dragondex.data.database.entities.PlanetEntity
+import com.sgale.dragondex.data.database.entities.CharacterEntity
 
 @Dao
-interface PlanetsDao {
+interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPlanetsList(planets: List<PlanetEntity>)
+    suspend fun insertCharactersList(characters: List<CharacterEntity>)
 
-    @Query("SELECT * FROM PlanetEntity WHERE page =:page")
-    fun getPlanetsList(page: Int): List<PlanetEntity>
+    @Query("SELECT * FROM CharacterEntity WHERE page = :page")
+    suspend fun getCharactersList(page: Int) : List<CharacterEntity>
 
-    @Query("SELECT * FROM PlanetEntity WHERE page <=:page")
-    fun getAllPlanets(page: Int): List<PlanetEntity>
+    @Query("SELECT * FROM CharacterEntity WHERE page <= :page")
+    suspend fun getAllCharactersList(page: Int): List<CharacterEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCharacterById(characterInfo: CharacterEntity)
+
+    @Query("SELECT * FROM CharacterEntity WHERE id = :id")
+    suspend fun getCharacterInfoById(id: Int): CharacterEntity?
 }

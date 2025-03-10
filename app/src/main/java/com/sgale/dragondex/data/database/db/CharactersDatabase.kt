@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database
+package com.sgale.dragondex.data.database.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
-import com.sgale.dragondex.data.database.entities.PlanetEntity
+import androidx.room.TypeConverters
+import com.sgale.dragondex.data.database.Converters
+import com.sgale.dragondex.data.database.dao.CharacterDao
+import com.sgale.dragondex.data.database.entities.CharacterEntity
 
 @Database(
-    entities = [PlanetEntity::class],
+    entities = [CharacterEntity::class],
     version = 1,
     exportSchema = false
 )
-abstract class PlanetsDatabase: RoomDatabase() {
-    abstract fun getPlanetsDao(): PlanetsDao
+@TypeConverters(Converters::class)
+abstract class CharactersDatabase: RoomDatabase() {
+    abstract fun getCharacterDao(): CharacterDao
 }

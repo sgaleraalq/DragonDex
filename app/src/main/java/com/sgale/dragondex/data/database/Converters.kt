@@ -1,4 +1,4 @@
-package com.sgale.dragondex.data.database.dao
+package com.sgale.dragondex.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

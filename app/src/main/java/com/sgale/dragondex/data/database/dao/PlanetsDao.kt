@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package com.sgale.dragondex.data.database
+package com.sgale.dragondex.data.database.dao
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.sgale.dragondex.data.database.dao.characters.CharacterDao
-import com.sgale.dragondex.data.database.dao.Converters
-import com.sgale.dragondex.data.database.entities.CharacterEntity
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.sgale.dragondex.data.database.entities.PlanetEntity
 
-@Database(
-    entities = [CharacterEntity::class],
-    version = 1,
-    exportSchema = false
-)
-@TypeConverters(Converters::class)
-abstract class CharactersDatabase: RoomDatabase() {
-    abstract fun getCharacterDao(): CharacterDao
+@Dao
+interface PlanetsDao {
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPlanetsList(planets: List<PlanetEntity>)
+
+    @Query("SELECT * FROM PlanetEntity WHERE page =:page")
+    fun getPlanetsList(page: Int): List<PlanetEntity>
+
+    @Query("SELECT * FROM PlanetEntity WHERE page <=:page")
+    fun getAllPlanets(page: Int): List<PlanetEntity>
 }

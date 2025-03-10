@@ -16,10 +16,9 @@
 
 package com.sgale.dragondex.data
 
-import android.util.Log
 import androidx.annotation.WorkerThread
-import com.sgale.dragondex.data.database.dao.characters.CharacterDao
-import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
+import com.sgale.dragondex.data.database.dao.CharacterDao
+import com.sgale.dragondex.data.database.dao.PlanetsDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
 import com.sgale.dragondex.data.network.Dispatcher
@@ -79,26 +78,18 @@ class RepositoryImpl @Inject constructor(
 
 
     override suspend fun fetchCharacterById(id: Int): CharacterModel? {
-        val characterFromDb = charactersDao.getCharacterInfoById(id)
-
-        Log.i("fetchCharacterById", "characterFromDb: $characterFromDb")
-        if (characterFromDb == null) {
-            runCatching { dragonBallClient.getCharacter(id) }
-                .onSuccess {
-                    val character = it.asDomain()
-                    Log.i("fetchCharacterById", "character: $character")
-                    charactersDao.insertCharacterById(character.asEntity())
-                    return character
-                }
-                .onFailure {
-                    return null
-                }
-        } else {
-            return characterFromDb.asDomain()
-        }
+        runCatching { dragonBallClient.getCharacter(id) }
+            .onSuccess {
+                val character = it.asDomain()
+                charactersDao.insertCharacterById(character.asEntity())
+                return character
+            }
+            .onFailure {
+                val characterFromDb = charactersDao.getCharacterInfoById(id)
+                return characterFromDb?.asDomain()
+            }
         return null
     }
-
 
 
     /**
