@@ -17,7 +17,6 @@
 package com.sgale.dragondex.ui.planets.detail
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,8 +28,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Icon
@@ -48,7 +47,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sgale.dragondex.R
-import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.model.Planet
 import com.sgale.dragondex.ui.characters.detail.Description
 import com.sgale.dragondex.ui.core.DragonDexImage
@@ -60,31 +58,49 @@ import com.sgale.dragondex.ui.theme.saiyanSans
 @Composable
 fun PlanetDetailInformation(planet: Planet?) {
     if (planet == null) return
-    Log.i("PlanetDetailInformation", "Planet: $planet")
 
-    LazyColumn (
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
         modifier = Modifier
             .fillMaxSize()
             .background(DragonDexTheme.background.color)
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalArrangement = Arrangement.Center
     ) {
-        item {
-            PlanetTitle(planet.name)
-            Spacer(Modifier.height(12.dp))
-            DragonDexImage(
-                modifier = Modifier.fillMaxWidth(),
-                imageUrl = planet.image,
-                description = stringResource(R.string.description_planet_image),
-                contentScale = ContentScale.Inside,
-                placeHolder = R.drawable.img_planet_namek
-            )
-            PlanetDestroyed(planet.isDestroyed)
-            Description(planet.description)
-            Spacer(Modifier.height(24.dp))
+        item(
+            span = { GridItemSpan(3) }
+        ) {
+            Column {
+                PlanetTitle(planet.name)
+                Spacer(Modifier.height(12.dp))
+                DragonDexImage(
+                    modifier = Modifier.fillMaxWidth(),
+                    imageUrl = planet.image,
+                    description = stringResource(R.string.description_planet_image),
+                    contentScale = ContentScale.Inside,
+                    placeHolder = R.drawable.img_planet_namek
+                )
+                PlanetDestroyed(planet.isDestroyed)
+                Description(planet.description)
+                Spacer(Modifier.height(24.dp))
+                CharsTitle()
+                Spacer(Modifier.height(24.dp))
+            }
         }
-        item {
-            PlanetChars(planet.characters)
+        if (planet.characters.isEmpty()) {
+            item(span = { GridItemSpan(3) }) {
+                NoCharsText()
+            }
+        } else {
+            itemsIndexed(
+                items = planet.characters,
+                key = { _, char -> char.name }
+            ) { _, char ->
+                PlanetCharCard(
+                    name = char.name,
+                    image = char.image
+                )
+            }
         }
     }
 }
@@ -132,7 +148,7 @@ fun PlanetDestroyed(isDestroyed: Boolean) {
 }
 
 @Composable
-fun PlanetChars(characters: List<CharacterModel>) {
+fun CharsTitle() {
     Text(
         modifier = Modifier
             .fillMaxWidth()
@@ -144,48 +160,34 @@ fun PlanetChars(characters: List<CharacterModel>) {
             fontWeight = FontWeight.Bold
         )
     )
+}
 
-    if (characters.isNotEmpty()) {
-        LazyVerticalGrid(
-            modifier = Modifier.fillMaxWidth().padding(12.dp),
-            columns = GridCells.Fixed(3),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            itemsIndexed(
-                items = characters,
-                key = { _, char -> char.id }
-            ) { _, char ->
-                PlanetCharCard(
-                    name = char.name,
-                    image = char.image
-                )
-            }
-        }
-    } else {
-        Spacer(Modifier.height(24.dp))
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            text = stringResource(R.string.no_characters),
-            style = roboto.copy(
-                color = DragonDexTheme.colors.black,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+@Composable
+fun NoCharsText() {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
+        text = stringResource(R.string.no_characters),
+        style = roboto.copy(
+            color = DragonDexTheme.colors.black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
-    }
+    )
 }
 
 @Composable
 fun PlanetCharCard(name: String, image: String) {
     Column(
+        modifier = Modifier.padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         DragonDexImage(
-            modifier = Modifier.height(150.dp).fillMaxWidth(),
+            modifier = Modifier
+                .height(150.dp)
+                .fillMaxWidth(),
             imageUrl = image,
             description = stringResource(R.string.description_character_image),
             contentScale = ContentScale.Fit
