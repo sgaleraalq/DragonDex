@@ -30,6 +30,6 @@ data class CharacterResponse (
     @SerializedName("description")      val description: String,
     @SerializedName("affiliation")      val affiliation: String,
     @SerializedName("deletedAt")        val deletedAt: String? = null,
-    @SerializedName("originPlanet")     val planet: PlanetResponse,
-    @SerializedName("transformations")  val transformations: List<TransformationResponse>
+    @SerializedName("originPlanet")     val planet: PlanetResponse? = null,
+    @SerializedName("transformations")  val transformations: List<TransformationResponse>? = null
 )

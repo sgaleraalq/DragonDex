@@ -21,8 +21,8 @@ object CharacterMapper : ResponseMapper <CharacterModel, CharacterResponse> {
             description = response.description,
             affiliation = response.affiliation,
             deletedAt = response.deletedAt,
-            planet = response.planet.asDomain(),
-            transformations = response.transformations.map { it.asDomain() }
+            planet = response.planet?.asDomain(),
+            transformations = response.transformations?.map { it.asDomain() } ?: emptyList()
         )
 }
 
