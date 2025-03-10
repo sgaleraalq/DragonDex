@@ -68,7 +68,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.domain.model.planets.Planet
 import com.sgale.dragondex.ui.core.ItemCard
@@ -80,7 +80,7 @@ import com.sgale.dragondex.ui.theme.saiyanSans
 @Composable
 fun CardDetailInformation(
     modifier: Modifier,
-    characterInfo: CharacterInfo?
+    characterInfo: CharacterModel?
 ) {
     if (characterInfo == null) return
 
@@ -134,7 +134,7 @@ fun CharName(
 
 @Composable
 fun CharMainInfo(
-    char: CharacterInfo
+    char: CharacterModel
 ) {
     val context = LocalContext.current
     Row (

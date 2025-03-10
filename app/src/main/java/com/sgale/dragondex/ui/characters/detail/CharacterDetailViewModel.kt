@@ -18,7 +18,7 @@ package com.sgale.dragondex.ui.characters.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacterById
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +35,7 @@ class CharacterDetailViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading
 
-    private val _character = MutableStateFlow<CharacterInfo?>(null)
+    private val _character = MutableStateFlow<CharacterModel?>(null)
     val character = _character
 
     fun getCharacterById(id: Int) {

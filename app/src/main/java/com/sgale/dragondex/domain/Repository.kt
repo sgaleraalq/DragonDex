@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.domain
 
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +33,7 @@ interface Repository {
         onLastCall: () -> Unit
     ): Flow<List<CharacterModel>>
 
-    suspend fun fetchCharacterById(id: Int): CharacterInfo?
+    suspend fun fetchCharacterById(id: Int): CharacterModel?
 
 
     /**

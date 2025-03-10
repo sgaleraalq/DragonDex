@@ -16,23 +16,6 @@
 
 package com.sgale.dragondex.domain.model.characters
 
-import com.sgale.dragondex.domain.model.planets.Planet
-
-data class CharacterInfo(
-    val id: Int,
-    val name: String,
-    val image: String,
-    val race: String,
-    val ki: String,
-    val maxKi: String,
-    val gender: String,
-    val description: String,
-    val affiliation: String,
-    val deletedAt: String? = null,
-    val planet: Planet?,
-    val transformations: List<Transformation> = emptyList()
-)
-
 data class Transformation(
     val id: Int,
     val name: String,

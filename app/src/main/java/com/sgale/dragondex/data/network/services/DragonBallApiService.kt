@@ -16,7 +16,6 @@
  
 package com.sgale.dragondex.data.network.services
 
-import com.sgale.dragondex.data.network.response.characters.CharacterInfoResponse
 import com.sgale.dragondex.data.network.response.characters.CharacterResponse
 import com.sgale.dragondex.data.network.response.core.MainResponse
 import com.sgale.dragondex.data.network.response.planets.PlanetResponse
@@ -33,7 +32,7 @@ interface DragonBallApiService {
     ): MainResponse<CharacterResponse>
 
     @GET("characters/{id}")
-    suspend fun getCharacter(@Path("id") id: Int): CharacterInfoResponse
+    suspend fun getCharacter(@Path("id") id: Int): CharacterResponse
 
     @GET("planets")
     suspend fun fetchPlanets(

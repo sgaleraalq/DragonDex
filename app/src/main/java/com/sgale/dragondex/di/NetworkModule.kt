@@ -20,7 +20,6 @@ import com.sgale.dragondex.BuildConfig.BASE_URL
 import com.sgale.dragondex.data.core.interceptor.DbInterceptor
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
 import com.sgale.dragondex.data.RepositoryImpl
-import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
 import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
 import com.sgale.dragondex.data.network.Dispatcher
 import com.sgale.dragondex.data.network.DragonDexAppDispatchers
@@ -77,14 +76,12 @@ internal object NetworkModule {
     fun provideRepository(
         client: DragonBallClient,
         characterDao: CharacterDao,
-        charactersInfoDao: CharacterInfoDao,
         planetsDao: PlanetsDao,
         @Dispatcher(DragonDexAppDispatchers.IO) ioDispatchers: CoroutineDispatcher
     ): Repository {
         return RepositoryImpl(
             dragonBallClient = client,
             charactersDao = characterDao,
-            charactersInfoDao = charactersInfoDao,
             planetsDao = planetsDao,
             ioDispatchers = ioDispatchers
         )

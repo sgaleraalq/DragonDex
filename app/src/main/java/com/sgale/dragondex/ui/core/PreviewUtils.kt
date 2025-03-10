@@ -1,6 +1,5 @@
 package com.sgale.dragondex.ui.core
 
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.characters.Transformation
 import com.sgale.dragondex.domain.model.planets.Planet
@@ -44,7 +43,8 @@ object PreviewUtils {
         deletedAt = null
     )
 
-    fun mockCharacterInfo() = CharacterInfo(
+    fun mockCharacterInfo() = CharacterModel(
+        page = 0,
         id = 1,
         name = "Goku",
         image = "https://dragonball-api.com/characters/goku_normal.webp",

@@ -18,6 +18,8 @@ package com.sgale.dragondex.data.database.entities.characters
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sgale.dragondex.domain.model.characters.Transformation
+import com.sgale.dragondex.domain.model.planets.Planet
 
 @Entity
 data class CharacterEntity(
@@ -31,5 +33,7 @@ data class CharacterEntity(
     val gender: String,
     val description: String,
     val affiliation: String,
-    val deletedAt: String? = null
+    val deletedAt: String? = null,
+    val planet: Planet? = null,
+    val transformations: List<Transformation> = emptyList()
 )

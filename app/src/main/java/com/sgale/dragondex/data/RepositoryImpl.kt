@@ -18,7 +18,6 @@ package com.sgale.dragondex.data
 
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.characters.CharacterDao
-import com.sgale.dragondex.data.database.dao.characters.CharacterInfoDao
 import com.sgale.dragondex.data.database.dao.planets.PlanetsDao
 import com.sgale.dragondex.data.database.entities.mapper.asDomain
 import com.sgale.dragondex.data.database.entities.mapper.asEntity
@@ -28,7 +27,7 @@ import com.sgale.dragondex.data.network.response.characters.mapper.asDomain
 import com.sgale.dragondex.data.network.response.planets.mapper.asDomain
 import com.sgale.dragondex.data.network.services.DragonBallClient
 import com.sgale.dragondex.domain.Repository
-import com.sgale.dragondex.domain.model.characters.CharacterInfo
+import com.sgale.dragondex.domain.model.characters.CharacterModel
 import com.sgale.dragondex.domain.model.planets.Planet
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -40,7 +39,6 @@ import javax.inject.Inject
 class RepositoryImpl @Inject constructor(
     private val dragonBallClient: DragonBallClient,
     private val charactersDao: CharacterDao,
-    private val charactersInfoDao: CharacterInfoDao,
     private val planetsDao: PlanetsDao,
     @Dispatcher(DragonDexAppDispatchers.IO) private val ioDispatchers: CoroutineDispatcher
 ) : Repository {
@@ -80,15 +78,15 @@ class RepositoryImpl @Inject constructor(
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 
 
-    override suspend fun fetchCharacterById(id: Int): CharacterInfo? {
-        val characterFromDb = charactersInfoDao.getCharacterInfoById(id)
+    override suspend fun fetchCharacterById(id: Int): CharacterModel? {
+        val characterFromDb = charactersDao.getCharacterInfoById(id)
 
         if (characterFromDb == null) {
             runCatching { dragonBallClient.getCharacter(id) }
                 .onSuccess {
-                    val characterInfoModel = it.asDomain()
-                    charactersInfoDao.insertCharacterById(characterInfoModel.asEntity())
-                    return characterInfoModel
+                    val character = it.asDomain()
+                    charactersDao.insertCharacterById(character.asEntity())
+                    return character
                 }
                 .onFailure {
                     return null

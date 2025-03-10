@@ -37,14 +37,6 @@ class CharactersViewModel @Inject constructor(
     private val fetchCharacters: FetchCharacters
 ): ViewModel() {
 
-    private val _scrollState = MutableStateFlow(Pair(0,0))
-    val scrollState = _scrollState
-
-    fun saveScrollState(index: Int, offset: Int) {
-        Log.i("ScrollState", "Index: $index, Offset: $offset")
-        _scrollState.value = Pair(index, offset)
-    }
-
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
 

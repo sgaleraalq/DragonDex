@@ -16,8 +16,10 @@
 
 package com.sgale.dragondex.domain.model.characters
 
+import com.sgale.dragondex.domain.model.planets.Planet
+
 data class CharacterModel(
-    val page: Int = 0,
+    val page: Int,
     val id: Int,
     val name: String,
     val image: String,
@@ -27,5 +29,7 @@ data class CharacterModel(
     val gender: String,
     val description: String,
     val affiliation: String,
-    val deletedAt: String? = null
+    val deletedAt: String? = null,
+    val planet: Planet? = null,
+    val transformations: List<Transformation> = emptyList()
 )

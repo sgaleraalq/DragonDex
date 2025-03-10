@@ -13,26 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 package com.sgale.dragondex.data.network.response.characters
 
 import com.google.gson.annotations.SerializedName
-import com.sgale.dragondex.data.network.response.planets.PlanetResponse
-
-data class CharacterInfoResponse (
-    @SerializedName("id")               val id: Int,
-    @SerializedName("name")             val name: String,
-    @SerializedName("image")            val image: String,
-    @SerializedName("ki")               val ki: String,
-    @SerializedName("maxKi")            val maxKi: String,
-    @SerializedName("race")             val race: String,
-    @SerializedName("gender")           val gender: String,
-    @SerializedName("description")      val description: String,
-    @SerializedName("affiliation")      val affiliation: String,
-    @SerializedName("deletedAt")        val deletedAt: String? = null,
-    @SerializedName("originPlanet")     val planet: PlanetResponse,
-    @SerializedName("transformations")  val transformations: List<TransformationResponse>
-)
 
 data class TransformationResponse(
     @SerializedName("id")           val id: Int,

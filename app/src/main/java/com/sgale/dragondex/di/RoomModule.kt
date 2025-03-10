@@ -59,9 +59,5 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideCharacterInfoDao(database: CharactersDatabase) = database.getCharacterInfoDao()
-
-    @Singleton
-    @Provides
     fun providePlanetsDao(database: PlanetsDatabase) = database.getPlanetsDao()
 }

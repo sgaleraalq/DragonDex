@@ -19,48 +19,53 @@ package com.sgale.dragondex.data.database.entities.mapper
 import com.sgale.dragondex.data.database.entities.characters.CharacterEntity
 import com.sgale.dragondex.domain.model.characters.CharacterModel
 
-object CharacterEntityMapper : EntityMapper<List<CharacterModel>, List<CharacterEntity>> {
-    override fun asEntity(domain: List<CharacterModel>): List<CharacterEntity> {
-        return domain.map { character ->
-            CharacterEntity(
-                page    = character.page,
-                id      = character.id,
-                name    = character.name,
-                image   = character.image,
-                race    = character.race,
-                ki      = character.ki,
-                maxKi   = character.maxKi,
-                gender  = character.gender,
-                description = character.description,
-                affiliation = character.affiliation,
-                deletedAt = character.deletedAt
-            )
-        }
-    }
+object CharacterEntityMapper : EntityMapper<CharacterModel, CharacterEntity>{
+    override fun asEntity(domain: CharacterModel) =
+        CharacterEntity(
+            id      = domain.id,
+            name    = domain.name,
+            image   = domain.image,
+            race    = domain.race,
+            ki      = domain.ki,
+            maxKi   = domain.maxKi,
+            gender  = domain.gender,
+            description = domain.description,
+            affiliation = domain.affiliation,
+            deletedAt = domain.deletedAt,
+            planet = domain.planet,
+            transformations = domain.transformations
+        )
 
-    override fun asDomain(entity: List<CharacterEntity>): List<CharacterModel> {
-        return entity.map { characterEntity ->
-            CharacterModel(
-                page    = characterEntity.page,
-                id      = characterEntity.id,
-                name    = characterEntity.name,
-                image   = characterEntity.image,
-                race    = characterEntity.race,
-                ki      = characterEntity.ki,
-                maxKi   = characterEntity.maxKi,
-                gender  = characterEntity.gender,
-                description = characterEntity.description,
-                affiliation = characterEntity.affiliation,
-                deletedAt = characterEntity.deletedAt
-            )
-        }
-    }
+    override fun asDomain(entity: CharacterEntity) =
+        CharacterModel(
+            page    = entity.page,
+            id      = entity.id,
+            name    = entity.name,
+            image   = entity.image,
+            race    = entity.race,
+            ki      = entity.ki,
+            maxKi   = entity.maxKi,
+            gender  = entity.gender,
+            description = entity.description,
+            affiliation = entity.affiliation,
+            deletedAt = entity.deletedAt,
+            planet = entity.planet,
+            transformations = entity.transformations
+        )
 }
 
 fun List<CharacterModel>.asEntity(): List<CharacterEntity> {
+    return map { CharacterEntityMapper.asEntity(it) }
+}
+
+fun List<CharacterEntity>.asDomain(): List<CharacterModel> {
+    return map { CharacterEntityMapper.asDomain(it) }
+}
+
+fun CharacterModel.asEntity(): CharacterEntity {
     return CharacterEntityMapper.asEntity(this)
 }
 
-fun List<CharacterEntity>?.asDomain(): List<CharacterModel> {
-    return CharacterEntityMapper.asDomain(this.orEmpty())
+fun CharacterEntity.asDomain(): CharacterModel {
+    return CharacterEntityMapper.asDomain(this)
 }
