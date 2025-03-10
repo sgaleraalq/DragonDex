@@ -22,20 +22,24 @@ import com.sgale.dragondex.domain.model.Planet
 object PlanetEntityMapper : EntityMapper<Planet, PlanetEntity> {
     override fun asEntity(domain: Planet) =
         PlanetEntity(
-            id = domain.id,
-            name = domain.name,
+            page        = domain.page,
+            id          = domain.id,
+            name        = domain.name,
+            image       = domain.image,
             isDestroyed = domain.isDestroyed,
-            image = domain.image,
             description = domain.description,
+            characters  = domain.characters
         )
 
     override fun asDomain(entity: PlanetEntity) =
         Planet(
-            id = entity.id,
-            name = entity.name,
+            page        = entity.page,
+            id          = entity.id,
+            name        = entity.name,
+            image       = entity.image,
             isDestroyed = entity.isDestroyed,
-            image = entity.image,
-            description = entity.description
+            description = entity.description,
+            characters  = entity.characters
         )
 }
 

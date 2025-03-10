@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.data
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import com.sgale.dragondex.data.database.dao.CharacterDao
 import com.sgale.dragondex.data.database.dao.PlanetsDao
@@ -108,12 +109,15 @@ class RepositoryImpl @Inject constructor(
                 if (response.links.next.isNullOrBlank()) {
                     onLastCall()
                 }
+
                 planets = response.items.map { it.asDomain().copy(page = page) }
                 planetsDao.insertPlanetsList(planets.asEntity())
                 emit(planetsDao.getAllPlanets(page).asDomain())
             } else {
                 onError("API ERROR")
             }
+        } else {
+            emit(planetsDao.getAllPlanets(page).asDomain())
         }
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 
