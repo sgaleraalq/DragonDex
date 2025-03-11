@@ -200,9 +200,9 @@ fun CharacterCardContent(
             imageOptions = ImageOptions(contentScale = ContentScale.Fit),
             component = rememberImageComponent {
                 +ShimmerPlugin(
-                    Shimmer.Resonate(
-                        baseColor = Color.Transparent,
-                        highlightColor = Color.LightGray
+                    Shimmer.Flash(
+                        baseColor = Color.White,
+                        highlightColor = Color.LightGray,
                     )
                 )
             },
