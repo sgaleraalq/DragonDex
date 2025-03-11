@@ -85,7 +85,10 @@ fun BackManagement(
         modifier = Modifier.fillMaxSize()
     ) {
         Icon(
-            modifier = Modifier.clickable { navigateBack() }.size(50.dp).padding(12.dp),
+            modifier = Modifier
+                .clickable { navigateBack() }
+                .size(50.dp)
+                .padding(12.dp),
             painter = painterResource(R.drawable.ic_back),
             contentDescription = stringResource(R.string.description_back),
             tint = DragonDexTheme.colors.black
@@ -101,10 +104,18 @@ fun BackManagement(
 }
 
 @Composable
-fun DragonDexImage(modifier: Modifier, imageUrl: String, description: String, contentScale: ContentScale, placeHolder: Int = R.drawable.img_goku) {
+fun DragonDexImage(
+    modifier: Modifier,
+    imageUrl: String,
+    description: String,
+    contentScale: ContentScale,
+    placeHolder: Int = R.drawable.img_goku
+) {
     val context = LocalContext.current
     AsyncImage(
-        modifier = modifier.clip(RoundedCornerShape(16.dp)).shimmerEffect(listOf(Color.Gray, Color.LightGray)),
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .shimmerEffect(listOf(Color.Gray, Color.LightGray)),
         model = ImageRequest.Builder(context).data(imageUrl).crossfade(true).build(),
         contentDescription = description,
         contentScale = contentScale,
@@ -164,7 +175,10 @@ fun ItemCard(
             pressedElevation = 16.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = color ?: Color.White
+            containerColor = color ?: DragonDexTheme.colors.white,
+            contentColor = color ?: DragonDexTheme.colors.white,
+            disabledContainerColor = color ?: DragonDexTheme.colors.white,
+            disabledContentColor = color ?: DragonDexTheme.colors.white,
         ),
         shape = RoundedCornerShape(16.dp)
     ) {
@@ -178,7 +192,6 @@ fun CharacterCardContent(
     image: String,
 ) {
     Column(
-        modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         GlideImage(
@@ -217,7 +230,7 @@ fun PlanetCardContent(
     image: String,
 ) {
     val context = LocalContext.current
-    Box{
+    Box {
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(image)
@@ -250,18 +263,26 @@ fun Header(
     onBackPressed: () -> Unit
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().background(DragonDexTheme.colors.primary).padding(vertical = 8.dp, horizontal = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(DragonDexTheme.colors.primary)
+            .padding(vertical = 8.dp, horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.size(32.dp).clickable { onBackPressed() }.padding(4.dp),
+            modifier = Modifier
+                .size(32.dp)
+                .clickable { onBackPressed() }
+                .padding(4.dp),
             imageVector = Icons.AutoMirrored.Default.ArrowBack,
             contentDescription = stringResource(R.string.description_back),
             tint = Color.White
         )
         Spacer(Modifier.width(16.dp))
         Icon(
-            modifier = Modifier.size(32.dp).padding(4.dp),
+            modifier = Modifier
+                .size(32.dp)
+                .padding(4.dp),
             painter = painterResource(R.drawable.ic_dragon_ball_logo),
             contentDescription = stringResource(R.string.description_app_icon),
             tint = Color.Unspecified
