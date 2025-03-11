@@ -16,12 +16,6 @@
 
 package com.sgale.dragondex.ui.core
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -43,29 +37,17 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.sgale.dragondex.R
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.roboto
@@ -107,54 +89,24 @@ fun BackManagement(
 fun DragonDexImage(
     modifier: Modifier,
     imageUrl: String,
-    description: String,
     contentScale: ContentScale,
     placeHolder: Int = R.drawable.img_goku
 ) {
-    val context = LocalContext.current
-    AsyncImage(
+    GlideImage(
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
-            .shimmerEffect(listOf(Color.Gray, Color.LightGray)),
-        model = ImageRequest.Builder(context).data(imageUrl).crossfade(true).build(),
-        contentDescription = description,
-        contentScale = contentScale,
-        placeholder = painterResource(placeHolder)
-    )
-}
-
-fun Modifier.shimmerEffect(
-    listOfColors: List<Color>
-): Modifier = composed {
-    var size by remember { mutableStateOf(IntSize.Zero) }
-    val transition = rememberInfiniteTransition()
-
-    val startOffsetX by transition.animateFloat(
-        initialValue = -2 * size.width.toFloat(),
-        targetValue = 2 * size.width.toFloat(),
-        animationSpec = infiniteRepeatable(
-            animation = tween(
-                durationMillis = 3000, easing = LinearEasing
-            ), repeatMode = RepeatMode.Restart
-        )
-    )
-
-    background(
-        brush = Brush.linearGradient(
-            colors = listOf(Color.Gray, Color.LightGray),
-            start = Offset(startOffsetX, 0f),
-            end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
-        )
-    )
-    background(
-        brush = Brush.linearGradient(
-            colors = listOfColors, start = Offset(startOffsetX, 0f), end = Offset(
-                startOffsetX + size.width.toFloat(), size.height.toFloat()
+            .clip(RoundedCornerShape(16.dp)),
+        imageModel = { imageUrl },
+        imageOptions = ImageOptions(contentScale = contentScale),
+        component = rememberImageComponent {
+            +ShimmerPlugin(
+                Shimmer.Flash(
+                    baseColor = Color.White,
+                    highlightColor = Color.LightGray,
+                )
             )
-        )
-    ).onGloballyPositioned { layoutCoordinates ->
-        size = layoutCoordinates.size
-    }
+        },
+        previewPlaceholder = painterResource(placeHolder)
+    )
 }
 
 @Composable
@@ -229,17 +181,20 @@ fun PlanetCardContent(
     name: String,
     image: String,
 ) {
-    val context = LocalContext.current
     Box {
-        AsyncImage(
-            model = ImageRequest.Builder(context)
-                .data(image)
-                .crossfade(true)
-                .build(),
-            placeholder = painterResource(R.drawable.ic_placeholder),
-            contentDescription = stringResource(R.string.description_character_image),
+        GlideImage(
             modifier = Modifier.height(120.dp),
-            contentScale = ContentScale.Crop
+            imageModel = { image },
+            imageOptions = ImageOptions(contentScale = ContentScale.Crop),
+            component = rememberImageComponent {
+                +ShimmerPlugin(
+                    Shimmer.Flash(
+                        baseColor = Color.White,
+                        highlightColor = Color.LightGray,
+                    )
+                )
+            },
+            previewPlaceholder = painterResource(R.drawable.ic_placeholder)
         )
         Text(
             modifier = Modifier

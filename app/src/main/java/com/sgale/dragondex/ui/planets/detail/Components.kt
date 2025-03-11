@@ -76,7 +76,6 @@ fun PlanetDetailInformation(planet: Planet?) {
                 DragonDexImage(
                     modifier = Modifier.fillMaxWidth(),
                     imageUrl = planet.image,
-                    description = stringResource(R.string.description_planet_image),
                     contentScale = ContentScale.Inside,
                     placeHolder = R.drawable.img_planet_namek
                 )
@@ -189,7 +188,6 @@ fun PlanetCharCard(name: String, image: String) {
                 .height(150.dp)
                 .fillMaxWidth(),
             imageUrl = image,
-            description = stringResource(R.string.description_character_image),
             contentScale = ContentScale.Fit
         )
         Spacer(Modifier.height(8.dp))

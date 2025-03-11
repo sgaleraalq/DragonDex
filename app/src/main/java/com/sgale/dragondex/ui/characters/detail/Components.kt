@@ -143,7 +143,6 @@ fun CharMainInfo(
         DragonDexImage(
             modifier = Modifier.height(250.dp).weight(1f),
             imageUrl = char.image,
-            description = stringResource(R.string.description_character_image),
             contentScale = ContentScale.FillHeight
         )
         Spacer(Modifier.width(24.dp))
