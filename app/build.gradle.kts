@@ -53,6 +53,10 @@ android {
 }
 
 dependencies {
+    // Glide
+    implementation(libs.landscapist.glide)
+    implementation(libs.landscapist.placeholder)
+
     // Lottie
     implementation(libs.lottie.compose)
 

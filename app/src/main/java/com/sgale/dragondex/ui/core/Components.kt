@@ -70,6 +70,11 @@ import com.sgale.dragondex.R
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.roboto
 import com.sgale.dragondex.ui.theme.saiyanSans
+import com.skydoves.landscapist.ImageOptions
+import com.skydoves.landscapist.components.rememberImageComponent
+import com.skydoves.landscapist.glide.GlideImage
+import com.skydoves.landscapist.placeholder.shimmer.Shimmer
+import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
 fun BackManagement(
@@ -172,20 +177,23 @@ fun CharacterCardContent(
     name: String,
     image: String,
 ) {
-    val context = LocalContext.current
     Column(
         modifier = Modifier.padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(context)
-                .data(image)
-                .crossfade(true)
-                .build(),
-            placeholder = painterResource(R.drawable.ic_placeholder), // TODO shimmer effect
-            contentDescription = stringResource(R.string.description_character_image),
+        GlideImage(
             modifier = Modifier.height(150.dp),
-            contentScale = ContentScale.Fit
+            imageModel = { image },
+            imageOptions = ImageOptions(contentScale = ContentScale.Fit),
+            component = rememberImageComponent {
+                +ShimmerPlugin(
+                    Shimmer.Resonate(
+                        baseColor = Color.Transparent,
+                        highlightColor = Color.LightGray
+                    )
+                )
+            },
+            previewPlaceholder = painterResource(R.drawable.ic_placeholder)
         )
         Spacer(Modifier.height(12.dp))
         Text(
