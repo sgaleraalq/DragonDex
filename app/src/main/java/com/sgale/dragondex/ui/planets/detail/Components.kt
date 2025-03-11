@@ -64,7 +64,8 @@ fun PlanetDetailInformation(planet: Planet?) {
         modifier = Modifier
             .fillMaxSize()
             .background(DragonDexTheme.background.color)
-            .padding(16.dp),
+            .padding(16.dp)
+            .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         item(
