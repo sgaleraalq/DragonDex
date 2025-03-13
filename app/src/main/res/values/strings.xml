@@ -35,4 +35,6 @@
     <string name="description_app_icon">App icon</string>
     <string name="description_extra_information">Extra information image</string>
     <string name="description_planet_image">Planet image</string>
+    <string name="description_filter">Filter icon</string>
+    <string name="description_arrow_down">Arrow down icon</string>
 </resources>

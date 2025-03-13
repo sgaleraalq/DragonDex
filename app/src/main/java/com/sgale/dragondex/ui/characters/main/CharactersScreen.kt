@@ -17,20 +17,34 @@
 package com.sgale.dragondex.ui.characters.main
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,6 +70,7 @@ fun CharactersScreen(
     val uiState             by viewModel.uiState.collectAsStateWithLifecycle()
     val charactersList      by viewModel.characterList.collectAsStateWithLifecycle()
     val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
+    var showFilters         by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -64,9 +79,12 @@ fun CharactersScreen(
     ) {
         Header(
             text = stringResource(R.string.characters),
-            onBackPressed = { navigateHome() }
+            onBackPressed = { navigateHome() },
+            onShowFilters = { showFilters = !showFilters }
         )
-        Spacer(Modifier.height(8.dp))
+        if (showFilters) {
+            CharacterFilters()
+        }
         CharactersList(
             charactersList = charactersList.toImmutableList(),
             isLastItem = isLastItem,
@@ -96,7 +114,6 @@ fun CharactersList(
     navigateToDetail: (Int) -> Unit = {}
 ) {
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
         columns = GridCells.Fixed(2)
     ) {
         val threadHold = 2
@@ -124,11 +141,51 @@ fun CharactersList(
     }
 }
 
+@Composable
+fun CharacterFilters() {
+    var isRaceExpanded by rememberSaveable { mutableStateOf(false) }
+    val races = listOf("Human", "Android", "Alien")
+    Row(
+        modifier = Modifier.fillMaxWidth().background(Color.Red).padding(horizontal = 12.dp)
+    ) {
+        Box{
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.clickable {
+                    isRaceExpanded = true
+                }
+            ) {
+                Text(text = races[0])
+                Image(
+                    imageVector = Icons.Default.ArrowDropDown,
+                    contentDescription = stringResource(R.string.description_arrow_down)
+                )
+            }
+        }
+        DropdownMenu(
+            expanded = isRaceExpanded,
+            onDismissRequest = { isRaceExpanded = false}
+        ) {
+            races.forEachIndexed { _, race ->
+                DropdownMenuItem(
+                    text = {
+                        Text(text = race)
+                    },
+                    onClick = {
+                        isRaceExpanded = false
+                    })
+            }
+        }
+    }
+}
+
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun CharactersMainPreview() {
     DragonDexTheme {
+        CharacterFilters()
         CharactersList(
             charactersList = PreviewUtils.mockCharacterList(),
             isLastItem = false,

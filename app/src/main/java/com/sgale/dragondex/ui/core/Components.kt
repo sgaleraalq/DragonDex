@@ -215,7 +215,8 @@ fun PlanetCardContent(
 @Composable
 fun Header(
     text: String,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onShowFilters: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -244,6 +245,7 @@ fun Header(
         )
         Spacer(Modifier.width(16.dp))
         Text(
+            modifier = Modifier.weight(1f),
             text = text,
             style = roboto.copy(
                 fontSize = 22.sp,
@@ -251,5 +253,19 @@ fun Header(
                 fontWeight = Bold
             )
         )
+        Icon(
+            modifier = Modifier
+                .size(32.dp)
+                .clickable { onShowFilters() }
+                .padding(4.dp),
+            painter = painterResource(R.drawable.ic_filter),
+            contentDescription = stringResource(R.string.description_filter),
+            tint = Color.White
+        )
     }
+}
+
+@Composable
+fun DropDownMenu(){
+
 }
