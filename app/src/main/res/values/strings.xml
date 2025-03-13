@@ -5,6 +5,8 @@
     // Character Main
     <string name="characters">Characters</string>
     <string name="planets">Planets</string>
+    <string name="race">Race:</string>
+    <string name="affiliation">Affiliation:</string>
 
     // Character Detail
     <string name="info">Info:</string>

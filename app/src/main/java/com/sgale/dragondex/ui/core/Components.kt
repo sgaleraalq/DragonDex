@@ -42,11 +42,17 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
@@ -270,30 +276,46 @@ fun Header(
     }
 }
 
+
 @Composable
 fun DropDownMenu(
     modifier: Modifier = Modifier,
+    dropDownTitle: String,
     menuExpanded: Boolean,
     selectedItem: String,
     items: List<String>,
     onChangeDisplay: () -> Unit,
-    onFilterApplied: () -> Unit
-){
-    Box(
-        modifier = modifier.padding(4.dp)
+    onFilterApplied: (String) -> Unit
+) {
+    var dropdownWidth by remember { mutableIntStateOf(0) }
+    Column(
+        modifier = modifier.padding(4.dp).onGloballyPositioned { coordinates ->
+            dropdownWidth = coordinates.size.width
+        }
     ) {
+        Text(
+            text = dropDownTitle,
+            style = roboto.copy(
+                fontSize = 16.sp,
+                fontWeight = Bold,
+                color = DragonDexTheme.colors.black
+            )
+        )
+        Spacer(Modifier.height(8.dp))
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable { onChangeDisplay() }.background(DragonDexTheme.colors.backgroundLight).padding(4.dp)
+            modifier = Modifier
+                .clickable { onChangeDisplay() }
+                .background(DragonDexTheme.colors.backgroundLight)
+                .padding(4.dp)
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(horizontal = 8.dp),
                 text = selectedItem,
                 style = roboto.copy(
                     fontSize = 16.sp,
                     color = DragonDexTheme.colors.black,
-                    fontWeight = Bold
                 )
             )
             Icon(
@@ -302,16 +324,28 @@ fun DropDownMenu(
                 tint = DragonDexTheme.colors.black
             )
         }
-    }
-    DropdownMenu(
-        expanded = menuExpanded,
-        onDismissRequest = { onChangeDisplay() }
-    ) {
-        items.forEachIndexed { _, item ->
-            DropdownMenuItem(
-                text = { Text(text = item) },
-                onClick = { onFilterApplied() }
-            )
+        DropdownMenu(
+            containerColor = DragonDexTheme.colors.backgroundLight,
+            modifier = modifier.width(with(LocalDensity.current) { dropdownWidth.toDp() }),
+            expanded = menuExpanded,
+            onDismissRequest = { onChangeDisplay() }
+        ) {
+            items.forEachIndexed { index, item ->
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = item,
+                            style = roboto.copy(
+                                fontSize = 16.sp,
+                                color = DragonDexTheme.colors.black
+                            )
+                        )
+                    },
+                    onClick = {
+                        onFilterApplied(items[index])
+                    }
+                )
+            }
         }
     }
 }

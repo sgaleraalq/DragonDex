@@ -59,6 +59,9 @@ class CharactersViewModel @Inject constructor(
     val selectedRace = MutableStateFlow<String?>(null)
     val selectedAffiliation = MutableStateFlow<String?>(null)
 
+    fun changeRace(race: String) { selectedRace.value = race }
+    fun changeAffiliation(affiliation: String) { selectedAffiliation.value = affiliation }
+
     private val charactersFetchingIndex = MutableStateFlow(1)
 
     private var _isLastItem = MutableStateFlow(false)

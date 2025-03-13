@@ -85,7 +85,9 @@ fun CharactersScreen(
                 racesList = racesList,
                 affiliationsList = affiliationsList,
                 race = selectedRace,
-                affiliation = selectedAffiliation
+                affiliation = selectedAffiliation,
+                onRaceSelected = { viewModel.changeRace(it) },
+                onAffiliationSelected = { viewModel.changeAffiliation(it) }
             )
         }
         CharactersList(
@@ -149,32 +151,43 @@ fun CharacterFilters(
     racesList: List<String> = emptyList(),
     affiliationsList: List<String> = emptyList(),
     race: String? = null,
-    affiliation: String? = null
+    affiliation: String? = null,
+    onRaceSelected: (String) -> Unit = {},
+    onAffiliationSelected: (String) -> Unit = {}
 ) {
     var isRaceExpanded          by rememberSaveable { mutableStateOf(false) }
     var isAffiliationsExpanded  by rememberSaveable { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(top = 8.dp)
     ) {
         DropDownMenu(
             modifier = Modifier.weight(1f),
+            dropDownTitle = stringResource(R.string.race),
             menuExpanded = isRaceExpanded,
             selectedItem = race ?: "",
             items = racesList,
             onChangeDisplay = { isRaceExpanded = !isRaceExpanded },
-            onFilterApplied = { isRaceExpanded = !isRaceExpanded }
+            onFilterApplied = {
+                isRaceExpanded = !isRaceExpanded
+                onRaceSelected(it)
+            }
         )
         DropDownMenu(
             modifier = Modifier.weight(1f),
+            dropDownTitle = stringResource(R.string.affiliation),
             menuExpanded = isAffiliationsExpanded,
             selectedItem = affiliation ?: "",
             items = affiliationsList,
             onChangeDisplay = { isAffiliationsExpanded = !isAffiliationsExpanded },
-            onFilterApplied = { isAffiliationsExpanded = !isAffiliationsExpanded }
+            onFilterApplied = {
+                isAffiliationsExpanded = !isAffiliationsExpanded
+                onAffiliationSelected(it)
+            }
         )
     }
 }
+
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -182,7 +195,16 @@ fun CharacterFilters(
 private fun CharactersMainPreview() {
     DragonDexTheme {
         Column {
-            CharacterFilters()
+            CharacterFilters(
+                racesList = listOf(
+                    "Test", "Test", "Test"
+                ),
+                affiliationsList = listOf(
+                    "Test", "Test", "Test"
+                ),
+                race = "Test",
+                affiliation = "Test"
+            )
             CharactersList(
                 charactersList = PreviewUtils.mockCharacterList(),
                 isLastItem = false,
