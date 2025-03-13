@@ -27,8 +27,6 @@ interface Repository {
      */
     suspend fun fetchCharacters(
         page: Int,
-        race: String?,
-        affiliation: String?,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit,

@@ -24,16 +24,12 @@ class FetchCharacters @Inject constructor(
 ) {
     suspend operator fun invoke(
         page: Int,
-        race: String?,
-        affiliation: String?,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = repository.fetchCharacters(
         page = page,
-        race = race,
-        affiliation = affiliation,
         onStart = onStart,
         onComplete = onComplete,
         onError = { onError(it) },

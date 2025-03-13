@@ -29,8 +29,8 @@ interface DragonBallApiService {
     suspend fun fetchCharacters(
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int,
-        @Query("race") race: String?,
-        @Query("affiliation") affiliation: String?
+        @Query("race") race: String? = null,
+        @Query("affiliation") affiliation: String? = null
     ): MainResponse<CharacterResponse>
 
     @GET("characters/{id}")

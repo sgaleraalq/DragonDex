@@ -29,7 +29,6 @@ import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.model.Planet
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
@@ -46,19 +45,17 @@ class RepositoryImpl @Inject constructor(
     @WorkerThread
     override suspend fun fetchCharacters(
         page: Int,
-        race: String?,
-        affiliation: String?,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = flow {
-        var characters = charactersDao.getCharactersList(page, race, affiliation).asDomain()
+        var characters = charactersDao.getCharactersList(page).asDomain()
         if (characters.isEmpty()) {
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response = runCatching { dragonBallClient.fetchCharacters(page, race, affiliation) }.onFailure {onError(it.message ?: "Unknown Error")}.getOrNull()
+            val response = runCatching { dragonBallClient.fetchCharacters(page) }.onFailure {onError(it.message ?: "Unknown Error")}.getOrNull()
             if (response != null) {
                 if (response.links.next.isNullOrBlank()) {
                     onLastCall()
@@ -67,7 +64,7 @@ class RepositoryImpl @Inject constructor(
                     characterResponse.asDomain().copy(page = page)
                 }
                 charactersDao.insertCharactersList(characters.asEntity())
-                emit(charactersDao.getAllCharactersList(page, race, affiliation).asDomain())
+                emit(charactersDao.getAllCharactersList(page).asDomain())
             } else {
                 onError("API ERROR")
             }
@@ -75,9 +72,9 @@ class RepositoryImpl @Inject constructor(
             /**
              * If we have characters in database, we just emit them
              */
-            emit(charactersDao.getAllCharactersList(page, race, affiliation).asDomain())
+            emit(charactersDao.getAllCharactersList(page).asDomain())
         }
-    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers).distinctUntilChanged()
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
 
 
     override suspend fun fetchCharacterById(id: Int): CharacterModel? {
