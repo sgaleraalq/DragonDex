@@ -45,17 +45,19 @@ class RepositoryImpl @Inject constructor(
     @WorkerThread
     override suspend fun fetchCharacters(
         page: Int,
+        race: String?,
+        affiliation: String?,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit,
         onLastCall: () -> Unit
     ) = flow {
-        var characters = charactersDao.getCharactersList(page = page).asDomain()
+        var characters = charactersDao.getCharactersList(page, race, affiliation).asDomain()
         if (characters.isEmpty()) {
             /**
              * If we can't get characters from database, we take it from API and insert it into database
              */
-            val response = runCatching { dragonBallClient.fetchCharacters(page = page) }.onFailure {onError(it.message ?: "Unknown Error")}.getOrNull()
+            val response = runCatching { dragonBallClient.fetchCharacters(page, race, affiliation) }.onFailure {onError(it.message ?: "Unknown Error")}.getOrNull()
             if (response != null) {
                 if (response.links.next.isNullOrBlank()) {
                     onLastCall()

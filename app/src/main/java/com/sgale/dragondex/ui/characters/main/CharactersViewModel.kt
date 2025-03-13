@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -67,9 +68,17 @@ class CharactersViewModel @Inject constructor(
     private var _isLastItem = MutableStateFlow(false)
     val isLastItem = _isLastItem
 
-    val characterList: StateFlow<List<CharacterModel>> = charactersFetchingIndex.flatMapLatest { page ->
+    val characterList: StateFlow<List<CharacterModel>> = combine(
+        charactersFetchingIndex,
+        selectedRace,
+        selectedAffiliation
+    ) { page, race, affiliation ->
+        Triple(page, race, affiliation) // Empaquetamos los valores en un Triple
+    }.flatMapLatest { (page, race, affiliation) ->
         fetchCharacters(
             page = page,
+            race = race,
+            affiliation = affiliation, // <-- Agregamos el filtro por afiliación
             onStart =       { _uiState.value = UIState.Loading      },
             onComplete =    { _uiState.value = UIState.Success      },
             onError =       { _uiState.value = UIState.Error(it)    },

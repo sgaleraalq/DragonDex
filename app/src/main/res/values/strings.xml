@@ -39,4 +39,5 @@
     <string name="description_planet_image">Planet image</string>
     <string name="description_filter">Filter icon</string>
     <string name="description_arrow_down">Arrow down icon</string>
+    <string name="apply_filters">Apply filters</string>
 </resources>

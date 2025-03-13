@@ -43,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.ui.core.ApplyFiltersButton
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.DropDownMenu
 import com.sgale.dragondex.ui.core.Header
@@ -87,7 +88,8 @@ fun CharactersScreen(
                 race = selectedRace,
                 affiliation = selectedAffiliation,
                 onRaceSelected = { viewModel.changeRace(it) },
-                onAffiliationSelected = { viewModel.changeAffiliation(it) }
+                onAffiliationSelected = { viewModel.changeAffiliation(it) },
+                hideFilters = { showFilters = !showFilters }
             )
         }
         CharactersList(
@@ -153,10 +155,13 @@ fun CharacterFilters(
     race: String? = null,
     affiliation: String? = null,
     onRaceSelected: (String) -> Unit = {},
-    onAffiliationSelected: (String) -> Unit = {}
+    onAffiliationSelected: (String) -> Unit = {},
+    hideFilters: () -> Unit = {}
 ) {
     var isRaceExpanded          by rememberSaveable { mutableStateOf(false) }
     var isAffiliationsExpanded  by rememberSaveable { mutableStateOf(false) }
+    var selectedRace            by rememberSaveable { mutableStateOf(race)        }
+    var selectedAffiliation     by rememberSaveable { mutableStateOf(affiliation) }
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(top = 8.dp)
@@ -165,26 +170,32 @@ fun CharacterFilters(
             modifier = Modifier.weight(1f),
             dropDownTitle = stringResource(R.string.race),
             menuExpanded = isRaceExpanded,
-            selectedItem = race ?: "",
+            selectedItem = selectedRace ?: "",
             items = racesList,
             onChangeDisplay = { isRaceExpanded = !isRaceExpanded },
             onFilterApplied = {
                 isRaceExpanded = !isRaceExpanded
-                onRaceSelected(it)
+                selectedRace = it
             }
         )
         DropDownMenu(
             modifier = Modifier.weight(1f),
             dropDownTitle = stringResource(R.string.affiliation),
             menuExpanded = isAffiliationsExpanded,
-            selectedItem = affiliation ?: "",
+            selectedItem = selectedAffiliation ?: "",
             items = affiliationsList,
             onChangeDisplay = { isAffiliationsExpanded = !isAffiliationsExpanded },
             onFilterApplied = {
-                isAffiliationsExpanded = !isAffiliationsExpanded
-                onAffiliationSelected(it)
+                isAffiliationsExpanded  = !isAffiliationsExpanded
+                selectedAffiliation     = it
             }
         )
+    }
+
+    ApplyFiltersButton {
+        hideFilters()
+        onRaceSelected(selectedRace ?: "")
+        onAffiliationSelected(selectedAffiliation ?: "")
     }
 }
 

@@ -22,6 +22,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,11 +35,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -346,6 +349,34 @@ fun DropDownMenu(
                     }
                 )
             }
+        }
+    }
+}
+
+
+@Composable
+fun ApplyFiltersButton(
+    onFiltersApplied: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
+    ) {
+        ElevatedButton(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            onClick = { onFiltersApplied() },
+            shape = RoundedCornerShape(4.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = DragonDexTheme.colors.backgroundLight
+            ),
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 2.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.apply_filters),
+                style = roboto.copy(
+                    color = DragonDexTheme.colors.black,
+                    fontSize = 12.sp
+                )
+            )
         }
     }
 }
