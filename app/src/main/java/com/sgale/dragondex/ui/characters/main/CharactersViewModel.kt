@@ -16,21 +16,21 @@
 
 package com.sgale.dragondex.ui.characters.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.data.provider.AffiliationsProvider
 import com.sgale.dragondex.data.provider.RacesProvider
 import com.sgale.dragondex.domain.core.UIState
-import com.sgale.dragondex.domain.model.AffiliationsModel
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class CharactersViewModel @Inject constructor(
     racesProvider: RacesProvider,
     affiliationsProvider: AffiliationsProvider,
     private val fetchCharacters: FetchCharacters
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
@@ -59,27 +59,44 @@ class CharactersViewModel @Inject constructor(
     val selectedRace = MutableStateFlow<String?>(null)
     val selectedAffiliation = MutableStateFlow<String?>(null)
 
-    fun changeRace(race: String) { selectedRace.value = race }
-    fun changeAffiliation(affiliation: String) { selectedAffiliation.value = affiliation }
+    fun changeRace(race: String) {
+        selectedRace.value = race
+    }
+
+    fun changeAffiliation(affiliation: String) {
+        selectedAffiliation.value = affiliation
+//        filterList()
+    }
+//
+//    private fun filterList() {
+////        character.race == selectedRace.value
+//        characterList.value.forEach { character ->
+//            character.isVisible =
+//                (character.race == selectedRace.value || selectedRace.value == null) &&
+//                    (character.affiliation == selectedAffiliation.value || selectedAffiliation.value == null)
+//        }
+//        Log.i("CharactersViewModel", "filterList: ${characterList.value}")
+//    }
 
     private val charactersFetchingIndex = MutableStateFlow(1)
 
     private var _isLastItem = MutableStateFlow(false)
     val isLastItem = _isLastItem
 
-    val characterList: StateFlow<List<CharacterModel>> = charactersFetchingIndex.flatMapLatest { page ->
-        fetchCharacters(
-            page = page,
-            onStart =       { _uiState.value = UIState.Loading      },
-            onComplete =    { _uiState.value = UIState.Success      },
-            onError =       { _uiState.value = UIState.Error(it)    },
-            onLastCall =    { _isLastItem.value = true              }
+    val characterList: StateFlow<List<CharacterModel>> =
+        charactersFetchingIndex.flatMapLatest { page ->
+            fetchCharacters(
+                page = page,
+                onStart = { _uiState.value = UIState.Loading },
+                onComplete = { _uiState.value = UIState.Success },
+                onError = { _uiState.value = UIState.Error(it) },
+                onLastCall = { _isLastItem.value = true }
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
         )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = emptyList()
-    )
 
     fun fetchNextCharacters() {
         if (_uiState.value != UIState.Loading) {

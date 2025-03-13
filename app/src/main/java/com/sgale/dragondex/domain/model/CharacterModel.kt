@@ -17,6 +17,7 @@
 package com.sgale.dragondex.domain.model
 
 data class CharacterModel(
+    var isVisible: Boolean = true,
     val page: Int,
     val id: Int,
     val name: String,

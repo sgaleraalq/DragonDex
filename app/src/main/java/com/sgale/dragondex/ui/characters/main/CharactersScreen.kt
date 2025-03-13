@@ -59,17 +59,17 @@ fun CharactersScreen(
     navigateToDetail: (Int) -> Unit,
     navigateHome: () -> Unit
 ) {
-    val uiState             by viewModel.uiState.collectAsStateWithLifecycle()
-    val charactersList      by viewModel.characterList.collectAsStateWithLifecycle()
-    val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val charactersList by viewModel.characterList.collectAsStateWithLifecycle()
+    val isLastItem by viewModel.isLastItem.collectAsStateWithLifecycle()
 
     // DropDown
-    val racesList           by viewModel.racesList.collectAsStateWithLifecycle()
-    val affiliationsList    by viewModel.affiliationsList.collectAsStateWithLifecycle()
-    val selectedRace        by viewModel.selectedRace.collectAsStateWithLifecycle()
+    val racesList by viewModel.racesList.collectAsStateWithLifecycle()
+    val affiliationsList by viewModel.affiliationsList.collectAsStateWithLifecycle()
+    val selectedRace by viewModel.selectedRace.collectAsStateWithLifecycle()
     val selectedAffiliation by viewModel.selectedAffiliation.collectAsStateWithLifecycle()
 
-    var showFilters         by rememberSaveable { mutableStateOf(false) }
+    var showFilters by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -132,7 +132,6 @@ fun CharactersList(
             if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && !isLastItem) {
                 fetchNextCharacters()
             }
-
             ItemCard(
                 id = character.id,
                 content = {
@@ -158,13 +157,16 @@ fun CharacterFilters(
     onAffiliationSelected: (String) -> Unit = {},
     hideFilters: () -> Unit = {}
 ) {
-    var isRaceExpanded          by rememberSaveable { mutableStateOf(false) }
-    var isAffiliationsExpanded  by rememberSaveable { mutableStateOf(false) }
-    var selectedRace            by rememberSaveable { mutableStateOf(race)        }
-    var selectedAffiliation     by rememberSaveable { mutableStateOf(affiliation) }
+    var isRaceExpanded by rememberSaveable { mutableStateOf(false) }
+    var isAffiliationsExpanded by rememberSaveable { mutableStateOf(false) }
+    var selectedRace by rememberSaveable { mutableStateOf(race) }
+    var selectedAffiliation by rememberSaveable { mutableStateOf(affiliation) }
 
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(top = 8.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp)
+            .padding(top = 8.dp)
     ) {
         DropDownMenu(
             modifier = Modifier.weight(1f),
@@ -186,8 +188,8 @@ fun CharacterFilters(
             items = affiliationsList,
             onChangeDisplay = { isAffiliationsExpanded = !isAffiliationsExpanded },
             onFilterApplied = {
-                isAffiliationsExpanded  = !isAffiliationsExpanded
-                selectedAffiliation     = it
+                isAffiliationsExpanded = !isAffiliationsExpanded
+                selectedAffiliation = it
             }
         )
     }
