@@ -36,8 +36,13 @@ interface CharacterDao {
         """)
     suspend fun getCharactersList(page: Int, race: String?, affiliation: String?) : List<CharacterEntity>
 
-    @Query("SELECT * FROM CharacterEntity WHERE page <= :page")
-    suspend fun getAllCharactersList(page: Int): List<CharacterEntity>
+    @Query("""
+        SELECT * FROM CharacterEntity 
+        WHERE page <= :page 
+        AND (:race IS NULL OR race =:race) 
+        AND (:affiliation IS NULL OR affiliation =:affiliation)
+        """)
+    suspend fun getAllCharactersList(page: Int, race: String?, affiliation: String?): List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacterById(character: CharacterEntity)

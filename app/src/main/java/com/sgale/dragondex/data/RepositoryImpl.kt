@@ -29,6 +29,7 @@ import com.sgale.dragondex.domain.Repository
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.model.Planet
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
@@ -66,7 +67,7 @@ class RepositoryImpl @Inject constructor(
                     characterResponse.asDomain().copy(page = page)
                 }
                 charactersDao.insertCharactersList(characters.asEntity())
-                emit(charactersDao.getAllCharactersList(page).asDomain())
+                emit(charactersDao.getAllCharactersList(page, race, affiliation).asDomain())
             } else {
                 onError("API ERROR")
             }
@@ -74,9 +75,9 @@ class RepositoryImpl @Inject constructor(
             /**
              * If we have characters in database, we just emit them
              */
-            emit(charactersDao.getAllCharactersList(page).asDomain())
+            emit(charactersDao.getAllCharactersList(page, race, affiliation).asDomain())
         }
-    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers)
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatchers).distinctUntilChanged()
 
 
     override suspend fun fetchCharacterById(id: Int): CharacterModel? {
