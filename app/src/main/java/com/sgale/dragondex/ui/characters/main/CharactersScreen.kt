@@ -17,10 +17,7 @@
 package com.sgale.dragondex.ui.characters.main
 
 import android.content.res.Configuration
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,12 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,8 +35,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,6 +44,7 @@ import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.ui.core.CharacterCardContent
+import com.sgale.dragondex.ui.core.DropDownMenu
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
 import com.sgale.dragondex.ui.core.PreviewUtils
@@ -70,6 +61,13 @@ fun CharactersScreen(
     val uiState             by viewModel.uiState.collectAsStateWithLifecycle()
     val charactersList      by viewModel.characterList.collectAsStateWithLifecycle()
     val isLastItem          by viewModel.isLastItem.collectAsStateWithLifecycle()
+
+    // DropDown
+    val racesList           by viewModel.racesList.collectAsStateWithLifecycle()
+    val affiliationsList    by viewModel.affiliationsList.collectAsStateWithLifecycle()
+    val selectedRace        by viewModel.selectedRace.collectAsStateWithLifecycle()
+    val selectedAffiliation by viewModel.selectedAffiliation.collectAsStateWithLifecycle()
+
     var showFilters         by rememberSaveable { mutableStateOf(false) }
 
     Column(
@@ -83,7 +81,12 @@ fun CharactersScreen(
             onShowFilters = { showFilters = !showFilters }
         )
         if (showFilters) {
-            CharacterFilters()
+            CharacterFilters(
+                racesList = racesList,
+                affiliationsList = affiliationsList,
+                race = selectedRace,
+                affiliation = selectedAffiliation
+            )
         }
         CharactersList(
             charactersList = charactersList.toImmutableList(),
@@ -142,41 +145,34 @@ fun CharactersList(
 }
 
 @Composable
-fun CharacterFilters() {
-    var isRaceExpanded by rememberSaveable { mutableStateOf(false) }
-    val races = listOf("Human", "Android", "Alien")
+fun CharacterFilters(
+    racesList: List<String> = emptyList(),
+    affiliationsList: List<String> = emptyList(),
+    race: String? = null,
+    affiliation: String? = null
+) {
+    var isRaceExpanded          by rememberSaveable { mutableStateOf(false) }
+    var isAffiliationsExpanded  by rememberSaveable { mutableStateOf(false) }
+
     Row(
-        modifier = Modifier.fillMaxWidth().background(Color.Red).padding(horizontal = 12.dp)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
     ) {
-        Box{
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable {
-                    isRaceExpanded = true
-                }
-            ) {
-                Text(text = races[0])
-                Image(
-                    imageVector = Icons.Default.ArrowDropDown,
-                    contentDescription = stringResource(R.string.description_arrow_down)
-                )
-            }
-        }
-        DropdownMenu(
-            expanded = isRaceExpanded,
-            onDismissRequest = { isRaceExpanded = false}
-        ) {
-            races.forEachIndexed { _, race ->
-                DropdownMenuItem(
-                    text = {
-                        Text(text = race)
-                    },
-                    onClick = {
-                        isRaceExpanded = false
-                    })
-            }
-        }
+        DropDownMenu(
+            modifier = Modifier.weight(1f),
+            menuExpanded = isRaceExpanded,
+            selectedItem = race ?: "",
+            items = racesList,
+            onChangeDisplay = { isRaceExpanded = !isRaceExpanded },
+            onFilterApplied = { isRaceExpanded = !isRaceExpanded }
+        )
+        DropDownMenu(
+            modifier = Modifier.weight(1f),
+            menuExpanded = isAffiliationsExpanded,
+            selectedItem = affiliation ?: "",
+            items = affiliationsList,
+            onChangeDisplay = { isAffiliationsExpanded = !isAffiliationsExpanded },
+            onFilterApplied = { isAffiliationsExpanded = !isAffiliationsExpanded }
+        )
     }
 }
 
@@ -185,11 +181,13 @@ fun CharacterFilters() {
 @Composable
 private fun CharactersMainPreview() {
     DragonDexTheme {
-        CharacterFilters()
-        CharactersList(
-            charactersList = PreviewUtils.mockCharacterList(),
-            isLastItem = false,
-            uiState = UIState.Success,
-        )
+        Column {
+            CharacterFilters()
+            CharactersList(
+                charactersList = PreviewUtils.mockCharacterList(),
+                isLastItem = false,
+                uiState = UIState.Success,
+            )
+        }
     }
 }

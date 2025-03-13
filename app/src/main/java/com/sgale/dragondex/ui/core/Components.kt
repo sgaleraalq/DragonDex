@@ -16,8 +16,10 @@
 
 package com.sgale.dragondex.ui.core
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,9 +33,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -266,6 +271,47 @@ fun Header(
 }
 
 @Composable
-fun DropDownMenu(){
-
+fun DropDownMenu(
+    modifier: Modifier = Modifier,
+    menuExpanded: Boolean,
+    selectedItem: String,
+    items: List<String>,
+    onChangeDisplay: () -> Unit,
+    onFilterApplied: () -> Unit
+){
+    Box(
+        modifier = modifier.padding(4.dp)
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.clickable { onChangeDisplay() }.background(DragonDexTheme.colors.backgroundLight).padding(4.dp)
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = selectedItem,
+                style = roboto.copy(
+                    fontSize = 16.sp,
+                    color = DragonDexTheme.colors.black,
+                    fontWeight = Bold
+                )
+            )
+            Icon(
+                imageVector = Icons.Default.ArrowDropDown,
+                contentDescription = stringResource(R.string.description_arrow_down),
+                tint = DragonDexTheme.colors.black
+            )
+        }
+    }
+    DropdownMenu(
+        expanded = menuExpanded,
+        onDismissRequest = { onChangeDisplay() }
+    ) {
+        items.forEachIndexed { _, item ->
+            DropdownMenuItem(
+                text = { Text(text = item) },
+                onClick = { onFilterApplied() }
+            )
+        }
+    }
 }

@@ -18,11 +18,15 @@ package com.sgale.dragondex.ui.characters.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sgale.dragondex.data.provider.AffiliationsProvider
+import com.sgale.dragondex.data.provider.RacesProvider
 import com.sgale.dragondex.domain.core.UIState
+import com.sgale.dragondex.domain.model.AffiliationsModel
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -33,11 +37,27 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
+    racesProvider: RacesProvider,
+    affiliationsProvider: AffiliationsProvider,
     private val fetchCharacters: FetchCharacters
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow<UIState>(UIState.Loading)
     val uiState = _uiState
+
+    private val _racesList = MutableStateFlow<List<String>>(emptyList())
+    val racesList = _racesList
+
+    private val _affiliationsList = MutableStateFlow<List<String>>(emptyList())
+    val affiliationsList = _affiliationsList
+
+    init {
+        _racesList.value = racesProvider.provideRaces()
+        _affiliationsList.value = affiliationsProvider.provideAffiliations()
+    }
+
+    val selectedRace = MutableStateFlow<String?>(null)
+    val selectedAffiliation = MutableStateFlow<String?>(null)
 
     private val charactersFetchingIndex = MutableStateFlow(1)
 

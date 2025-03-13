@@ -34,7 +34,7 @@
 
     <!-- light colors-->
     <color name="background">#FBF7FB</color>
-    <color name="background800">#D0C7C7</color>
+    <color name="background800">#EBE5E5</color>
     <color name="background900">#FFFFFF</color>
     <color name="white_12">#1F000000</color>
     <color name="white_56">#8F000000</color>
