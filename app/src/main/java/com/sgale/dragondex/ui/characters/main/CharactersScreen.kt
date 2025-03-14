@@ -120,18 +120,20 @@ fun CharactersList(
     fetchNextCharacters: () -> Unit = {},
     navigateToDetail: (Int) -> Unit = {}
 ) {
+    val filteredChar = charactersList.filter { it.isVisible }
     LazyVerticalGrid(
         columns = GridCells.Fixed(2)
     ) {
         val threadHold = 2
         itemsIndexed(
-            items = charactersList,
+            items = filteredChar,
             key = { _, character -> character.name }
         ) { index, character ->
             // Load more items when there are only two items left
-            if ((index + threadHold) >= charactersList.size && uiState != UIState.Loading && !isLastItem) {
+            if ((index + threadHold) >= filteredChar.size && uiState != UIState.Loading && !isLastItem) {
                 fetchNextCharacters()
             }
+
             ItemCard(
                 id = character.id,
                 content = {
