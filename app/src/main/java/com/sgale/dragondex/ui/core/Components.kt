@@ -35,9 +35,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -279,6 +281,37 @@ fun Header(
     }
 }
 
+@Composable
+fun AppliedFilter(filter: String, onFilterRemoved: () -> Unit = {}){
+    Card(
+        modifier = Modifier.padding(top = 8.dp, end = 12.dp),
+        elevation = CardDefaults.cardElevation(8.dp),
+        shape = RoundedCornerShape(4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = DragonDexTheme.colors.backgroundLight
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = filter,
+                style = roboto.copy(
+                    fontSize = 16.sp,
+                    color = DragonDexTheme.colors.black
+                )
+            )
+            Spacer(Modifier.width(24.dp))
+            Icon(
+                modifier = Modifier.size(24.dp).clickable { onFilterRemoved() },
+                imageVector = Icons.Default.Close,
+                contentDescription = stringResource(R.string.description_close),
+                tint = DragonDexTheme.colors.black
+            )
+        }
+    }
+}
 
 @Composable
 fun DropDownMenu(

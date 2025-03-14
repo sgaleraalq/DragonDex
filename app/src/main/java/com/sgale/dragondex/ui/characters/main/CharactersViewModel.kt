@@ -85,7 +85,6 @@ class CharactersViewModel @Inject constructor(
                         (selectedAffiliation.value == null || character.affiliation == selectedAffiliation.value)
             )
         }.toList()
-        Log.i("CharactersViewModel", "applyFilters: ${_characterList.value}")
     }
 
     fun changeRace(race: String?) {

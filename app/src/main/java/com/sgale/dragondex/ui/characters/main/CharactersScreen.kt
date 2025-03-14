@@ -21,8 +21,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -43,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.CharacterModel
+import com.sgale.dragondex.ui.core.AppliedFilter
 import com.sgale.dragondex.ui.core.ApplyFiltersButton
 import com.sgale.dragondex.ui.core.CharacterCardContent
 import com.sgale.dragondex.ui.core.DropDownMenu
@@ -81,6 +84,19 @@ fun CharactersScreen(
             onBackPressed = { navigateHome() },
             onShowFilters = { showFilters = !showFilters }
         )
+
+        Row(
+            modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)
+        ) {
+            if (!selectedRace.isNullOrBlank()){
+                AppliedFilter(selectedRace!!) { viewModel.changeRace(null) }
+            }
+            if (!selectedAffiliation.isNullOrBlank()){
+                AppliedFilter(selectedAffiliation!!) { viewModel.changeAffiliation(null) }
+
+            }
+        }
+
         if (showFilters) {
             CharacterFilters(
                 racesList = racesList,
@@ -92,6 +108,7 @@ fun CharactersScreen(
                 hideFilters = { showFilters = !showFilters }
             )
         }
+
         CharactersList(
             charactersList = charactersList.toImmutableList(),
             isLastItem = isLastItem,
@@ -210,6 +227,11 @@ fun CharacterFilters(
 private fun CharactersMainPreview() {
     DragonDexTheme {
         Column {
+            Row(
+                modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp)
+            ) {
+                AppliedFilter("Test") {}
+            }
             CharacterFilters(
                 racesList = listOf(
                     "Test", "Test", "Test"

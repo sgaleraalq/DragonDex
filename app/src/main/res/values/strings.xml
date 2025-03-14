@@ -7,6 +7,7 @@
     <string name="planets">Planets</string>
     <string name="race">Race:</string>
     <string name="affiliation">Affiliation:</string>
+    <string name="apply_filters">Apply filters</string>
 
     // Character Detail
     <string name="info">Info:</string>
@@ -39,5 +40,5 @@
     <string name="description_planet_image">Planet image</string>
     <string name="description_filter">Filter icon</string>
     <string name="description_arrow_down">Arrow down icon</string>
-    <string name="apply_filters">Apply filters</string>
+    <string name="description_close">Close icon</string>
 </resources>
