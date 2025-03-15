@@ -18,6 +18,7 @@ package com.sgale.dragondex.ui.characters.detail
 
 import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -248,7 +249,7 @@ fun ExtraInformation(
         ExtraInformationCard(
             modifier = Modifier.weight(1f),
             titleText = stringResource(R.string.transformations),
-            composition = planetsComposition,
+            cardImage = R.drawable.img_fusion,
             onItemClicked = { onShowTransformation() }
         )
     }
@@ -258,7 +259,8 @@ fun ExtraInformation(
 fun ExtraInformationCard(
     modifier: Modifier,
     titleText: String,
-    composition: LottieComposition?,
+    composition: LottieComposition? = null,
+    cardImage: Int? = null,
     onItemClicked: () -> Unit
 ) {
     Column(
@@ -269,11 +271,20 @@ fun ExtraInformationCard(
             onItemClicked = { onItemClicked() },
             color = DragonDexTheme.colors.backgroundLight,
             content = {
-                LottieAnimation(
-                    modifier = Modifier.height(100.dp),
-                    composition = composition,
-                    iterations = Int.MAX_VALUE
-                )
+                if (composition != null) {
+                    LottieAnimation(
+                        modifier = Modifier.height(100.dp),
+                        composition = composition,
+                        iterations = Int.MAX_VALUE
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier.height(100.dp).fillMaxWidth(),
+                        painter = painterResource(cardImage?:R.drawable.ic_planet),
+                        contentDescription = stringResource(R.string.description_character_image),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
         )
         Text(
