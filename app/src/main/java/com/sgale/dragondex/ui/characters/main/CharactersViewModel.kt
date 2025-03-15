@@ -25,6 +25,7 @@ import com.sgale.dragondex.domain.core.UIState
 import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.domain.usecase.FetchCharacters
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -79,16 +80,16 @@ class CharactersViewModel @Inject constructor(
     }
 
     private fun applyFilters() {
-        _characterList.value = _characterList.value.map { character ->
-            character.copy(
-                isVisible = (selectedRace.value == null || character.race == selectedRace.value) &&
-                        (selectedAffiliation.value == null || character.affiliation == selectedAffiliation.value)
-            )
-        }.toList()
-        Log.i("CharactersViewModel", "filters: ${selectedRace.value} - ${selectedAffiliation.value}")
-        Log.i("CharactersViewModel", "applyFilters: ${_characterList.value}")
+        viewModelScope.launch(Dispatchers.Default) {
+            val filteredList = _characterList.value.map { character ->
+                character.copy(
+                    isVisible = (selectedRace.value == null || character.race == selectedRace.value) &&
+                            (selectedAffiliation.value == null || character.affiliation == selectedAffiliation.value)
+                )
+            }
+            _characterList.value = filteredList
+        }
     }
-
     fun changeRace(race: String?) {
         selectedRace.value = race
         applyFilters()
