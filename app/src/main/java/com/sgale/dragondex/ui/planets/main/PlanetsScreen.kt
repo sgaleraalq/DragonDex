@@ -22,12 +22,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,19 +47,14 @@ fun PlanetsScreen(
     val uiState     by viewModel.uiState.collectAsStateWithLifecycle()
     val planetsList by viewModel.planetsList.collectAsStateWithLifecycle()
     val isLastItem  by viewModel.isLastItem.collectAsStateWithLifecycle()
-    var showFilters by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Header(
             text = stringResource(R.string.planets),
-            onBackPressed = { navigateHome() },
-            onShowFilters = { showFilters = !showFilters }
+            onBackPressed = { navigateHome() }
         )
-        if (showFilters) {
-
-        }
         PlanetsList(
             planetsList = planetsList,
             isLastItem = isLastItem,

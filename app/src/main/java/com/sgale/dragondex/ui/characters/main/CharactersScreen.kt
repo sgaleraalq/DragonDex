@@ -80,7 +80,8 @@ fun CharactersScreen(
         Header(
             text = stringResource(R.string.characters),
             onBackPressed = { navigateHome() },
-            onShowFilters = { showFilters = !showFilters }
+            onShowFilters = { showFilters = !showFilters },
+            showFilterButton = true
         )
 
         Row(

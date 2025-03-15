@@ -230,7 +230,8 @@ fun PlanetCardContent(
 fun Header(
     text: String,
     onBackPressed: () -> Unit,
-    onShowFilters: () -> Unit
+    onShowFilters: () -> Unit = {},
+    showFilterButton: Boolean = false
 ) {
     Row(
         modifier = Modifier
@@ -267,15 +268,17 @@ fun Header(
                 fontWeight = Bold
             )
         )
-        Icon(
-            modifier = Modifier
-                .size(32.dp)
-                .clickable { onShowFilters() }
-                .padding(4.dp),
-            painter = painterResource(R.drawable.ic_filter),
-            contentDescription = stringResource(R.string.description_filter),
-            tint = Color.White
-        )
+        if (showFilterButton) {
+            Icon(
+                modifier = Modifier
+                    .size(32.dp)
+                    .clickable { onShowFilters() }
+                    .padding(4.dp),
+                painter = painterResource(R.drawable.ic_filter),
+                contentDescription = stringResource(R.string.description_filter),
+                tint = Color.White
+            )
+        }
     }
 }
 
