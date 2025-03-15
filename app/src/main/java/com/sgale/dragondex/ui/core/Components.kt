@@ -79,7 +79,6 @@ import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 @Composable
 fun BackManagement(
     navigateBack: () -> Unit,
-    isLoading: Boolean
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -93,13 +92,6 @@ fun BackManagement(
             contentDescription = stringResource(R.string.description_back),
             tint = DragonDexTheme.colors.black
         )
-
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = DragonDexTheme.colors.primary
-            )
-        }
     }
 }
 

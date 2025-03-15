@@ -51,7 +51,6 @@ fun PlanetDetailScreen(
     PlanetDetailInformation(planet = planet)
 
     BackManagement(
-        navigateBack = navigateBack,
-        isLoading = isLoading
+        navigateBack = navigateBack
     )
 }

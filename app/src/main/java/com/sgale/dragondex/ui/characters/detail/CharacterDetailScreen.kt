@@ -51,7 +51,6 @@ fun CharacterDetailScreen(
     CharDetailInformation( characterInfo = character )
 
     BackManagement(
-        navigateBack = navigateBack,
-        isLoading = isLoading
+        navigateBack = navigateBack
     )
 }
