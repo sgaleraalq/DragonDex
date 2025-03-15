@@ -46,6 +46,7 @@ import com.sgale.dragondex.domain.model.CharacterModel
 import com.sgale.dragondex.ui.core.AppliedFilter
 import com.sgale.dragondex.ui.core.ApplyFiltersButton
 import com.sgale.dragondex.ui.core.CharacterCardContent
+import com.sgale.dragondex.ui.core.DragonDexLoading
 import com.sgale.dragondex.ui.core.DropDownMenu
 import com.sgale.dragondex.ui.core.Header
 import com.sgale.dragondex.ui.core.ItemCard
@@ -118,13 +119,7 @@ fun CharactersScreen(
     }
 
     if (uiState == UIState.Loading) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+        DragonDexLoading()
     }
 }
 

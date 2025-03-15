@@ -62,6 +62,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.LottieAnimatable
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 import com.sgale.dragondex.ui.theme.roboto
@@ -96,6 +100,20 @@ fun BackManagement(
                 color = DragonDexTheme.colors.primary
             )
         }
+    }
+}
+
+@Composable
+fun DragonDexLoading() {
+    val loadingLottie by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.dragon_ball_loading))
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LottieAnimation(
+            modifier = Modifier.align(Alignment.Center).size(100.dp),
+            composition = loadingLottie,
+            iterations = Int.MAX_VALUE
+        )
     }
 }
 
