@@ -16,7 +16,6 @@
 
 package com.sgale.dragondex.ui.characters.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgale.dragondex.data.provider.AffiliationsProvider
