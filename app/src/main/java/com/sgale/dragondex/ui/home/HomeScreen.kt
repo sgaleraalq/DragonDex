@@ -17,18 +17,23 @@
 package com.sgale.dragondex.ui.home
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
 fun HomeScreen(
@@ -36,9 +41,13 @@ fun HomeScreen(
     navigateToPlanets: () -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(vertical = 32.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 200.dp)
+            .background(Color.Red),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(Modifier.height(32.dp))
         TitleLogo()
         Column(
             modifier = Modifier
@@ -64,5 +73,7 @@ fun HomeScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    DragonDexTheme {
+        HomeScreen()
+    }
 }
