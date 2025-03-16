@@ -71,16 +71,7 @@ fun Content(
     }
 
     NavHost(
-        modifier = modifier.background(
-            brush = Brush.radialGradient(
-                colors = listOf(
-                    DragonDexTheme.colors.bluePrimary,
-                    DragonDexTheme.colors.blueSecondary
-                ),
-                center = Offset(x = 0.5f, y = 1f),
-                radius = 2500f
-            )
-        ),
+        modifier = modifier,
         navController = navController,
         startDestination = Home.route
     ) {

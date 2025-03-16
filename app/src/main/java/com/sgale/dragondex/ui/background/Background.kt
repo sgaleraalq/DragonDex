@@ -16,6 +16,7 @@
 
 package com.sgale.dragondex.ui.background
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,12 +25,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
 fun Background(){
@@ -37,7 +41,16 @@ fun Background(){
         spec = LottieCompositionSpec.RawRes(R.raw.main_background)
     )
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(
+            brush = Brush.radialGradient(
+                colors = listOf(
+                    DragonDexTheme.colors.bluePrimary,
+                    DragonDexTheme.colors.blueSecondary
+                ),
+                center = Offset(x = 0.5f, y = 1f),
+                radius = 2500f
+            )
+        )
     ){
         LottieAnimation(
             modifier = Modifier.fillMaxWidth().height(200.dp).align(Alignment.BottomCenter),
