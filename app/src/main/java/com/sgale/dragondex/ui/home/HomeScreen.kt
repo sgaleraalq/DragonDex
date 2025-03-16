@@ -24,16 +24,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.sgale.dragondex.R
+import com.sgale.dragondex.ui.background.Background
 import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
@@ -41,19 +38,16 @@ fun HomeScreen(
     navigateToCharacters: () -> Unit = {},
     navigateToPlanets: () -> Unit = {}
 ) {
-    val waterLottie by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.main_background)
-    )
+    Background()
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(Modifier.height(32.dp))
         TitleLogo()
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             LaunchCard(
@@ -67,14 +61,9 @@ fun HomeScreen(
                 onLaunchCardPressed = { navigateToPlanets() }
             )
         }
-        LottieAnimation(
-            composition = waterLottie,
-            iterations = Int.MAX_VALUE,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-        )
+        Spacer(Modifier.height(300.dp))
     }
+
 }
 
 @Preview
