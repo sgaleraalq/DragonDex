@@ -42,10 +42,10 @@ fun HomeScreen(
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Spacer(Modifier.height(32.dp))
         TitleLogo()
+        Spacer(Modifier.height(70.dp))
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly
@@ -61,9 +61,7 @@ fun HomeScreen(
                 onLaunchCardPressed = { navigateToPlanets() }
             )
         }
-        Spacer(Modifier.height(300.dp))
     }
-
 }
 
 @Preview
