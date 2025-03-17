@@ -34,5 +34,5 @@ Go to the [Releases](https://github.com/skydoves/pokedex-compose/releases) to do
 - [ksp](https://github.com/google/ksp): Kotlin Symbol Processing API for code generation and analysis.
 - [Lottie](https://github.com/airbnb/lottie-android): Render After Effects animations natively on Android and iOS.
 <p align="center">
-<img src="assets/description_gif.webm"/>
+<img src="assets/description_gif.gif"/>
 </p>
