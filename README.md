@@ -1,16 +1,16 @@
-<h1 align="center">DragonDex</h1>
+<h1 style="text-align: center">DragonDex</h1>
 
-<p align="center">
+<p style="text-align: center">
   <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
 
-<p align="center">  
-🔥 DragonDex is a modern Android development project developed with Hilt, Coroutines, Flow, Jetpack (Room, ViewModel) based on MVVM architecture.
+<p style="text-align: center">
+  🔥 DragonDex is a modern Android development project developed with Hilt, Coroutines, Flow, Jetpack (Room, ViewModel) based on MVVM architecture.
 </p>
 
-<p align="center">
-<img src="assets/main_screenshot.png"/>
+<p style="text-align: center">
+  <img src="assets/main_screenshot.png" alt="Image of app"/>
 </p>
 
 
@@ -33,6 +33,7 @@ Go to the [Releases](https://github.com/skydoves/pokedex-compose/releases) to do
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit): Constructs REST APIs and facilitates paging network data retrieval.
 - [ksp](https://github.com/google/ksp): Kotlin Symbol Processing API for code generation and analysis.
 - [Lottie](https://github.com/airbnb/lottie-android): Render After Effects animations natively on Android and iOS.
-<p align="center">
-<img src="assets/description_gif.gif"/>
+
+<p style="text-align: center">
+  <img src="assets/description_gif.gif" alt="Descriptive gif of the app"/>
 </p>
