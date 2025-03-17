@@ -45,7 +45,6 @@ fun HomeScreen(
     ) {
         Spacer(Modifier.height(32.dp))
         TitleLogo()
-        Spacer(Modifier.height(70.dp))
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.SpaceEvenly
