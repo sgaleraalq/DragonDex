@@ -4,15 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -63,10 +60,11 @@ fun Content(
 ) {
     fun navigateTo(
         destination: String,
+        prevState: Boolean = true
     ) {
         navController.navigate(destination) {
             launchSingleTop = true
-            restoreState = true
+            restoreState = prevState
         }
     }
 
@@ -88,7 +86,7 @@ fun Content(
             route = Characters.route
         ) {
             CharactersScreen(
-                navigateToDetail = { id -> navigateTo(CharacterDetail.createRoute(id)) },
+                navigateToDetail = { id -> navigateTo(CharacterDetail.createRoute(id), false) },
                 navigateHome = { navigateTo(Home.createRoute()) }
             )
         }

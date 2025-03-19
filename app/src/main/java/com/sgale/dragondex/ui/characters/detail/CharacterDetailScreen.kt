@@ -17,15 +17,25 @@
 package com.sgale.dragondex.ui.characters.detail
 
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sgale.dragondex.R
 import com.sgale.dragondex.ui.core.BackManagement
+import com.sgale.dragondex.ui.theme.DragonDexTheme
 
 @Composable
 fun CharacterDetailScreen(
@@ -48,7 +58,17 @@ fun CharacterDetailScreen(
         }
     }
 
-    CharDetailInformation( characterInfo = character )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .background(DragonDexTheme.background.color)
+            .padding(16.dp)
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CharDetailInformation(characterInfo = character)
+    }
 
     BackManagement(
         navigateBack = navigateBack

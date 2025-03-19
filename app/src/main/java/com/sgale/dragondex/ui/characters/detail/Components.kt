@@ -87,24 +87,14 @@ fun CharDetailInformation(
     var showPlanet by remember { mutableStateOf(false) }
     var showTrans by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .background(DragonDexTheme.background.color)
-            .padding(16.dp)
-            .padding(vertical = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CharName(characterInfo.name)
-        CharMainInfo(characterInfo)
-        Spacer(Modifier.height(32.dp))
-        Description(characterInfo.description)
-        ExtraInformation(
-            onShowPlanet = { showPlanet = true },
-            onShowTransformation = { showTrans = true }
-        )
-    }
+    CharName(characterInfo.name)
+    CharMainInfo(characterInfo)
+    Spacer(Modifier.height(32.dp))
+    Description(characterInfo.description)
+    ExtraInformation(
+        onShowPlanet = { showPlanet = true },
+        onShowTransformation = { showTrans = true }
+    )
 
     if (showPlanet) {
         DialogOriginPlanet(characterInfo.planet) { showPlanet = false }
@@ -138,11 +128,15 @@ fun CharName(
 fun CharMainInfo(
     char: CharacterModel
 ) {
-    Row (
-        modifier = Modifier.padding(16.dp).fillMaxWidth()
+    Row(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
     ) {
         DragonDexImage(
-            modifier = Modifier.height(250.dp).weight(1f),
+            modifier = Modifier
+                .height(250.dp)
+                .weight(1f),
             imageUrl = char.image,
             contentScale = ContentScale.FillHeight
         )
@@ -279,8 +273,10 @@ fun ExtraInformationCard(
                     )
                 } else {
                     Image(
-                        modifier = Modifier.height(100.dp).fillMaxWidth(),
-                        painter = painterResource(cardImage?:R.drawable.ic_planet),
+                        modifier = Modifier
+                            .height(100.dp)
+                            .fillMaxWidth(),
+                        painter = painterResource(cardImage ?: R.drawable.ic_planet),
                         contentDescription = stringResource(R.string.description_character_image),
                         contentScale = ContentScale.Crop
                     )
@@ -325,11 +321,16 @@ fun DialogOriginPlanet(planet: Planet?, onHideDialog: () -> Unit = {}) {
                         .build(),
                     loading = { CircularProgressIndicator() },
                     contentDescription = stringResource(R.string.description_character_image),
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp).clip(RoundedCornerShape(8.dp)),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
+                        .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Fit
                 )
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     text = planet.description,
                     style = roboto.copy(
                         fontSize = 16.sp,
@@ -394,7 +395,7 @@ fun PlanetDialogHeader(planet: Planet) {
 @Composable
 fun DialogTransformation(transformations: List<Transformation>, onHideDialog: () -> Unit = {}) {
     val noTransformationMsg = stringResource(R.string.no_transformations_found)
-    if (transformations.isEmpty()){
+    if (transformations.isEmpty()) {
         Toast.makeText(LocalContext.current, noTransformationMsg, Toast.LENGTH_SHORT).show()
         onHideDialog()
         return
@@ -404,14 +405,18 @@ fun DialogTransformation(transformations: List<Transformation>, onHideDialog: ()
         onDismissRequest = { onHideDialog() }
     ) {
         Card(
-            modifier = Modifier.fillMaxWidth().padding(24.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(24.dp),
             colors = CardDefaults.cardColors(
                 containerColor = DragonDexTheme.colors.backgroundLight
             )
         ) {
             Column {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp),
                     text = stringResource(R.string.transformations),
                     style = saiyanSans.copy(
                         fontSize = 24.sp,
@@ -440,7 +445,9 @@ fun TransformationCard(transformation: Transformation) {
         modifier = Modifier.padding(8.dp)
     ) {
         SubcomposeAsyncImage(
-            modifier = Modifier.height(200.dp).align(Alignment.Center),
+            modifier = Modifier
+                .height(200.dp)
+                .align(Alignment.Center),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(transformation.image)
                 .crossfade(true)
@@ -450,7 +457,11 @@ fun TransformationCard(transformation: Transformation) {
             contentScale = ContentScale.Fit
         )
         Column(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).background(DragonDexTheme.colors.grayTransparent).padding(vertical = 4.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .background(DragonDexTheme.colors.grayTransparent)
+                .padding(vertical = 4.dp)
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -481,9 +492,19 @@ fun TransformationCard(transformation: Transformation) {
 @Composable
 private fun CharacterDetailPreview() {
     DragonDexTheme {
-        CharDetailInformation(
-            characterInfo = PreviewUtils.mockCharacterInfo()
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(DragonDexTheme.background.color)
+                .padding(16.dp)
+                .padding(vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CharDetailInformation(
+                characterInfo = PreviewUtils.mockCharacterInfo()
+            )
+        }
     }
 }
 

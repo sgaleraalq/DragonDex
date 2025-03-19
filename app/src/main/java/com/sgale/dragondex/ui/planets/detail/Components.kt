@@ -17,7 +17,6 @@
 package com.sgale.dragondex.ui.planets.detail
 
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,7 +62,6 @@ fun PlanetDetailInformation(planet: Planet?) {
         columns = GridCells.Fixed(3),
         modifier = Modifier
             .fillMaxSize()
-            .background(DragonDexTheme.background.color)
             .padding(16.dp)
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.Center
