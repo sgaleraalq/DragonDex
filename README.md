@@ -14,7 +14,7 @@
 </p>
 
 ## Download
-Go to the [Releases](https://github.com/skydoves/pokedex-compose/releases) to download the latest APK.
+Go to the [Releases](https://github.com/sgaleraalq/DragonDex/releases) to download the latest APK.
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21.
