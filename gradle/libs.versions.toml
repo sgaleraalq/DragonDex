@@ -4,7 +4,6 @@ agp = "8.9.0"
 animation = "1.7.8"
 coilCompose = "2.0.0"
 converterGson = "2.11.0"
-glide = "4.16.0"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -32,7 +31,6 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
